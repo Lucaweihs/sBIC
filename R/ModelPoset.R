@@ -1,5 +1,5 @@
 setConstructorS3("ModelPoset",
-                 function() { extend(Object(), "ModelPoset") },
+                 function() { extend(Object(), "Object") },
                  abstract = T)
 
 setMethodS3("getTopOrder", "ModelPoset", function(this) {
@@ -26,14 +26,14 @@ setMethodS3("parents", "ModelPoset", function(this, model) {
   throw("parents is not yet implemented.")
 }, appendVarArgs = F)
 
-setMethodS3("logLike", "ModelPoset", function(this, model) {
+setMethodS3("logLikeMle", "ModelPoset", function(this, model) {
   throw("logLike is not yet implemented.")
 }, appendVarArgs = F)
 
-setMethodS3("learnCoef", "ModelPoset", function(this, model1, model2) {
+setMethodS3("learnCoef", "ModelPoset", function(this, superModel, subModel) {
   throw("learnCoef is not yet implemented.")
 }, appendVarArgs = F)
 
-setMethodS3("getDim", "ModelPoset", function(this, model) {
+setMethodS3("getDimension", "ModelPoset", function(this, model) {
   throw("getDim is not yet implemented.")
 }, appendVarArgs = F)

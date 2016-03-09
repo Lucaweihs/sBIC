@@ -74,7 +74,7 @@ sBIC = function(X, mod) {
   loglike <- rep(0, numModels)
 
   for (i in topOrder) {
-    loglike[i] <- mod$logLike(i)
+    loglike[i] <- mod$logLikeMle(i)
     lf <- mod$learnCoef(i, i)
     logLii[i] <- loglike[i] - lf$lambda * log(n)
     for (j in reach[[i]]) {
@@ -111,7 +111,7 @@ sBIC = function(X, mod) {
   results$logL = log(L) + mn
   results$L = L
   results$loglike = loglike
-  results$regBIC = loglike - (mod$getDim(1:numModels) / 2) * log(n)
+  results$regBIC = loglike - (mod$getDimension(1:numModels) / 2) * log(n)
   results$modelPoset = mod
   return(results)
 }
