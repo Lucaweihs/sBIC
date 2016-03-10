@@ -64,7 +64,7 @@ getSubmodelEdges = function(subs, edges) {
 subModelsToDAG = function(subModels) {
   numSubModels = nrow(subModels)
   if (ncol(subModels) == 0) {
-    return(graph.empty(1))
+    return(igraph::graph.empty(1))
   }
 
   lessThanMatrix = matrix(numeric(numSubModels ^ 2), ncol = numSubModels)
@@ -103,7 +103,7 @@ subModelsToDAG = function(subModels) {
     }
   }
 
-  return(graph.edgelist(toEdgeListMat(edgeMatrix)))
+  return(igraph::graph.edgelist(toEdgeListMat(edgeMatrix)))
 }
 
 forestDim = function(edgeList, support, numLeaves) {
@@ -111,8 +111,8 @@ forestDim = function(edgeList, support, numLeaves) {
     return(0)
   }
   edgeList = toEdgeListMat(edgeList[support == 1,])
-  g = graph.edgelist(edgeList, directed = F)
-  return(numLeaves + nrow(edgeList) - sum(degree(g) == 2))
+  g = igraph::graph.edgelist(edgeList, directed = F)
+  return(numLeaves + nrow(edgeList) - sum(igraph::degree(g) == 2))
 }
 
 forestFromTreeEdgesAndSupport = function(tree, edges, support) {
@@ -120,7 +120,7 @@ forestFromTreeEdgesAndSupport = function(tree, edges, support) {
     edges = t(matrix(edges, 2, length(edges) / 2))
   }
   edgesToDelete = as.vector(t(edges[support == 0, ]))
-  return(delete.edges(tree, get.edge.ids(tree, edgesToDelete)))
+  return(igraph::delete.edges(tree, igraph::get.edge.ids(tree, edgesToDelete)))
 }
 
 edgesInRootedDAGOrder = function(edgeList, root = "max") {
@@ -134,9 +134,9 @@ edgesInRootedDAGOrder = function(edgeList, root = "max") {
     root = max(edgeList)
   }
 
-  g = graph.empty(max(edgeList), directed = F)
-  g = add.edges(g, as.vector(t(edgeList)))
-  dfsResults = graph.dfs(g, max(edgeList), father = T, unreachable = T)
+  g = igraph::graph.empty(max(edgeList), directed = F)
+  g = igraph::add.edges(g, as.vector(t(edgeList)))
+  dfsResults = igraph::graph.dfs(g, max(edgeList), father = T, unreachable = T)
   dfsFather = as.numeric(dfsResults$father)
 
   for (i in 1:nrow(edgeList)) {
@@ -151,15 +151,15 @@ edgesInRootedDAGOrder = function(edgeList, root = "max") {
 }
 
 removeDeg2Nodes = function(forest) {
-  deg2Nodes = which(degree(forest) == 2)
+  deg2Nodes = which(igraph::degree(forest) == 2)
 
   while (length(deg2Nodes) > 0) {
     deg2Node = deg2Nodes[1]
-    adjNodes = as.numeric(get.adjlist(forest)[[deg2Node]])
-    edgeIdsToDelete = as.numeric(get.edge.ids(forest, c(deg2Node, adjNodes[1], deg2Node, adjNodes[2])))
-    forest = delete.edges(forest, edgeIdsToDelete)
-    forest = add.edges(forest, adjNodes)
-    deg2Nodes = which(degree(forest) == 2)
+    adjNodes = as.numeric(igraph::get.adjlist(forest)[[deg2Node]])
+    edgeIdsToDelete = as.numeric(igraph::get.edge.ids(forest, c(deg2Node, adjNodes[1], deg2Node, adjNodes[2])))
+    forest = igraph::delete.edges(forest, edgeIdsToDelete)
+    forest = igraph::add.edges(forest, adjNodes)
+    deg2Nodes = which(igraph::degree(forest) == 2)
   }
   return(forest)
 }
@@ -187,14 +187,14 @@ isSubPartition = function(pBig, pSmall) {
 # that the leaves are the first numLeaves vertices of the two forests.
 ###
 forestDistance = function(f1, f2, numLeaves) {
-  if (length(V(f1)) == 0) {
+  if (length(igraph::V(f1)) == 0) {
     return(0)
   }
   leaves = 1:numLeaves
   f1 = removeDeg2Nodes(f1)
   f2 = removeDeg2Nodes(f2)
-  f1Clusters = clusters(f1)$membership[leaves]
-  f2Clusters = clusters(f2)$membership[leaves]
+  f1Clusters = igraph::clusters(f1)$membership[leaves]
+  f2Clusters = igraph::clusters(f2)$membership[leaves]
 
   # There are fewer, bigger, clusters in one forest
   forestFlipped = F
@@ -219,13 +219,13 @@ forestDistance = function(f1, f2, numLeaves) {
   numSmallClusters = length(unique(smallClusters))
   dist = numSmallClusters - numBigClusters
   while (numBigClusters != numSmallClusters) {
-    edgeList = get.edgelist(fBig)
+    edgeList = igraph::get.edgelist(fBig)
     didChange = F
     for (i in 1:nrow(edgeList)) {
       edge = edgeList[i, ]
-      edgeId = get.edge.ids(fBig, edge)
-      newF = removeDeg2Nodes(delete.edges(fBig, edgeId))
-      newClusters = clusters(newF)$membership[leaves]
+      edgeId = igraph::get.edge.ids(fBig, edge)
+      newF = removeDeg2Nodes(igraph::delete.edges(fBig, edgeId))
+      newClusters = igraph::clusters(newF)$membership[leaves]
       if (isSubPartition(newClusters, smallClusters)) {
         didChange = T
         fBig = newF
@@ -253,17 +253,17 @@ forestDistance = function(f1, f2, numLeaves) {
 # tree has depth numLeaves-1
 ###
 forestDepth = function(forest, numLeaves) {
-  numClusters = length(unique(clusters(forest)$membership[1:numLeaves]))
+  numClusters = length(unique(igraph::clusters(forest)$membership[1:numLeaves]))
   return((numLeaves - 1) - (numClusters - 1))
 }
 
 
 # Helper function
 isRootedDag = function(g) {
-  if (!is.simple(g)) {
+  if (!igraph::is.simple(g)) {
     return(F)
   }
-  clusts = clusters(g, mode = "weak")
+  clusts = igraph::clusters(g, mode = "weak")
   membership = clusts$membership
   numClusts = clusts$no
 
@@ -271,7 +271,7 @@ isRootedDag = function(g) {
     sourceFound = F
     vertices = which(membership == i)
     for (v in vertices) {
-      if (length(incident(g, v, "in")) == 0) {
+      if (length(igraph::incident(g, v, "in")) == 0) {
         if (sourceFound == T) {
           return(F)
         }
@@ -326,10 +326,10 @@ isBinaryEdgelistMat = function(edgeList, numLeaves) {
   if (!is.edgelist.mat(edgeList)) {
     return(F)
   }
-  g = graph.edgelist(edgeList, directed = F)
-  v = length(V(g))
+  g = igraph::graph.edgelist(edgeList, directed = F)
+  v = length(igraph::V(g))
   if (v < numLeaves) {
-    g = add.vertices(g, numLeaves - v)
+    g = igraph::add.vertices(g, numLeaves - v)
   }
   return(is.binary.forest(g, numLeaves))
 }
@@ -354,20 +354,20 @@ is.data.matrix = function(mat) {
 }
 
 is.forest = function(f) {
-  minSpanTree = minimum.spanning.tree(f)
-  return(!is.directed(f) && length(E(f)) == length(E(minSpanTree)))
+  minSpanTree = igraph::minimum.spanning.tree(f)
+  return(!igraph::is.directed(f) && length(igraph::E(f)) == length(igraph::E(minSpanTree)))
 }
 
 is.binary.forest = function(f, numLeaves) {
   if (numLeaves == 0) {
-    return(length(V(f)) == 0)
+    return(length(igraph::V(f)) == 0)
   }
-  degs = degree(f)
+  degs = igraph::degree(f)
   return(
     is.forest(f) &&
       numLeaves %% 1 == 0 &&
       numLeaves > 0 &&
-      numLeaves <= length(V(f)) &&
+      numLeaves <= length(igraph::V(f)) &&
       all(degs[1:numLeaves] %in% c(0, 1)) &&
       all(degs[-(1:numLeaves)] %in% c(0, 2, 3))
   )
@@ -377,7 +377,7 @@ is.binary.forest = function(f, numLeaves) {
 # Creates a unique string representation of the bifucating forest.
 ##
 forestToString = function(forest, numLeaves) {
-  subTreeMembership = clusters(forest)$membership
+  subTreeMembership = igraph::clusters(forest)$membership
 
   numSubTrees = max(subTreeMembership)
   subTreeVertexList = vector("list", numSubTrees)
@@ -404,8 +404,8 @@ forestToString = function(forest, numLeaves) {
   subTreeVertexList = newSubTreeVertexList
   numSubTrees = length(subTreeVertexList)
 
-  adjList = get.adjlist(forest, "all")
-  ancestors = vector("list", length(V(forest)))
+  adjList = igraph::get.adjlist(forest, "all")
+  ancestors = vector("list", length(igraph::V(forest)))
 
   subTreeStrings = character(numSubTrees)
   for (i in 1:numSubTrees) {
@@ -433,7 +433,7 @@ forestToString = function(forest, numLeaves) {
         last = current
       }
 
-      dfsResult = graph.dfs(
+      dfsResult = igraph::graph.dfs(
         forest,
         root = smallestObservedDegree3Parent,
         unreachable = F,
@@ -474,8 +474,8 @@ getSubForestString = function(forest, edgeList, support, numLeaves) {
   if (!is.vector(edgesToDelete)) {
     edgesToDelete = as.vector(t(edgesToDelete))
   }
-  edgesToDelete = get.edge.ids(forest, edgesToDelete)
-  return(forestToString(delete.edges(forest, edgesToDelete), numLeaves))
+  edgesToDelete = igraph::get.edge.ids(forest, edgesToDelete)
+  return(forestToString(igraph::delete.edges(forest, edgesToDelete), numLeaves))
 }
 
 ###
@@ -557,8 +557,8 @@ generateRandomBinaryTree = function(numLeaves, directedOrdering = F) {
   }
 
   if (directedOrdering) {
-    g = graph.edgelist(edgeMatrix, directed = F)
-    dfsResults = graph.dfs(g, max(edgeMatrix), father = T)
+    g = igraph::graph.edgelist(edgeMatrix, directed = F)
+    dfsResults = igraph::graph.dfs(g, max(edgeMatrix), father = T)
 
     edgeMatrix = edgeMatrix * 0
 
@@ -578,7 +578,7 @@ generateRandomBinaryForest = function(numLeaves, depth) {
     stop("Invalid number of leaves or depth")
   }
   if (numLeaves == 1) {
-    return(graph.empty(1, directed = F))
+    return(igraph::graph.empty(1, directed = F))
   }
   edgeList = generateRandomBinaryTree(numLeaves, T)
 
@@ -593,13 +593,13 @@ generateRandomBinaryForest = function(numLeaves, depth) {
     }
   }
 
-  tree = graph.edgelist(edgeList, directed = F)
+  tree = igraph::graph.edgelist(edgeList, directed = F)
   edgesToDelete = edgeList[subForestIndicator == 0, ]
   if (!is.vector(edgesToDelete)) {
     edgesToDelete = as.vector(t(edgesToDelete))
   }
-  edgesToDelete = get.edge.ids(tree, edgesToDelete)
-  return(removeDeg2Nodes(delete.edges(tree, edgesToDelete)))
+  edgesToDelete = igraph::get.edge.ids(tree, edgesToDelete)
+  return(removeDeg2Nodes(igraph::delete.edges(tree, edgesToDelete)))
 }
 
 ###

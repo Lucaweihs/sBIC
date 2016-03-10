@@ -56,7 +56,7 @@ test_that("Randomized testing of the EM algorithm", {
     if (numLeaves == 1) {
       return(T)
     }
-    isDisconnected = (distances(forest) == Inf)[1:numLeaves, 1:numLeaves]
+    isDisconnected = (igraph::distances(forest) == Inf)[1:numLeaves, 1:numLeaves]
     for (i in 1:(numLeaves - 1)) {
       for (j in (i + 1):numLeaves) {
         if (isDisconnected[i, j] && covMat[i, j] != 0) {
@@ -71,7 +71,7 @@ test_that("Randomized testing of the EM algorithm", {
     set.seed(323231 + i)
     numLeaves = sample(1:7, 1)
     g = generateRandomBinaryForest(numLeaves, sample(0:(numLeaves - 1), 1))
-    edgeList = get.edgelist(g)
+    edgeList = igraph::get.edgelist(g)
     lfs = LatentForests(numLeaves, edgeList)
 
     trueModel = sample(1:(lfs$getNumModels()), 1)
@@ -208,34 +208,34 @@ test_that("forestToString works", {
   edgeList = matrix(c(1,6,2,6,6,7,7,8,3,7,4,8,5,8), ncol=2, byrow=T)
   numLeaves = 5
   expect_equal(
-    forestToString(graph.edgelist(edgeList, directed=F), numLeaves),
+    forestToString(igraph::graph.edgelist(edgeList, directed=F), numLeaves),
     "((1)(2)((3)((4)(5))))"
   )
 
   edgeList = matrix(c(1,6,2,6,7,8,3,7,4,8,5,8), ncol=2, byrow=T)
   numLeaves = 5
   expect_equal(
-    forestToString(graph.edgelist(edgeList, directed=F), numLeaves),
+    forestToString(igraph::graph.edgelist(edgeList, directed=F), numLeaves),
     "((1)(2))|((3)(4)(5))"
   )
 
   edgeList = matrix(c(1,6,2,6,4,8,5,8), ncol=2, byrow=T)
   numLeaves = 5
   expect_equal(
-    forestToString(graph.edgelist(edgeList, directed=F), numLeaves),
+    forestToString(igraph::graph.edgelist(edgeList, directed=F), numLeaves),
     "((1)(2))|(3)|((4)(5))"
   )
 
   edgeList = matrix(c(1,6,2,6), ncol=2, byrow=T)
   numLeaves = 5
   expect_equal(
-    forestToString(graph.edgelist(edgeList, directed=F), numLeaves),
+    forestToString(igraph::graph.edgelist(edgeList, directed=F), numLeaves),
     "((1)(2))|(3)|(4)|(5)"
   )
 
   numLeaves = 5
   expect_equal(
-    forestToString(graph.empty(5, directed=F), numLeaves),
+    forestToString(igraph::graph.empty(5, directed=F), numLeaves),
     "(1)|(2)|(3)|(4)|(5)"
   )
 
@@ -244,28 +244,28 @@ test_that("forestToString works", {
   edgeList = matrix(c(5,6,6,2,6,7,7,4,7,8,8,3,8,1), ncol=2, byrow=T)
   numLeaves = 5
   expect_equal(
-    forestToString(graph.edgelist(edgeList, directed=F), numLeaves),
+    forestToString(igraph::graph.edgelist(edgeList, directed=F), numLeaves),
     "((1)(((2)(5))(4))(3))"
   )
 
   edgeList = matrix(c(5,6,6,2,7,4,7,8,8,3,8,1), ncol=2, byrow=T)
   numLeaves = 5
   expect_equal(
-    forestToString(graph.edgelist(edgeList, directed=F), numLeaves),
+    forestToString(igraph::graph.edgelist(edgeList, directed=F), numLeaves),
     "((1)(3)(4))|((2)(5))"
   )
 
   edgeList = matrix(c(7,4,7,8,8,3,8,1), ncol=2, byrow=T)
   numLeaves = 5
   expect_equal(
-    forestToString(graph.edgelist(edgeList, directed=F), numLeaves),
+    forestToString(igraph::graph.edgelist(edgeList, directed=F), numLeaves),
     "((1)(3)(4))|(2)|(5)"
   )
 
   edgeList = matrix(c(8,3,8,1), ncol=2, byrow=T)
   numLeaves = 5
   expect_equal(
-    forestToString(graph.edgelist(edgeList, directed=F), numLeaves),
+    forestToString(igraph::graph.edgelist(edgeList, directed=F), numLeaves),
     "((1)(3))|(2)|(4)|(5)"
   )
 })
@@ -286,111 +286,109 @@ test_that("isSubPartition works", {
 test_that("forestFromTreeEdgesAndSupport works", {
   set.seed(123512)
   for(i in 1:10) {
-    g = graph.full(5, directed=F)
-    edgeList = get.edgelist(g)
+    g = igraph::graph.full(5, directed=F)
+    edgeList = igraph::get.edgelist(g)
     support = sample(c(0,1), nrow(edgeList), replace=T, prob=c(.8, 1))
     newG = forestFromTreeEdgesAndSupport(
       g,
       edgeList,
       support)
-    expect_equal(edgeList[support == 1,], get.edgelist(newG))
+    expect_equal(edgeList[support == 1,], igraph::get.edgelist(newG))
   }
 
-  g = graph.full(5, directed=F)
-  edgeList = get.edgelist(g)
+  g = igraph::graph.full(5, directed=F)
+  edgeList = igraph::get.edgelist(g)
   support = rep(0, nrow(edgeList))
   newG = forestFromTreeEdgesAndSupport(
     g,
     edgeList,
     support)
-  expect_equal(edgeList[support == 1,], get.edgelist(newG))
+  expect_equal(edgeList[support == 1,], igraph::get.edgelist(newG))
 
-  g = graph.full(0, directed=F)
-  edgeList = get.edgelist(g)
+  g = igraph::graph.full(0, directed=F)
+  edgeList = igraph::get.edgelist(g)
   support = rep(0, nrow(edgeList))
   newG = forestFromTreeEdgesAndSupport(
     g,
     edgeList,
     support)
-  expect_equal(edgeList[support == 1,], get.edgelist(newG))
+  expect_equal(edgeList[support == 1,], igraph::get.edgelist(newG))
 })
 
 test_that("edgesInRootedDAGOrder works", {
-  expect_true(isRootedDag(graph.edgelist(edgesInRootedDAGOrder(c(1,2,1,3,1,4), 1))))
-  expect_true(isRootedDag(graph.edgelist(edgesInRootedDAGOrder(c(1,2,1,3,1,4), 2))))
-  expect_true(isRootedDag(graph.edgelist(edgesInRootedDAGOrder(c(1,2,1,3,1,4), 3))))
-  expect_true(isRootedDag(graph.edgelist(edgesInRootedDAGOrder(c(1,2,1,3,1,4), 4))))
+  expect_true(isRootedDag(igraph::graph.edgelist(edgesInRootedDAGOrder(c(1,2,1,3,1,4), 1))))
+  expect_true(isRootedDag(igraph::graph.edgelist(edgesInRootedDAGOrder(c(1,2,1,3,1,4), 2))))
+  expect_true(isRootedDag(igraph::graph.edgelist(edgesInRootedDAGOrder(c(1,2,1,3,1,4), 3))))
+  expect_true(isRootedDag(igraph::graph.edgelist(edgesInRootedDAGOrder(c(1,2,1,3,1,4), 4))))
 
-  g = graph.edgelist(edgesInRootedDAGOrder(c(2,1,3,1,4,1), 4))
+  g = igraph::graph.edgelist(edgesInRootedDAGOrder(c(2,1,3,1,4,1), 4))
   expect_true(isRootedDag(g))
-  expect_true(length(incident(g, 4, "in")) == 0)
+  expect_true(length(igraph::incident(g, 4, "in")) == 0)
 
-  g = graph.edgelist(edgesInRootedDAGOrder(c(2,1,3,1,4,1,4,5,6,5)))
+  g = igraph::graph.edgelist(edgesInRootedDAGOrder(c(2,1,3,1,4,1,4,5,6,5)))
   expect_true(isRootedDag(g))
-  expect_true(length(incident(g, 6, "in")) == 0)
+  expect_true(length(igraph::incident(g, 6, "in")) == 0)
 })
 
 test_that("removeDeg2Nodes works", {
-  g1 = graph.edgelist(matrix(c(4,1,4,2,4,3), ncol=2, byrow=T), directed=F)
+  g1 = igraph::graph.edgelist(matrix(c(4,1,4,2,4,3), ncol=2, byrow=T), directed=F)
   g2 = removeDeg2Nodes(g1)
-  expect_true(all(degree(g2) == c(1,1,1,3)))
+  expect_true(all(igraph::degree(g2) == c(1,1,1,3)))
   expect_equal(forestToString(g1, 3), forestToString(g2, 3))
 
-  g1 = graph.edgelist(matrix(c(5,1,5,2,5,6,6,7,7,3,7,4), ncol=2, byrow=T), directed=F)
+  g1 = igraph::graph.edgelist(matrix(c(5,1,5,2,5,6,6,7,7,3,7,4), ncol=2, byrow=T), directed=F)
   g2 = removeDeg2Nodes(g1)
-  expect_true(all(degree(g2) == c(1,1,1,1,3,0,3)))
+  expect_true(all(igraph::degree(g2) == c(1,1,1,1,3,0,3)))
   expect_equal(forestToString(g1, 4), forestToString(g2, 4))
 
-  g1 = graph.edgelist(matrix(c(5,1,5,2,5,6,6,7,7,3,7,8,8,9,9,10,10,4), ncol=2, byrow=T), directed=F)
+  g1 = igraph::graph.edgelist(matrix(c(5,1,5,2,5,6,6,7,7,3,7,8,8,9,9,10,10,4), ncol=2, byrow=T), directed=F)
   g2 = removeDeg2Nodes(g1)
-  expect_true(all(degree(g2) == c(1,1,1,1,3,0,3,0,0,0)))
+  expect_true(all(igraph::degree(g2) == c(1,1,1,1,3,0,3,0,0,0)))
   expect_equal(forestToString(g1, 4), forestToString(g2, 4))
 
 })
 
 test_that("forestDistance works", {
-  f1 = graph.edgelist(matrix(c(1,5,5,2,5,6,6,3,6,4), ncol=2, byrow=T), directed=F)
-  f2 = graph.edgelist(matrix(c(1,5,5,2,6,3,6,4), ncol=2, byrow=T), directed=F)
+  f1 = igraph::graph.edgelist(matrix(c(1,5,5,2,5,6,6,3,6,4), ncol=2, byrow=T), directed=F)
+  f2 = igraph::graph.edgelist(matrix(c(1,5,5,2,6,3,6,4), ncol=2, byrow=T), directed=F)
   expect_equal(forestDistance(f1,f2,4), 1)
 
-  f1 = graph.edgelist(matrix(c(1,5,5,2,5,6,6,3,6,4), ncol=2, byrow=T), directed=F)
-  f2 = graph.edgelist(matrix(c(1,5,5,2,5,6,6,3,6,4), ncol=2, byrow=T), directed=F)
-  f2 = delete.edges(f2, c(1,2,3))
+  f1 = igraph::graph.edgelist(matrix(c(1,5,5,2,5,6,6,3,6,4), ncol=2, byrow=T), directed=F)
+  f2 = igraph::graph.edgelist(matrix(c(1,5,5,2,5,6,6,3,6,4), ncol=2, byrow=T), directed=F)
+  f2 = igraph::delete.edges(f2, c(1,2,3))
   expect_equal(forestDistance(f1,f2,4), 2)
 
-  f1 = graph.edgelist(matrix(c(1,5,5,2,5,6,6,3,6,4), ncol=2, byrow=T), directed=F)
-  f2 = graph.edgelist(matrix(c(1,5,5,2,5,6,6,3,6,4), ncol=2, byrow=T), directed=F)
-  f2 = delete.edges(f2, c(3,4,5))
+  f1 = igraph::graph.edgelist(matrix(c(1,5,5,2,5,6,6,3,6,4), ncol=2, byrow=T), directed=F)
+  f2 = igraph::graph.edgelist(matrix(c(1,5,5,2,5,6,6,3,6,4), ncol=2, byrow=T), directed=F)
+  f2 = igraph::delete.edges(f2, c(3,4,5))
   expect_equal(forestDistance(f2, f1, 4), -2)
 
-  f1 = graph.edgelist(matrix(c(1,5,5,2,5,6,6,3,6,4), ncol=2, byrow=T), directed=F)
-  f2 = graph.edgelist(matrix(c(1,5,5,2,5,6,6,3,6,4), ncol=2, byrow=T), directed=F)
-  f2 = delete.edges(f2, c(1,2,3,4,5))
+  f1 = igraph::graph.edgelist(matrix(c(1,5,5,2,5,6,6,3,6,4), ncol=2, byrow=T), directed=F)
+  f2 = igraph::graph.edgelist(matrix(c(1,5,5,2,5,6,6,3,6,4), ncol=2, byrow=T), directed=F)
+  f2 = igraph::delete.edges(f2, c(1,2,3,4,5))
   expect_equal(forestDistance(f1, f2, 4), 3)
 
-  f1 = graph.empty(12, directed=F)
-  f2 = graph.empty(12, directed=F)
+  f1 = igraph::graph.empty(12, directed=F)
+  f2 = igraph::graph.empty(12, directed=F)
   expect_equal(forestDistance(f2, f1, 4), 0)
 })
 
 test_that("forestDepth works", {
-  expect_equal(forestDepth(
-    graph.edgelist(matrix(c(4,1,4,2,4,3), ncol=2, byrow=T), directed=F),
-    3),
-    2
-  )
-  g = graph.edgelist(matrix(c(5,1,5,2,5,6,6,3,6,4), ncol=2, byrow=T), directed=F)
-  g = delete.edges(g, c(1,2,3))
-  expect_equal(forestDepth(
-    g,
-    4),
-    1
-  )
-  g = graph.edgelist(matrix(c(5,1,5,2,5,6,6,3,6,4), ncol=2, byrow=T), directed=F)
-  g = delete.edges(g, c(1))
-  expect_equal(forestDepth(
-    g,
-    4),
-    2
-  )
+  expect_equal(forestDepth(igraph::graph.edgelist(matrix(
+    c(4, 1, 4, 2, 4, 3), ncol = 2, byrow = T
+  ), directed = F),
+  3),
+  2)
+  g = igraph::graph.edgelist(matrix(c(5, 1, 5, 2, 5, 6, 6, 3, 6, 4), ncol =
+                                      2, byrow = T), directed = F)
+  g = igraph::delete.edges(g, c(1, 2, 3))
+  expect_equal(forestDepth(g,
+                           4),
+               1)
+  g = igraph::graph.edgelist(matrix(c(5, 1, 5, 2, 5, 6, 6, 3, 6, 4), ncol =
+                                      2, byrow = T), directed = F)
+  g = igraph::delete.edges(g, c(1))
+  expect_equal(forestDepth(g,
+                           4),
+               2)
 })

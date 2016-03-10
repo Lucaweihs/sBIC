@@ -12,8 +12,8 @@ setConstructorS3("LatentForests",
 
                    # Generate the partial order of the models
                    posetAsGraph = subModelsToDAG(subModels)
-                   topOrder <- topological.sort(posetAsGraph)
-                   tree <- graph.edgelist(E, directed = F)
+                   topOrder <- igraph::topological.sort(posetAsGraph)
+                   tree <- igraph::graph.edgelist(E, directed = F)
 
                    # Parameters
                    dimension = rep(0, numModels)
@@ -102,7 +102,7 @@ setMethodS3("parents", "LatentForests", function(this, model) {
   if (length(model) != 1) {
     throw("parents can only accept a single model.")
   }
-  return(as.numeric(neighbors(this$posetAsGraph, model, "in")))
+  return(as.numeric(igraph::neighbors(this$.posetAsGraph, model, "in")))
 }, appendVarArgs = F)
 
 setMethodS3("logLikeMle", "LatentForests", function(this, model) {
