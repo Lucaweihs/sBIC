@@ -40,7 +40,7 @@ sBIC = function(X, mod) {
   numModels = mod$getNumModels()
   topOrder = mod$getTopOrder()
   mod$setData(X)
-  n <- nrow(X)
+  n = mod$getNumSamples()
 
   # go through the vertices of g in the topological order and
   # find the list of reachable nodes (the set {j:j<i})

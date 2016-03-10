@@ -64,6 +64,10 @@ setMethodS3("getData", "FactorAnalyses", function(this) {
   return(this$.X)
 }, appendVarArgs = F)
 
+setMethodS3("getNumSamples", "FactorAnalyses", function(this) {
+  return(nrow(this$getData()))
+}, appendVarArgs = F)
+
 setMethodS3("parents", "FactorAnalyses", function(this, model) {
   if (model > this$getNumModels() ||
       model <= 0 || length(model) != 1) {

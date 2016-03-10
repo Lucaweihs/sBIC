@@ -22,6 +22,10 @@ setMethodS3("getData", "ModelPoset", function(this) {
   throw("getData is not yet implemented.")
 }, appendVarArgs = F)
 
+setMethodS3("getNumSamples", "ModelPoset", function(this) {
+  throw("getData is not yet implemented.")
+}, appendVarArgs = F)
+
 setMethodS3("parents", "ModelPoset", function(this, model) {
   throw("parents is not yet implemented.")
 }, appendVarArgs = F)

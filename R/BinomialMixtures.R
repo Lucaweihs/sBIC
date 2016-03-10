@@ -72,6 +72,10 @@ setMethodS3("getData", "BinomialMixtures", function(this) {
   return(this$.X)
 }, appendVarArgs = F)
 
+setMethodS3("getNumSamples", "BinomialMixtures", function(this) {
+  return(nrow(this$getData()))
+}, appendVarArgs = F)
+
 setMethodS3("parents", "BinomialMixtures", function(this, model) {
   if (model > this$getNumModels() ||
       model < 1 || length(model) != 1) {

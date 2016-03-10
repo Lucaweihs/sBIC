@@ -68,6 +68,10 @@ setMethodS3("getData", "LCAs", function(this) {
   return(this$.X)
 }, appendVarArgs = F)
 
+setMethodS3("getNumSamples", "LCAs", function(this) {
+  return(nrow(this$getData()))
+}, appendVarArgs = F)
+
 setMethodS3("parents", "LCAs", function(this, model) {
   if (model > this$getNumModels() ||
       model < 1 || length(model) != 1) {
@@ -81,6 +85,14 @@ setMethodS3("parents", "LCAs", function(this, model) {
 }, appendVarArgs = F)
 
 setMethodS3("logLikeMle", "LCAs", function(this, model) {
+  # First do a messed up hack to fix the poLCA package if we haven't already
+  if (is.null(LCAs$poLCAFixed)) {
+    LCAs$poLCAFixed = T
+    fixPoLCA = ".Csave = .C; .C = function(...) { a = list(...); a$PACKAGE='poLCA'; do.call(.Csave, a)};"
+    trace("poLCA.probHat.C", tracer = parse(text = fixPoLCA), where = poLCA, at = 1, print = F)
+    trace("poLCA.postClass.C", tracer = parse(text = fixPoLCA), where = poLCA, at = 1, print = F)
+    trace("poLCA.ylik.C", tracer = parse(text = fixPoLCA), where = poLCA, at = 1, print = F)
+  }
   if (!is.na(this$.logLikes[model])) {
     return(this$.logLikes[model])
   }
