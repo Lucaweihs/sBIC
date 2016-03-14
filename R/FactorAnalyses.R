@@ -1,3 +1,19 @@
+#' Construct a poset of factor analysis models.
+#'
+#' Creates an object representing a collection of factor analysis models which
+#' have a natural ordering upon them.
+#'
+#' @name FactorAnalyses
+#' @usage FactorAnalyses(numCovariates = 1, maxNumFactors = 0)
+#' @export FactorAnalyses
+#'
+#' @param numCovariates the number of covariates in all of the models.
+#' @param maxNumFactors the maximum number of factors allowed in a model, will
+#'                      create a hierarchy of all models with less than or equal
+#'                      to this number.
+#'
+#' @return An object representing the collection.
+NULL
 setConstructorS3("FactorAnalyses",
                  function(numCovariates = 1, maxNumFactors = 0) {
                    numModels = maxNumFactors + 1

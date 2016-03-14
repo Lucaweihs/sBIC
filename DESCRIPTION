@@ -15,7 +15,8 @@ Imports:
     Rcpp (>= 0.12.3),
     combinat,
     flexmix,
-    poLCA
+    poLCA,
+    mclust
 LinkingTo: Rcpp
 Suggets:
     testthat, mvtnorm

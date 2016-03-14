@@ -36,6 +36,34 @@
 # Need to find a better way to solve this issue.
 # list of parents for each edge
 
+#' Compute the sBIC.
+#'
+#' Computes the sBIC for a given collection of models
+#'
+#' @export
+#'
+#' @param X the data for which the maximum likelihood estimates will be computed
+#'          for the given collection of models. To see how this data should be
+#'          formatted check the documentation for setData.YourModelName.
+#' @param mod an object representing a poset of models of the same type, e.g.
+#'            a collection of binomial mixture models. The currently implemented
+#'            models include:
+#'            \itemize{
+#'              \item{Binomial mixtures}{see ?BinomialMixtures}
+#'              \item{Latent class analysis}{see ?LCAs}
+#'              \item{Latent gaussian forests}{see LatentForests}
+#'              \item{Reduced rank regression}{see ReducedRankRegressions}
+#'              \item{1-dimensional gaussian mixtures}{see GaussianMixtures}
+#'            }
+#'
+#'@return A named list containing the components
+#'         \itemize{
+#'          \item{logLike}{the computed MLE log-likelihoods for each model.}
+#'          \item{sBIC}{the sBIC score for each model.}
+#'          \item{BIC}{the usual BIC score for each model.}
+#'          \item{modelPoset}{the input model poset mod.}
+#'         }
+#'
 sBIC = function(X, mod) {
   numModels = mod$getNumModels()
   topOrder = mod$getTopOrder()
@@ -70,17 +98,16 @@ sBIC = function(X, mod) {
   logL <-  vector(mode = "list", length = numModels)
   logLii <- rep(0, numModels)
   Lij <-  vector(mode = "list", length = numModels)
-  logLij <-  vector(mode = "list", length = numModels)
-  loglike <- rep(0, numModels)
+  logLike <- rep(0, numModels)
 
   for (i in topOrder) {
-    loglike[i] <- mod$logLikeMle(i)
+    logLike[i] <- mod$logLikeMle(i)
     lf <- mod$learnCoef(i, i)
-    logLii[i] <- loglike[i] - lf$lambda * log(n)
+    logLii[i] <- logLike[i] - lf$lambda * log(n)
     for (j in reach[[i]]) {
       lf <- mod$learnCoef(i, j)
       logL[[i]][j] <-
-        loglike[i] - lf$lambda * log(n) + (lf$m - 1) * log(log(n))
+        logLike[i] - lf$lambda * log(n) + (lf$m - 1) * log(log(n))
     }
   }
   mn = max(c(unlist(logL), logLii), na.rm = TRUE) # note na.rm=TRUE
@@ -106,12 +133,16 @@ sBIC = function(X, mod) {
     }
   }
 
-  L = pmax(L, 0)
+  if (any(L < 0)) {
+    warning(paste("Negative probabilities found, likely due to rounding",
+            "errors, rounding these values to 0."))
+    L = pmax(L, 0)
+  }
+
   results = list()
-  results$logL = log(L) + mn
-  results$L = L
-  results$loglike = loglike
-  results$regBIC = loglike - (mod$getDimension(1:numModels) / 2) * log(n)
+  results$logLike = logLike
+  results$sBIC = log(L) + mn
+  results$BIC = logLike - (mod$getDimension(1:numModels) / 2) * log(n)
   results$modelPoset = mod
   return(results)
 }

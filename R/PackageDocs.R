@@ -1,9 +1,11 @@
 #' sBIC package documentation.
 #'
-#' sBIC 
-# 
-#'@importFrom Rcpp evalCpp
-#'@useDynLib sBIC
+#' sBIC
+#'
+#' @name sBIC-package
+#'
+#' @importFrom Rcpp evalCpp
+#' @useDynLib sBIC
 #'
 "_PACKAGE"
 #> [1] "_PACKAGE"

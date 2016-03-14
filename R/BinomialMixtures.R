@@ -1,6 +1,22 @@
+#' Construct a poset of binomial mixture models.
+#'
+#' Creates an object representing a collection of binomial mixture models which
+#' have a natural ordering upon them.
+#'
+#' @name BinomialMixtures
+#' @usage BinomialMixtures(numCovariates = 1, maxNumFactors = 0)
+#' @export BinomialMixtures
+#'
+#' @param numCovariates the number of covariates in all of the models.
+#' @param maxNumFactors the maximum number of factors allowed in a model, will
+#'                      create a hierarchy of all models with less than or equal
+#'                      to this number.
+#'
+#' @return An object representing the collection.
+NULL
 setConstructorS3("BinomialMixtures",
                  function(maxNumComponents = 1, rousseau = F) {
-                   numModels = maxNumComponents
+                   numModels =  maxNumComponents
                    prior = rep(1, numModels)
 
                    # Generate the partial order of the models
@@ -34,18 +50,38 @@ setConstructorS3("BinomialMixtures",
                    )
                  })
 
+#' @rdname   getTopOrder
+#' @name     getTopOrder.BinomialMixtures
+#' @export   getTopOrder.BinomialMixtures
 setMethodS3("getTopOrder", "BinomialMixtures", function(this) {
   return(this$.topOrder)
 }, appendVarArgs = F)
 
+#' @rdname   getPrior
+#' @name     getPrior.BinomialMixtures
+#' @export   getPrior.BinomialMixtures
 setMethodS3("getPrior", "BinomialMixtures", function(this) {
   return(this$.prior)
 }, appendVarArgs = F)
 
+#' @rdname   getNumModels
+#' @name     getNumModels.BinomialMixtures
+#' @export   getNumModels.BinomialMixtures
 setMethodS3("getNumModels", "BinomialMixtures", function(this) {
   return(this$.numModels)
 }, appendVarArgs = F)
 
+#' Set data for the binomial mixture models.
+#'
+#' Sets the data to be used by the binomial mixture models when computing MLEs.
+#'
+#' @name     setData.BinomialMixtures
+#' @export   setData.BinomialMixtures
+#'
+#' @param this the BinomialMixtures object.
+#' @param X the data to be set, should be a numeric vector of non-negative
+#'        integers.
+NULL
 setMethodS3("setData", "BinomialMixtures", function(this, X) {
   this$.X = X
 
@@ -65,6 +101,9 @@ setMethodS3("setData", "BinomialMixtures", function(this, X) {
   }
 }, appendVarArgs = F)
 
+#' @rdname   getData
+#' @name     getData.BinomialMixtures
+#' @export   getData.BinomialMixtures
 setMethodS3("getData", "BinomialMixtures", function(this) {
   if (is.null(this$.X)) {
     throw("Data has not yet been set")
@@ -72,10 +111,16 @@ setMethodS3("getData", "BinomialMixtures", function(this) {
   return(this$.X)
 }, appendVarArgs = F)
 
+#' @rdname   getNumSamples
+#' @name     getNumSamples.BinomialMixtures
+#' @export   getNumSamples.BinomialMixtures
 setMethodS3("getNumSamples", "BinomialMixtures", function(this) {
   return(nrow(this$getData()))
 }, appendVarArgs = F)
 
+#' @rdname   parents
+#' @name     parents.BinomialMixtures
+#' @export   parents.BinomialMixtures
 setMethodS3("parents", "BinomialMixtures", function(this, model) {
   if (model > this$getNumModels() ||
       model < 1 || length(model) != 1) {
@@ -88,10 +133,16 @@ setMethodS3("parents", "BinomialMixtures", function(this, model) {
   }
 }, appendVarArgs = F)
 
+#' @rdname   logLikeMle
+#' @name     logLikeMle.BinomialMixtures
+#' @export   logLikeMle.BinomialMixtures
 setMethodS3("logLikeMle", "BinomialMixtures", function(this, model) {
   return(this$.logLikes[model])
 }, appendVarArgs = F)
 
+#' @rdname   learnCoef
+#' @name     learnCoef.BinomialMixtures
+#' @export   learnCoef.BinomialMixtures
 setMethodS3("learnCoef", "BinomialMixtures", function(this, superModel, subModel) {
   if (!this$.rousseau) {
     lambda = 1 / 2 * ((superModel - 1) + subModel)
@@ -104,6 +155,9 @@ setMethodS3("learnCoef", "BinomialMixtures", function(this, superModel, subModel
   return(learn.coeff)
 }, appendVarArgs = F)
 
+#' @rdname   getDimension
+#' @name     getDimension.BinomialMixtures
+#' @export   getDimension.BinomialMixtures
 setMethodS3("getDimension", "BinomialMixtures", function(this, model) {
   return(this$.dimension[model])
 }, appendVarArgs = F)
