@@ -683,14 +683,14 @@ generateOneStepSubForestSupports = function(support, edgeList, numLeaves, numVer
                                length(support))
   edgesToRemove = which(support != 0)
 
-  seenSupports = hash()
+  seenSupports = hash::hash()
   k = 1
   for (i in 1:numPossibleSubForests) {
     newSupport = support
     newSupport[edgesToRemove[i]] = 0
     newSupport = pruneEdges(newSupport, edgeList, numLeaves, numVertices)
     newSupportString = paste(newSupport, collapse = "")
-    if (!has.key(newSupportString, seenSupports)) {
+    if (!hash::has.key(newSupportString, seenSupports)) {
       seenSupports[[newSupportString]] = 1
       subForestSupports[k,] = newSupport
       k = k + 1
