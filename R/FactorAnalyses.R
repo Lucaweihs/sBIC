@@ -49,22 +49,58 @@ setConstructorS3("FactorAnalyses",
                    )
                  })
 
+#' @rdname   getTopOrder
+#' @name     getTopOrder.FactorAnalyses
+#' @export   getTopOrder.FactorAnalyses
 setMethodS3("getTopOrder", "FactorAnalyses", function(this) {
   return(this$.topOrder)
 }, appendVarArgs = F)
 
+#' @rdname   getPrior
+#' @name     getPrior.FactorAnalyses
+#' @export   getPrior.FactorAnalyses
 setMethodS3("getPrior", "FactorAnalyses", function(this) {
   return(this$.prior)
 }, appendVarArgs = F)
 
+#' @rdname   getNumModels
+#' @name     getNumModels.FactorAnalyses
+#' @export   getNumModels.FactorAnalyses
 setMethodS3("getNumModels", "FactorAnalyses", function(this) {
   return(this$.numModels)
 }, appendVarArgs = F)
 
+#' Number of factors for a model.
+#'
+#' Given a model number returns the number of factors in that model
+#'
+#' @name     getNumFactorsForModel
+#' @export   getNumFactorsForModel
+#'
+#' @param this the FactorAnalyses object.
+#' @param model the model number.
+NULL
+#' @rdname   getNumFactorsForModel
+#' @name     getNumFactorsForModel.FactorAnalyses
+#' @export   getNumFactorsForModel.FactorAnalyses
 setMethodS3("getNumFactorsForModel", "FactorAnalyses", function(this, model) {
+  if (model < 1 || model > this$getNumModels()) {
+    throw("Invalid model number.")
+  }
   return(model - 1)
 }, appendVarArgs = F)
 
+#' Set data for the factor analysis models.
+#'
+#' Sets the data to be used by the factor analysis models when computing MLEs.
+#'
+#' @name     setData.FactorAnalyses
+#' @export   setData.FactorAnalyses
+#'
+#' @param this the FactorAnalyses object.
+#' @param X the data to be set, should matrix of observed responses.
+#'
+NULL
 setMethodS3("setData", "FactorAnalyses", function(this, X) {
   if (ncol(X) != this$.numCovariates) {
     throw("Number of covariates in model does not match input matrix.")
@@ -73,6 +109,9 @@ setMethodS3("setData", "FactorAnalyses", function(this, X) {
   this$.logLikes = rep(NA, this$getNumModels())
 }, appendVarArgs = F)
 
+#' @rdname   getData
+#' @name     getData.FactorAnalyses
+#' @export   getData.FactorAnalyses
 setMethodS3("getData", "FactorAnalyses", function(this) {
   if (is.null(this$.X)) {
     throw("Data has not yet been set")
@@ -80,10 +119,16 @@ setMethodS3("getData", "FactorAnalyses", function(this) {
   return(this$.X)
 }, appendVarArgs = F)
 
+#' @rdname   getNumSamples
+#' @name     getNumSamples.FactorAnalyses
+#' @export   getNumSamples.FactorAnalyses
 setMethodS3("getNumSamples", "FactorAnalyses", function(this) {
   return(nrow(this$getData()))
 }, appendVarArgs = F)
 
+#' @rdname   parents
+#' @name     parents.FactorAnalyses
+#' @export   parents.FactorAnalyses
 setMethodS3("parents", "FactorAnalyses", function(this, model) {
   if (model > this$getNumModels() ||
       model <= 0 || length(model) != 1) {
@@ -96,6 +141,9 @@ setMethodS3("parents", "FactorAnalyses", function(this, model) {
   }
 }, appendVarArgs = F)
 
+#' @rdname   logLikeMle
+#' @name     logLikeMle.FactorAnalyses
+#' @export   logLikeMle.FactorAnalyses
 setMethodS3("logLikeMle", "FactorAnalyses", function(this, model, starts = 1) {
   if (!is.na(this$.logLikes[model])) {
     return(this$.logLikes[model])
@@ -117,6 +165,9 @@ setMethodS3("logLikeMle", "FactorAnalyses", function(this, model, starts = 1) {
   return(this$.logLikes[model])
 }, appendVarArgs = F)
 
+#' @rdname   learnCoef
+#' @name     learnCoef.FactorAnalyses
+#' @export   learnCoef.FactorAnalyses
 setMethodS3("learnCoef", "FactorAnalyses", function(this, superModel, subModel) {
   m = this$.numCovariates
   k = this$getNumFactorsForModel(superModel)
@@ -124,6 +175,9 @@ setMethodS3("learnCoef", "FactorAnalyses", function(this, superModel, subModel) 
   return( list(lambda = 1 / 4 * ((k + 2) * m + l * (m - k + 1)), m = 1))
 }, appendVarArgs = F)
 
+#' @rdname   getDimension
+#' @name     getDimension.FactorAnalyses
+#' @export   getDimension.FactorAnalyses
 setMethodS3("getDimension", "FactorAnalyses", function(this, model) {
   return(this$.dimension[model])
 }, appendVarArgs = F)

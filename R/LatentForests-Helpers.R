@@ -1,3 +1,6 @@
+# These are a collection of helper functions for the LatentForests class. These
+# are still in need of much better documentation.
+
 toEdgeListMat = function(edgeListVec) {
   if (is.matrix(edgeListVec)) {
     return(edgeListVec)
@@ -528,6 +531,65 @@ treeToString = function(root,
     print("Error: input tree is not bivariate.")
     return(F)
   }
+}
+
+#' Generate all non-isomorphic binary trees.
+#'
+#' Generates all non-isomorphic binary trees with a given number of
+#' leaves where leaves are considered labeled and inner nodes are
+#' unlabeled. Takes as argument the number of leaves for which to produce the
+#' binary trees and returns a list of (n-1)x2 matrices where each row
+#' corresponds to a edge in the tree. These edge matrices will be in 'directed
+#' order,' i.e. will be so that if they are considered to be directed edges
+#' then the resulting graph will have exactly one source.
+#'
+#' @export
+#'
+#' @param numLeaves the number of leaves
+generateAllBinaryTrees = function(numLeaves) {
+  if (numLeaves <= 1) {
+    print("Number of leaves must be greater than or equal to 2")
+    return(list())
+  }
+
+  edgeMatrix = t(c(1, 2))
+  n = 2
+  lastGraphList = list(edgeMatrix)
+  while (n < numLeaves) {
+    curGraphList = list()
+    for (edgeMatrix in lastGraphList) {
+      #increment all non-leaf vertices by 1 so that there is
+      # room for the next leaf
+      maxVertex = max(edgeMatrix)
+      edgeMatrix = edgeMatrix + (edgeMatrix > n)
+      for (i in 1:dim(edgeMatrix)[1]) {
+        newEdges = matrix(
+          c(edgeMatrix[i, 1], maxVertex + 2, edgeMatrix[i, 2], maxVertex + 2),
+          ncol = 2,
+          byrow = T
+        )
+        newEdgeMatrix = edgeMatrix
+        newEdgeMatrix[i, ] = c(maxVertex + 2, n + 1)
+        newEdgeMatrix = rbind(newEdgeMatrix, newEdges)
+        g = igraph::graph.edgelist(newEdgeMatrix, directed = F)
+        dfsResults = igraph::graph.dfs(g, max(newEdgeMatrix), father = T)
+
+        newEdgeMatrix = newEdgeMatrix * 0
+
+        for (j in 1:(length(dfsResults$order) - 1)) {
+          node = dfsResults$order[j + 1]
+          father = dfsResults$father[node]
+          newEdgeMatrix[j, 1] = father
+          newEdgeMatrix[j, 2] = node
+        }
+        curGraphList = c(curGraphList, list(newEdgeMatrix))
+      }
+    }
+    lastGraphList = curGraphList
+    n = n + 1
+  }
+
+  return(lastGraphList)
 }
 
 generateRandomBinaryTree = function(numLeaves, directedOrdering = F) {

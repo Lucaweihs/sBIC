@@ -1,3 +1,21 @@
+#' Construct a poset of gaussian latent forest models.
+#'
+#' Creates an object representing a collection of gaussian latent forest models
+#' which have a natural ordering upon them. In particular, we consider the
+#' collection of all latent forests that are subforests of an input forest.
+#'
+#' @name LatentForests
+#' @usage LatentForests(numLeaves = 0, E = matrix(numeric(0), ncol = 2))
+#' @export LatentForests
+#'
+#' @param numLeaves the number of observed variables (these are the leaves of
+#'                  the model)
+#' @param E a 2xm matrix of edges corresponding to the edges of the 'super
+#'          forest' f for which we compute all subforests. f should have nodes
+#'          1:numLeaves as leaves of the forest with no internal nodes as leaves.
+#'
+#' @return An object representing the collection.
+NULL
 setConstructorS3("LatentForests",
                  function(numLeaves = 0,
                           E = matrix(numeric(0), ncol = 2)) {
@@ -37,34 +55,231 @@ setConstructorS3("LatentForests",
                    )
                  })
 
+#' @rdname   getTopOrder
+#' @name     getTopOrder.LatentForests
+#' @export   getTopOrder.LatentForests
 setMethodS3("getTopOrder", "LatentForests", function(this) {
   return(this$.topOrder)
 }, appendVarArgs = F)
 
+#' @rdname   getPrior
+#' @name     getPrior.LatentForests
+#' @export   getPrior.LatentForests
 setMethodS3("getPrior", "LatentForests", function(this) {
   return(this$.prior)
 }, appendVarArgs = F)
 
+#' @rdname   getNumModels
+#' @name     getNumModels.LatentForests
+#' @export   getNumModels.LatentForests
 setMethodS3("getNumModels", "LatentForests", function(this) {
   return(this$.numModels)
 }, appendVarArgs = F)
 
-setMethodS3("getNumLeaves", "LatentForests", function(this) {
-  return(this$.numLeaves)
+#' Set data for the latent forest models.
+#'
+#' Sets the data to be used by the latent forest models models for computing
+#' MLEs.
+#'
+#' @name     setData.LatentForests
+#' @export   setData.LatentForests
+#'
+#' @param this the LatentForests object.
+#' @param X the data to be set, should matrix of observed values where each row
+#'        corresponds to a single sample.
+#'
+NULL
+setMethodS3("setData", "LatentForests", function(this, X) {
+  this$.X = X
+  this$.sampleCovMat = t(X) %*% X
 }, appendVarArgs = F)
 
+#' @rdname   getData
+#' @name     getData.LatentForests
+#' @export   getData.LatentForests
+setMethodS3("getData", "LatentForests", function(this) {
+  if (is.null(this$.X)) {
+    throw("No data has been set for models.")
+  }
+  return(this$.X)
+}, appendVarArgs = F)
+
+#' @rdname   getNumSamples
+#' @name     getNumSamples.LatentForests
+#' @export   getNumSamples.LatentForests
 setMethodS3("getNumSamples", "LatentForests", function(this) {
   return(nrow(this$getData()))
 }, appendVarArgs = F)
 
+#' @rdname   parents
+#' @name     parents.LatentForests
+#' @export   parents.LatentForests
+setMethodS3("parents", "LatentForests", function(this, model) {
+  if (length(model) != 1) {
+    throw("parents can only accept a single model.")
+  }
+  return(as.numeric(igraph::neighbors(this$.posetAsGraph, model, "in")))
+}, appendVarArgs = F)
+
+#' @rdname   logLikeMle
+#' @name     logLikeMle.LatentForests
+#' @export   logLikeMle.LatentForests
+setMethodS3("logLikeMle", "LatentForests", function(this, model) {
+  return((this$emMain(model, starts = 5, maxIter = 1000, tol = 1e-4))$logLike)
+}, appendVarArgs = F)
+
+#' @rdname   learnCoef
+#' @name     learnCoef.LatentForests
+#' @export   learnCoef.LatentForests
+setMethodS3("learnCoef", "LatentForests", function(this, superModel, subModel) {
+  support = this$getSupport(superModel)
+  subSupport = this$getSupport(subModel)
+  E = this$getAllEdges()
+  numLeaves = this$getNumLeaves()
+
+  w.sum = 0
+  m = 1
+  if (!all(support == subSupport)) {
+    # Compute w sum (primary lambda component)
+    subEdges = E[subSupport == 1, , drop = F]
+    qForestNodes = union(subEdges, 1:numLeaves)
+
+    for (it in 1:length(support)) {
+      if (support[it] - subSupport[it] == 1) {
+        w.sum = w.sum + sum(E[it, ] %in% qForestNodes)
+      }
+    }
+
+    # Compute multiplicity
+    nodeDegsBig = table(E[support == 1, , drop = F])
+    deg2NodesBig = as.numeric(names(nodeDegsBig[nodeDegsBig == 2]))
+    m = 1 + length(setdiff(deg2NodesBig, qForestNodes))
+  }
+
+  lambda = this$getDimension(subModel) / 2 + w.sum / 4
+
+  return(list(lambda = lambda, m = m))
+}, appendVarArgs = F)
+
+#' @rdname   getDimension
+#' @name     getDimension.LatentForests
+#' @export   getDimension.LatentForests
+setMethodS3("getDimension", "LatentForests", function(this, model) {
+  return(this$.dimension[model])
+}, appendVarArgs = F)
+
+#' Sampling covariance matrix.
+#'
+#' Returns the sampling covariance matrix for the data set with setData().
+#'
+#' @name     getSamplingCovMat
+#' @export   getSamplingCovMat
+#'
+#' @param this the LatentForests object.
+NULL
+#' @rdname   getSamplingCovMat
+#' @name     getSamplingCovMat.LatentForests
+#' @export   getSamplingCovMat.LatentForests
+setMethodS3("getSamplingCovMat", "LatentForests", function(this) {
+  if (is.null(this$.X)) {
+    throw("No data has been set for models.")
+  }
+  return(this$.sampleCovMat)
+}, appendVarArgs = F, private = T)
+
+#' Get support for a given model.
+#'
+#' Given a model number returns the support of the model. Let E by the matrix
+#' of edges returned by this$getAllEdges(), the support is represented by a
+#' 0-1 vector v where the ith entry of v is 1 if the ith edge in E is in the
+#' model and is 0 otherwise.
+#'
+#' @name     getSupport
+#' @export   getSupport
+#'
+#' @param this the LatentForests object.
+#' @param model the model number.
+NULL
+#' @rdname   getSupport
+#' @name     getSupport.LatentForests
+#' @export   getSupport.LatentForests
+setMethodS3("getSupport", "LatentForests", function(this, model) {
+  return(this$.subModels[model, ])
+}, appendVarArgs = F)
+
+#' Edges representing the largest model.
+#'
+#' When creating the LatentForests object a set of edges representing the
+#' largest model is required. This function returns those edges as a matrix.
+#' This matrix will have edges in the same order but may have flipped which
+#' node comes first in any particular edge. That is if edge (1,4) was the
+#' 5th edge then it will remain the 5th edge but may now be of the form (4,1).
+#'
+#' @name     getAllEdges
+#' @export   getAllEdges
+#'
+#' @param this the LatentForests object.
+#' @param model the model number.
+NULL
+#' @rdname   getAllEdges
+#' @name     getAllEdges.LatentForests
+#' @export   getAllEdges.LatentForests
+setMethodS3("getAllEdges", "LatentForests", function(this, model) {
+  return(this$.E)
+}, appendVarArgs = F)
+
+#' Get number of leaves.
+#'
+#' Gets the number of leaves in the latent forest models.
+#'
+#' @name     getNumLeaves
+#' @export   getNumLeaves
+#'
+#' @param this the LatentForests object.
+NULL
+#' @rdname   getNumLeaves
+#' @name     getNumLeaves.LatentForests
+#' @export   getNumLeaves.LatentForests
+setMethodS3("getNumLeaves", "LatentForests", function(this) {
+  return(this$.numLeaves)
+}, appendVarArgs = F)
+
+#' Maximum number of vertices.
+#'
+#' A private method for LatentForests that computes the number
+#' of vertices a tree with this$getNumLeaves() number of leaves has.
+#'
+#' @name     getNumVertices
+#' @export   getNumVertices
+#'
+#' @param this the LatentForests object.
+NULL
+#' @rdname   getNumVertices
+#' @name     getNumVertices.LatentForests
+#' @export   getNumVertices.LatentForests
 setMethodS3("getNumVertices", "LatentForests", function(this) {
   numLeaves = this$getNumLeaves()
   if (numLeaves == 0) {
     return(0)
   }
   return(max(2 * this$getNumLeaves() - 2, 1))
-}, appendVarArgs = F)
+}, appendVarArgs = F, private = T)
 
+#' Get model with the given support.
+#'
+#' Returns the model number corresponding to a given 0-1 vector representing
+#' the support of the model. This support should corresponds to the edges
+#' returned by this$getAllEdges()
+#'
+#' @name     getModelWithSupport
+#' @export   getModelWithSupport
+#'
+#' @param this the LatentForests object.
+#' @param support the 0-1 vector representing the support.
+NULL
+#' @rdname   getModelWithSupport
+#' @name     getModelWithSupport.LatentForests
+#' @export   getModelWithSupport.LatentForests
 setMethodS3("getModelWithSupport", "LatentForests", function(this, support) {
   if (length(support) != nrow(this$getAllEdges())) {
     throw("Invalid support length.")
@@ -75,48 +290,21 @@ setMethodS3("getModelWithSupport", "LatentForests", function(this, support) {
   return(which(this$.subModelsAsStrings == paste(support, collapse = "")))
 }, appendVarArgs = F)
 
-setMethodS3("getDimension", "LatentForests", function(this, model) {
-  return(this$.dimension[model])
-}, appendVarArgs = F)
-
-setMethodS3("setData", "LatentForests", function(this, X) {
-  this$.X = X
-  this$.sampleCovMat = t(X) %*% X
-}, appendVarArgs = F)
-
-setMethodS3("getData", "LatentForests", function(this) {
-  if (is.null(this$.X)) {
-    throw("No data has been set for models.")
-  }
-  return(this$.X)
-}, appendVarArgs = F)
-
-setMethodS3("getSamplingCovMat", "LatentForests", function(this) {
-  if (is.null(this$.X)) {
-    throw("No data has been set for models.")
-  }
-  return(this$.sampleCovMat)
-}, appendVarArgs = F)
-
-setMethodS3("parents", "LatentForests", function(this, model) {
-  if (length(model) != 1) {
-    throw("parents can only accept a single model.")
-  }
-  return(as.numeric(igraph::neighbors(this$.posetAsGraph, model, "in")))
-}, appendVarArgs = F)
-
-setMethodS3("logLikeMle", "LatentForests", function(this, model) {
-  return((this$emMain(model, starts = 5, maxIter = 1000, tol = 1e-4))$logLike)
-}, appendVarArgs = F)
-
-setMethodS3("getSupport", "LatentForests", function(this, model) {
-  return(this$.subModels[model, ])
-}, appendVarArgs = F)
-
-setMethodS3("getAllEdges", "LatentForests", function(this, model) {
-  return(this$.E)
-}, appendVarArgs = F)
-
+#' Multivariate gaussian log-likelihood.
+#'
+#' A private method that returns the log-likelihood of the data set with
+#' setData() under a multivariate gaussian model with a given covariance matrix
+#' and assumed 0 means.
+#'
+#' @name     logLike
+#' @export   logLike
+#'
+#' @param this the LatentForests object.
+#' @param covMat a covariance matrix.
+NULL
+#' @rdname   logLike
+#' @name     logLike.LatentForests
+#' @export   logLike.LatentForests
 setMethodS3("logLike", "LatentForests", function(this, covMat) {
   n = this$getNumSamples()
   tXX = this$getSamplingCovMat()
@@ -125,8 +313,25 @@ setMethodS3("logLike", "LatentForests", function(this, covMat) {
     - n / 2 * as.numeric(determinant(covMat)$modulus)
     - (1 / 2) * sum(tXX * chol2inv(chol(covMat)))
   )
-}, appendVarArgs = F)
+}, appendVarArgs = F, private = T)
 
+#' EM-algorithm for latent forests.
+#'
+#' Uses the EM-algorithm (with multiple random restarts) to compute an
+#' approximate maximum likelihood estimate for a given latent forest model.
+#'
+#' @name     emMain
+#' @export   emMain
+#'
+#' @param this the LatentForests object.
+#' @param model the model for which to compute the approximate MLE.
+#' @param starts the number of random restarts.
+#' @param maxIter the maximum number of iterations to complete in the algorithm.
+#' @param tol the tolerance to use a convergence criterion.
+NULL
+#' @rdname   emMain
+#' @name     emMain.LatentForests
+#' @export   emMain.LatentForests
 setMethodS3("emMain", "LatentForests", function(this, model, starts = 5,
                                                 maxIter = 1000, tol = 1e-4) {
   bestLogLike <- -Inf
@@ -177,10 +382,22 @@ setMethodS3("emMain", "LatentForests", function(this, model, starts = 5,
   return(list(logLike = bestLogLike, covMat = bestCovMat))
 }, appendVarArgs = F)
 
+#' Create a covariance matrix.
+#'
+#' Creates a covariance matrix for the latent forest model where edge
+#' correlations are given. Here edge correlations are given as a vector and
+#' correspond (in order) to the edges returned by this$getAllEdges().
+#'
+#' @name     getCovMat
+#' @export   getCovMat
+#'
+#' @param this the LatentForests object.
+#' @param edgeCorrelations the edge correlations in a numeric vector.
+NULL
+#' @rdname   getCovMat
+#' @name     getCovMat.LatentForests
+#' @export   getCovMat.LatentForests
 setMethodS3("getCovMat", "LatentForests", function(this, edgeCorrelations) {
-  # for given edge correlations it output the full correlation matrix
-  # (!!) this works only if edges were provided so that
-  # T forms a rooted tree (we use the DAG parametrization)
   v = this$getNumVertices()
   E = this$getAllEdges()
 
@@ -201,6 +418,21 @@ setMethodS3("getCovMat", "LatentForests", function(this, edgeCorrelations) {
   return(t(M) %*% U %*% M)
 }, appendVarArgs = F)
 
+#' One EM-iteration.
+#'
+#' A private method that performs a single iteration of the EM-algorithm, this
+#' is a helper function for emMain method.
+#'
+#' @name     emSteps
+#' @export   emSteps
+#'
+#' @param this the LatentForests object.
+#' @param support the support of the model.
+#' @param S the current covariance matrix.
+NULL
+#' @rdname   emSteps
+#' @name     emSteps.LatentForests
+#' @export   emSteps.LatentForests
 setMethodS3("emSteps", "LatentForests", function(this, support, S) {
   tXX = this$getSamplingCovMat()
   E = this$getAllEdges()
@@ -228,36 +460,4 @@ setMethodS3("emSteps", "LatentForests", function(this, support, S) {
     }
   }
   return(this$getCovMat(edgeCorrelations))
-}, appendVarArgs = F)
-
-# This function must compute the learning coefficient of subModel in superModel
-# Returns a named list with components lambda and m
-setMethodS3("learnCoef", "LatentForests", function(this, superModel, subModel) {
-  support = this$getSupport(superModel)
-  subSupport = this$getSupport(subModel)
-  E = this$getAllEdges()
-  numLeaves = this$getNumLeaves()
-
-  w.sum = 0
-  m = 1
-  if (!all(support == subSupport)) {
-    # Compute w sum (primary lambda component)
-    subEdges = E[subSupport == 1, , drop = F]
-    qForestNodes = union(subEdges, 1:numLeaves)
-
-    for (it in 1:length(support)) {
-      if (support[it] - subSupport[it] == 1) {
-        w.sum = w.sum + sum(E[it, ] %in% qForestNodes)
-      }
-    }
-
-    # Compute multiplicity
-    nodeDegsBig = table(E[support == 1, , drop = F])
-    deg2NodesBig = as.numeric(names(nodeDegsBig[nodeDegsBig == 2]))
-    m = 1 + length(setdiff(deg2NodesBig, qForestNodes))
-  }
-
-  lambda = this$getDimension(subModel) / 2 + w.sum / 4
-
-  return(list(lambda = lambda, m = m))
-}, appendVarArgs = F)
+}, appendVarArgs = F, private = T)
