@@ -67,7 +67,11 @@
 sBIC = function(X, mod) {
   numModels = mod$getNumModels()
   topOrder = mod$getTopOrder()
-  mod$setData(X)
+  if (!is.null(X)) {
+    mod$setData(X)
+  } else {
+    X = mod$getData()
+  }
   n = mod$getNumSamples()
 
   # go through the vertices of g in the topological order and
