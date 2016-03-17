@@ -4,18 +4,15 @@
 \alias{GaussianMixtures}
 \title{Construct a poset of gaussian mixture models.}
 \usage{
-GaussianMixtures(maxNumComponents = 1, learnCoefBound = "")
+GaussianMixtures(maxNumComponents = 1, phi = "default",
+                        restarts = 5000)
 }
 \arguments{
 \item{maxNumComponents}{the maximum number of gaussian components to
 consider in a mixture.}
 
-\item{learnCoefBound}{which bound on learning coefficients to use, can be
-one of
-\itemize{
- \item{"1"}
- \item{"+"}
-}}
+\item{phi}{parameter determining the prior placed on latent class
+probabilities.}
 
 \item{restarts}{the number of random restarts to perform when computing the
 MLE.}

@@ -4,7 +4,8 @@
 \alias{BinomialMixtures}
 \title{Construct a poset of binomial mixture models.}
 \usage{
-BinomialMixtures(numCovariates = 1, maxNumFactors = 0)
+BinomialMixtures(numCovariates = 1, maxNumFactors = 0,
+                        phi = "default")
 }
 \arguments{
 \item{numCovariates}{the number of covariates in all of the models.}
@@ -12,6 +13,9 @@ BinomialMixtures(numCovariates = 1, maxNumFactors = 0)
 \item{maxNumFactors}{the maximum number of factors allowed in a model, will
 create a hierarchy of all models with less than or equal
 to this number.}
+
+\item{phi}{parameter determining the prior placed on latent class
+probabilities.}
 }
 \value{
 An object representing the collection.

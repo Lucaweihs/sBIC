@@ -10,10 +10,10 @@
 \alias{getData.ReducedRankRegressions}
 \title{Return the set data.}
 \arguments{
-\item{this}{the BinomialMixtures object}
+\item{this}{the object from which to get the data.}
 }
 \description{
-If data has been set for the object using the getData() function
+If data has been set for the object using the setData() function
 then will return that data, otherwise will throw an error.
 }
 

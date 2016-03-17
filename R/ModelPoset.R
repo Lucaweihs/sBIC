@@ -57,13 +57,13 @@ setMethodS3("setData", "ModelPoset", function(this, X) {
 
 #' Return the set data.
 #'
-#' If data has been set for the object using the getData() function
+#' If data has been set for the object using the setData() function
 #' then will return that data, otherwise will throw an error.
 #'
 #' @name     getData
 #' @export   getData
 #'
-#' @param this the BinomialMixtures object
+#' @param this the object from which to get the data.
 NULL
 setMethodS3("getData", "ModelPoset", function(this) {
   throw("getData is not yet implemented.")

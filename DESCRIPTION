@@ -10,14 +10,14 @@ Description: Computes the sBIC for various model collections including:
              regressions.
 License: GPL (>=3)
 Depends:
-    R.oo (>= 1.20.0)
+    R.oo (>= 1.20.0),
+    mclust
 Imports:
     igraph (>= 1.0.1),
     Rcpp (>= 0.12.3),
     combinat,
     flexmix,
     poLCA,
-    mclust,
     hash
 LinkingTo: Rcpp
 Suggets:

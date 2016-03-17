@@ -20,7 +20,7 @@
 NULL
 setConstructorS3("LCAs",
                  function(maxNumClasses = 1, numVariables = 2,
-                          numStatesForVariables = 2, phi = 1) {
+                          numStatesForVariables = 2, phi = "default") {
                    numModels = maxNumClasses
                    prior = rep(1, numModels)
 
@@ -35,14 +35,19 @@ setConstructorS3("LCAs",
                    topOrder = as.numeric(igraph::topological.sort(g))
 
                    dimension = rep(1, numModels)
-                   K = numeric(numModels)
-                   for (j in topOrder) {
-                     K[j] = j
-                     dimension[j] = (j - 1) + numVariables * (numStatesForVariables - 1) * j
+                   for (j in 1:numModels) {
+                     dimension[j] = min(
+                       (j - 1) + numVariables * (numStatesForVariables - 1) * j,
+                       numStatesForVariables ^ numVariables - 1
+                     )
+                   }
+
+                   if (phi == "default") {
+                     phi = (dimension[1] + 1) / 2
                    }
 
                    extend(
-                     ModelPoset(),
+                     MixtureModels(),
                      "LCAs",
                      .numModels = numModels,
                      .prior = prior,
@@ -50,7 +55,6 @@ setConstructorS3("LCAs",
                      .posetAsGraph = g,
                      .topOrder = topOrder,
                      .dimension = dimension,
-                     .K = K,
                      .maxNumClasses = maxNumClasses,
                      .numVariables = numVariables,
                      .numStatesForVariables = numStatesForVariables,
@@ -118,21 +122,6 @@ setMethodS3("getNumSamples", "LCAs", function(this) {
   return(nrow(this$getData()))
 }, appendVarArgs = F)
 
-#' @rdname   parents
-#' @name     parents.LCAs
-#' @export   parents.LCAs
-setMethodS3("parents", "LCAs", function(this, model) {
-  if (model > this$getNumModels() ||
-      model < 1 || length(model) != 1) {
-    throw("Invalid input model.")
-  }
-  if (model == 1) {
-    return(numeric(0))
-  } else {
-    return(model - 1)
-  }
-}, appendVarArgs = F)
-
 #' @rdname   logLikeMle
 #' @name     logLikeMle.LCAs
 #' @export   logLikeMle.LCAs
@@ -147,44 +136,9 @@ setMethodS3("logLikeMle", "LCAs", function(this, model) {
   return(this$.logLikes[model])
 }, appendVarArgs = F)
 
-#' @rdname   learnCoef
-#' @name     learnCoef.LCAs
-#' @export   learnCoef.LCAs
-setMethodS3("learnCoef", "LCAs", function(this, superModel, subModel) {
-  S = superModel
-  S0 = subModel
-  Y = this$.numStatesForVariables
-  N = this$.numVariables
-
-  lambda <- 1 / 2 * min(S0 * ((Y - 1) * N + 1) - 1 + (S - S0) * this$.phi,
-                        N * (Y - 1) * S + S0 - 1)
-  learn.coeff = list(lambda = lambda, m = 1)
-  return(learn.coeff)
-}, appendVarArgs = F)
-
 #' @rdname   getDimension
 #' @name     getDimension.LCAs
 #' @export   getDimension.LCAs
 setMethodS3("getDimension", "LCAs", function(this, model) {
   return(this$.dimension[model])
-}, appendVarArgs = F)
-
-#' Set phi parameter.
-#'
-#' Set the phi parameter in an LCAs object to a different value.
-#'
-#' @name     setPhi
-#' @export   setPhi
-#'
-#' @param this the LCAs object.
-#' @param phi the new phi value.
-NULL
-#' @rdname   setPhi
-#' @name     setPhi.LCAs
-#' @export   setPhi.LCAs
-setMethodS3("setPhi", "LCAs", function(this, phi) {
-  if (!is.numeric(phi) || length(phi) != 1) {
-    throw("Invalid phi value.")
-  }
-  this$.phi = phi
 }, appendVarArgs = F)
