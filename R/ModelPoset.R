@@ -114,6 +114,22 @@ setMethodS3("logLikeMle", "ModelPoset", function(this, model) {
   throw("logLike is not yet implemented.")
 }, appendVarArgs = F)
 
+#' Maximum likelihood estimator.
+#'
+#' Computes the maximum likelihood estimator of the model parameters (for a
+#' given model in the collection) given the data set with setData.
+#'
+#' @name     mle
+#' @export   mle
+#'
+#' @param this the object representing the model poset.
+#' @param model the model for which the maximum likelihood should be computed.
+NULL
+setMethodS3("mle", "ModelPoset", function(this, model) {
+  throw("mle is not yet implemented.")
+}, appendVarArgs = F)
+
+
 #' Learning coefficient
 #'
 #' Computes the learning coefficient for a model with respect to one of the

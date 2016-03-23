@@ -90,6 +90,7 @@ NULL
 setMethodS3("setData", "GaussianMixtures", function(this, X) {
   this$.X = as.numeric(X)
   this$.logLikes = rep(NA, this$getNumModels())
+  this$.mles = rep(list(NA), this$getNumModels())
 }, appendVarArgs = F)
 
 #' @rdname   getData
@@ -109,36 +110,6 @@ setMethodS3("getNumSamples", "GaussianMixtures", function(this) {
   return(length(this$getData()))
 }, appendVarArgs = F)
 
-#' A helper function.
-#'
-#' A helper function.
-#'
-#' @name logLikeMleHelper
-#' @export logLikeMleHelper
-NULL
-#' @rdname   logLikeMleHelper
-#' @name     logLikeMleHelper.GaussianMixtures
-#' @export   logLikeMleHelper.GaussianMixtures
-setMethodS3("logLikeMleHelper", "GaussianMixtures", function(this, model,
-                                                             restarts) {
-  X = this$getData()
-  N = length(X)
-  numModels = this$getNumModels()
-
-  logLike = mclust::Mclust(X, G = model, model = "V")$loglik
-  for (i in 1:restarts) {
-    my.z = matrix(rexp(N * model), N, model)
-    my.z = my.z / rowSums(my.z)
-    temp.fit = mclust::me(modelName = "V", data = X, z = my.z)
-    if (!is.na(temp.fit$loglik)) {
-      if (temp.fit$loglik > logLike) {
-        logLike = temp.fit$loglik
-      }
-    }
-  }
-  return(logLike)
-}, appendVarArgs = F)
-
 #' @rdname   logLikeMle
 #' @name     logLikeMle.GaussianMixtures
 #' @export   logLikeMle.GaussianMixtures
@@ -146,8 +117,38 @@ setMethodS3("logLikeMle", "GaussianMixtures", function(this, model) {
   if (!is.na(this$.logLikes[model])) {
     return(this$.logLikes[model])
   }
-  this$.logLikes[model] = this$logLikeMleHelper(model, this$.restarts)
+  X = this$getData()
+  N = length(X)
+
+  fit = mclust::Mclust(X, G = model, model = "V")
+  logLike = fit$loglik
+  mle = fit$parameters
+  for (i in 1:this$.restarts) {
+    my.z = matrix(rexp(N * model), N, model)
+    my.z = my.z / rowSums(my.z)
+    temp.fit = mclust::me(modelName = "V", data = X, z = my.z)
+    if (!is.na(temp.fit$loglik)) {
+      if (temp.fit$loglik > logLike) {
+        logLike = temp.fit$loglik
+        mle = temp.fit$parameters
+      }
+    }
+  }
+  this$.logLikes[model] = logLike
+  this$.mles[[model]] = list(mixWeights = mle$pro, means = mle$mean,
+                             vars = mle$vars)
   return(this$.logLikes[model])
+}, appendVarArgs = F)
+
+#' @rdname   mle
+#' @name     mle.GaussianMixtures
+#' @export   mle.GaussianMixtures
+setMethodS3("mle", "GaussianMixtures", function(this, model) {
+  if (!is.na(this$.mle[[model]])) {
+    return(this$.mle[[model]])
+  }
+  this$logLikeMle(model)
+  return(this$.mle[[model]])
 }, appendVarArgs = F)
 
 #' @rdname   getDimension

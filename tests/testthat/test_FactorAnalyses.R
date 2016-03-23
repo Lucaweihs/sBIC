@@ -2,9 +2,7 @@ library(sBIC)
 
 context("Testing Factor Analyses")
 
-test_that("NOT ENOUGH TESTS IMPLEMENTED", {
-  expect_true(FALSE)
-})
+# TODO: More tests!
 
 test_that("Learning coefficients are correct", {
   facModels = FactorAnalyses(6, 3)
@@ -19,11 +17,3 @@ test_that("Learning coefficients are correct", {
     }
   }
 })
-
-# X = read.table("lopeswest.csv", header = TRUE)[, -(1:2)]
-# m = ncol(X)
-# kmax = 3
-# Y = scale(X[-1, ] - X[-n, ])
-# facModels = FactorAnalyses(m, kmax)
-# sBIC(Y, facModels)
-

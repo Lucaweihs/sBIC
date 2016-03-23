@@ -3,6 +3,8 @@ library(mvtnorm)
 
 context("Testing LatentForests")
 
+# TODO: More tests!
+
 test_that("getCovMatrix works", {
   expect_equal(LatentForests(1)$getCovMat(numeric(0)), matrix(1))
 

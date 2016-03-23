@@ -152,7 +152,7 @@ setMethodS3("logLikeMleHelper", "ReducedRankRegressions", function(this, model) 
       throw("Unexpected error in logLikeMleHelper.")
     }
     this$.Yhat = this$.unconstrainedMLE %*% X
-    this$.S <- svd(this$.Yhat)
+    this$.S = svd(this$.Yhat)
   }
 }, appendVarArgs = F, private = T)
 
@@ -173,9 +173,9 @@ setMethodS3("logLikeMle", "ReducedRankRegressions", function(this, model) {
   S = this$.S # SVD of YHat
 
   if (H == 0) {
-    UH <- matrix(0, nrow(S$u), 1)
+    UH = matrix(0, nrow(S$u), 1)
   } else{
-    UH <- S$u[, 1:H]
+    UH = S$u[, 1:H]
   }
 
   M = this$.numCovariates

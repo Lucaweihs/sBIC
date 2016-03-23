@@ -92,6 +92,8 @@ NULL
 setMethodS3("setData", "LatentForests", function(this, X) {
   this$.X = X
   this$.sampleCovMat = t(X) %*% X
+  this$.logLikes = rep(NA, this$getNumModels())
+  this$.mles = rep(list(NA), this$getNumModels())
 }, appendVarArgs = F)
 
 #' @rdname   getData
@@ -125,7 +127,24 @@ setMethodS3("parents", "LatentForests", function(this, model) {
 #' @name     logLikeMle.LatentForests
 #' @export   logLikeMle.LatentForests
 setMethodS3("logLikeMle", "LatentForests", function(this, model) {
-  return((this$emMain(model, starts = 5, maxIter = 1000, tol = 1e-4))$logLike)
+  if (!is.na(this$.logLikes[model])) {
+    return(this$.logLikes[model])
+  }
+  emResults = this$emMain(model, starts = 5, maxIter = 1000, tol = 1e-4)
+  this$.mles[[model]] = emResults$covMat
+  this$.logLikes[model] = emResults$logLike
+  return(this$.logLikes[model])
+}, appendVarArgs = F)
+
+#' @rdname   mle
+#' @name     mle.LatentForests
+#' @export   mle.LatentForests
+setMethodS3("mle", "LatentForests", function(this, model) {
+  if (!is.na(this$.mle[[model]])) {
+    return(this$.mle[[model]])
+  }
+  this$logLikeMle(model)
+  return(this$.mle[[model]])
 }, appendVarArgs = F)
 
 #' @rdname   learnCoef

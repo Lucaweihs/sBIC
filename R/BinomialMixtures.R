@@ -91,18 +91,25 @@ setMethodS3("setData", "BinomialMixtures", function(this, X) {
 
   flexmixFit = flexmix::initFlexmix(
     X ~ 1,
-    k = this$topOrder,
+    k = 1:this$getNumModels(),
     model = flexmix::FLXglm(family = "binomial"),
     control = list(minprior = 0),
     nrep = 10,
     verbose = FALSE
   )
-  flexmixEll = flexmix::logLik(flexmixFit)
 
-  this$.logLikes = numeric(this$getNumModels())
-  for (j in this$getTopOrder()) {
-    this$.logLikes[j] = flexmixEll[j]
+  this$.mles = rep(list(list()), this$getNumModels())
+  n = this$getNumSamples()
+  for (i in 1:this$getNumModels()) {
+    model = flexmix::getModel(flexmixFit, i)
+    clusters = as.numeric(flexmix::clusters(model))
+    params = as.numeric(flexmix::parameters(model))
+
+    this$.mles[[i]]$binomProbs = exp(params)/(1 + exp(params))
+    this$.mles[[i]]$mixWeights = as.numeric(table(factor(clusters, levels = 1:i))) / n
   }
+
+  this$.logLikes = as.numeric(flexmix::logLik(flexmixFit))
 }, appendVarArgs = F)
 
 #' @rdname   getData
@@ -127,6 +134,13 @@ setMethodS3("getNumSamples", "BinomialMixtures", function(this) {
 #' @export   logLikeMle.BinomialMixtures
 setMethodS3("logLikeMle", "BinomialMixtures", function(this, model) {
   return(this$.logLikes[model])
+}, appendVarArgs = F)
+
+#' @rdname   mle
+#' @name     mle.BinomialMixtures
+#' @export   mle.BinomialMixtures
+setMethodS3("mle", "BinomialMixtures", function(this, model) {
+  return(this$.mle[[model]])
 }, appendVarArgs = F)
 
 #' @rdname   getDimension

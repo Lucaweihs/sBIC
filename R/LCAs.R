@@ -131,9 +131,22 @@ setMethodS3("logLikeMle", "LCAs", function(this, model) {
   }
   X = this$getData()
   f = as.formula(paste("cbind(", paste(names(X), collapse =  ","), ")~1"))
-  this$.logLikes[model] = poLCA::poLCA(f, X, nclass = model, nrep = 50,
-                                       maxiter = 8000, verbose = FALSE)$llik
+  fit = poLCA::poLCA(f, X, nclass = model, nrep = 50, maxiter = 8000,
+                     verbose = FALSE)
+  this$.logLikes[model] = fit$llik
+  this$.mles[[model]] = fit$probs
   return(this$.logLikes[model])
+}, appendVarArgs = F)
+
+#' @rdname   mle
+#' @name     mle.LCAs
+#' @export   mle.LCAs
+setMethodS3("mle", "LCAs", function(this, model) {
+  if (!is.na(this$.mle[[model]])) {
+    return(this$.mle[[model]])
+  }
+  this$logLikeMle(model)
+  return(this$.mle[[model]])
 }, appendVarArgs = F)
 
 #' @rdname   getDimension

@@ -107,6 +107,7 @@ setMethodS3("setData", "FactorAnalyses", function(this, X) {
   }
   this$.X = X
   this$.logLikes = rep(NA, this$getNumModels())
+  this$.mles = rep(list(NA), this$getNumModels())
 }, appendVarArgs = F)
 
 #' @rdname   getData
@@ -154,15 +155,28 @@ setMethodS3("logLikeMle", "FactorAnalyses", function(this, model, starts = 1) {
   S = cov(X)
   k = this$getNumFactorsForModel(model)
   if (k == 0) {
+    fit = list()
     R = diag(1, m)
-    ell.hat <- sum(log(diag(S))) + m
+    ell.hat = sum(log(diag(S))) + m
   } else{
-    fit <- factanal(X, k, control = list(nstart = starts))
-    R <- tcrossprod(fit$loadings) + diag(fit$uniquenesses)
-    ell.hat <- sum(log(diag(S))) + log(det(R)) + m
+    fit = factanal(X, k, control = list(nstart = starts))
+    R = tcrossprod(fit$loadings) + diag(fit$uniquenesses)
+    ell.hat = sum(log(diag(S))) + log(det(R)) + m
   }
+  this$.mles[[model]] = fit
   this$.logLikes[model] = -n / 2 * ell.hat
   return(this$.logLikes[model])
+}, appendVarArgs = F)
+
+#' @rdname   mle
+#' @name     mle.FactorAnalyses
+#' @export   mle.FactorAnalyses
+setMethodS3("mle", "FactorAnalyses", function(this, model) {
+  if (!is.na(this$.mle[[model]])) {
+    return(this$.mle[[model]])
+  }
+  this$logLikeMle(model)
+  return(this$.mle[[model]])
 }, appendVarArgs = F)
 
 #' @rdname   learnCoef
@@ -172,7 +186,7 @@ setMethodS3("learnCoef", "FactorAnalyses", function(this, superModel, subModel) 
   m = this$.numCovariates
   k = this$getNumFactorsForModel(superModel)
   l = this$getNumFactorsForModel(subModel)
-  return( list(lambda = 1 / 4 * ((k + 2) * m + l * (m - k + 1)), m = 1))
+  return(list(lambda = 1 / 4 * ((k + 2) * m + l * (m - k + 1)), m = 1))
 }, appendVarArgs = F)
 
 #' @rdname   getDimension
