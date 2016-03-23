@@ -18,7 +18,7 @@ for collections of the following model types
 6. Factor analysis
 
 All of these models, excluding gaussian latent forests, are described in the
-above paper. For details regardings the use of the sBIC iwht gaussian latent
+above paper. For details regardings the use of the sBIC with gaussian latent
 forests see 
 
 Mathias Drton, Shaowei Lin, Luca Weihs, and Piotr Zwiernik. "Marginal likelihood
