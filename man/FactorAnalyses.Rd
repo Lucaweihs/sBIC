@@ -17,7 +17,13 @@ to this number.}
 An object representing the collection.
 }
 \description{
-Creates an object representing a collection of factor analysis models which
-have a natural ordering upon them.
+Creates an object representing a collection of factor analysis models. There
+is one model for each fixed number of factors from 0 to some specified
+maximum number of factors. Each model is identified by a single
+number, in particular the model with n factors is associated with the model
+numbered (n + 1), this is because we allow a model with 0 factors and would
+like all models to be numbered with strictly positive integers for
+consistency. Models are naturally ordered by inclusion so that, for example,
+a model with 2 factors comes before a model with 3 or more factors.
 }
 

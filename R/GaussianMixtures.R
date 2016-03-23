@@ -23,7 +23,7 @@
 NULL
 setConstructorS3("GaussianMixtures",
                  function(maxNumComponents = 1, phi = "default",
-                          restarts = 5000) {
+                          restarts = 50) {
                    numModels = maxNumComponents
                    prior = rep(1, numModels)
 

@@ -21,7 +21,11 @@ MLE.}
 An object representing the collection.
 }
 \description{
-Creates an object representing a collection of gaussian mixture models which
-have a natural ordering upon them.
+Creates an object representing a collection of gaussian mixture models. There
+is one model for each fixed number of components from 1 to some specified
+maximum. In particular each model is identified by a single number
+specifiying the number of components in the model. Models are naturally
+ordered by inclusion so that, for example, a model with 2 components comes
+before a model with 3 or more components.
 }
 

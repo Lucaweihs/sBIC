@@ -17,7 +17,11 @@ ReducedRankRegressions(numResponses, numCovariates, maxRank)
 An object representing the collection.
 }
 \description{
-Creates an object representing a collection of reduced rank regression models
-which have a natural ordering upon them.
+Creates an object representing a collection of reduced rank regression
+models. There is one model for each fixed rank from 1 to some specified
+maximum. In particular each model is identified by a single number
+specifiying the rank of the regression matrix in the model. Models are
+naturally ordered by inclusion so that, for example, a model with 2
+rank 2 comes before before a model with rank 3 or greater.
 }
 

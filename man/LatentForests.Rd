@@ -18,8 +18,12 @@ forest' f for which we compute all subforests. f should have nodes
 An object representing the collection.
 }
 \description{
-Creates an object representing a collection of gaussian latent forest models
-which have a natural ordering upon them. In particular, we consider the
-collection of all latent forests that are subforests of an input forest.
+For a fixed binary forest where all leaves represent observed variables this
+function creates an object representing all gaussian latent forest models
+that are submodels of the given model. All models are enumerated from 1 to
+the total number of subforests, see the method getSupport.LatentForests
+for details on how to determine which model a particular model number
+corresponds to. Models are naturally ordered by inclusion so that, for
+example, the forest that has no edges is less than all other models.
 }
 
