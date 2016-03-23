@@ -66,7 +66,4 @@ $BIC
 
 $modelPoset
 [1] "GaussianMixtures: 0x10c2954b0"
-
-$modelPoset
-[1] "GaussianMixtures: 0x10c2954b0"
 ```
