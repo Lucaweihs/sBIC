@@ -1,7 +1,11 @@
 #' Construct a poset of latent class analysis models.
 #'
-#' Creates an object representing a collection of LCA models which
-#' have a natural ordering upon them.
+#' Creates an object representing a collection of latent class analysis models.
+#' There is one model for each fixed number of latent classes from 1 to some
+#' specified maximum. In particular each model is identified by a single number
+#' specifiying the number of latent classes in the model. Models are naturally
+#' ordered by inclusion so that, for example, a model with 2 latent classes
+#' comes before a model with 3 or more latent classes.
 #'
 #' @name LCAs
 #' @usage LCAs(maxNumClasses = 1, numVariables = 2,

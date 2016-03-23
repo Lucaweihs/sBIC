@@ -2,7 +2,8 @@
 #'
 #' An abstract class representing a collection of mixture models that are
 #' linearly ordered by the number of components in the mixture. This class
-#' should not be instantiated, just extended.
+#' should not be instantiated, just extended. See the GaussianMixtures class
+#' for an example of how to extend this class.
 #'
 #' @name MixtureModels
 #' @usage MixtureModels(phi = "default")
