@@ -11,6 +11,9 @@ GaussianMixtures(maxNumComponents = 1, phi = "default",
 \item{maxNumComponents}{the maximum number of gaussian components to
 consider in a mixture.}
 
+\item{dim}{the ambient dimension in which the gaussian mixtures reside.
+Default is 1, corresponding to gaussian mixtures on the real line.}
+
 \item{phi}{parameter determining the prior placed on latent class
 probabilities.}
 

@@ -14,15 +14,18 @@
 #'
 #' @param maxNumComponents the maximum number of gaussian components to
 #'                         consider in a mixture.
+#' @param dim the ambient dimension in which the gaussian mixtures reside.
+#'        Default is 1, corresponding to gaussian mixtures on the real line.
 #' @param phi parameter determining the prior placed on latent class
 #'        probabilities.
+#'
 #' @param restarts the number of random restarts to perform when computing the
 #'        MLE.
 #'
 #' @return An object representing the collection.
 NULL
 setConstructorS3("GaussianMixtures",
-                 function(maxNumComponents = 1, phi = "default",
+                 function(maxNumComponents = 1, dim = 1, phi = "default",
                           restarts = 50) {
                    numModels = maxNumComponents
                    prior = rep(1, numModels)
@@ -39,7 +42,7 @@ setConstructorS3("GaussianMixtures",
 
                    dimension = rep(1, numModels)
                    for (j in topOrder) {
-                     dimension[j] = 3 * j - 1
+                     dimension[j] = choose(dim + 2, 2) * j - 1
                    }
 
                    if (phi == "default") {
@@ -54,6 +57,7 @@ setConstructorS3("GaussianMixtures",
                      .E = E,
                      .posetAsGraph = g,
                      .topOrder = topOrder,
+                     .ambientDim = dim,
                      .dimension = dimension,
                      .phi = phi,
                      .restarts = restarts
@@ -89,10 +93,21 @@ setMethodS3("getNumModels", "GaussianMixtures", function(this) {
 #' @export   setData.GaussianMixtures
 #'
 #' @param this the GaussianMixtures object.
-#' @param X the data to be set, should be a numeric vector of observations.
+#' @param X the data to be set, a matrix where each row corresponds to a single
+#'        multivariate observation. If the corresponding GaussianMixtures object
+#'        has ambient dimension 1, then X may be a numeric vector of
+#'        observations.
 NULL
 setMethodS3("setData", "GaussianMixtures", function(this, X) {
-  this$.X = as.numeric(X)
+  if (is.vector(X)) {
+    X = matrix(as.numeric(X), ncol = 1)
+  }
+  if (this$.ambientDim != ncol(X)) {
+    stop(paste("Attempting to set data in GaussianMixtures whose ambient",
+               "dimesion does not agree with the number of columns in the data."
+               ))
+  }
+  this$.X = X
   this$.logLikes = rep(NA, this$getNumModels())
   this$.mles = rep(list(NA), this$getNumModels())
 }, appendVarArgs = F)
@@ -122,15 +137,20 @@ setMethodS3("logLikeMle", "GaussianMixtures", function(this, model) {
     return(this$.logLikes[model])
   }
   X = this$getData()
-  N = length(X)
+  N = nrow(X)
 
-  fit = mclust::Mclust(X, G = model, model = "V")
+  if (ncol(X) == 1) {
+    mclustModelName = "V"
+  } else {
+    mclustModelName = "VVV"
+  }
+  fit = mclust::Mclust(X, G = model, model = mclustModelName)
   logLike = fit$loglik
   mle = fit$parameters
   for (i in 1:this$.restarts) {
     my.z = matrix(rexp(N * model), N, model)
     my.z = my.z / rowSums(my.z)
-    temp.fit = mclust::me(modelName = "V", data = X, z = my.z)
+    temp.fit = mclust::me(modelName = mclustModelName, data = X, z = my.z)
     if (!is.na(temp.fit$loglik)) {
       if (temp.fit$loglik > logLike) {
         logLike = temp.fit$loglik

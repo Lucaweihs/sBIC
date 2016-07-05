@@ -6,7 +6,10 @@
 \arguments{
 \item{this}{the GaussianMixtures object.}
 
-\item{X}{the data to be set, should be a numeric vector of observations.}
+\item{X}{the data to be set, a matrix where each row corresponds to a single
+multivariate observation. If the corresponding GaussianMixtures object
+has ambient dimension 1, then X may be a numeric vector of
+observations.}
 }
 \description{
 Sets the data to be used by the gaussian mixture models when computing MLEs.
