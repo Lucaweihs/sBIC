@@ -8,8 +8,8 @@
 #' before a model with 3 or more components.
 #'
 #' @name GaussianMixtures
-#' @usage GaussianMixtures(maxNumComponents = 1, phi = "default",
-#'                         restarts = 5000)
+#' @usage GaussianMixtures(maxNumComponents = 1, dim = 1,
+#'                         phi = "default", restarts = 50)
 #' @export GaussianMixtures
 #'
 #' @param maxNumComponents the maximum number of gaussian components to

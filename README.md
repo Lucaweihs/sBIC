@@ -44,26 +44,28 @@ with at most 6 components:
 > set.seed(123)
 > 
 > # Create an object representing a collection of Gaussian mixture models
-> # with at most 6 components.
-> gms = GaussianMixtures(maxNumComponents = 6)
+> # with at most 6 components in two dimensions.
+> gms = GaussianMixtures(maxNumComponents = 6, dim = 2)
 >
 > # Generate some simulation data, a mixture of 2 normals
-> class = sample(1:2, 100, replace = T)
-> X = (class == 1) * rnorm(100) + (class == 2) * rnorm(100, 3)
+> library(MASS)
+> class = sample(0:1, 100, replace = T)
+> X = (class == 0) * mvrnorm(100, mu = c(0,0), Sigma = diag(2)) +
+>     (class == 1) * mvrnorm(100, mu = c(2.5,2.5), Sigma = diag(2) + t(.3 * diag(2)))
 > 
 > # Compute the sBIC on the mixture models with the randomly generated data,
 > # notice that the BIC too strongly penalizes the (true) model with 2
 > # components.
 > sBIC(X, gms)
 $logLike
-[1] -196.6984 -191.3533 -190.1739 -189.0820 -188.0583 -188.7303
+[1] -353.7890 -341.3404 -336.1208 -328.5612 -319.4646 -309.0157
 
 $sBIC
-[1] -201.3036 -200.5109 -202.8495 -205.2173 -207.6479 -211.7738
+[1] -367.0348 -364.8352 -367.6173 -368.0392 -366.9820 -364.9812
 
 $BIC
-[1] -201.3036 -202.8662 -208.5946 -214.4105 -220.2945 -227.8742
+[1] -367.0348 -370.4811 -381.1565 -389.4919 -396.2902 -401.7362
 
 $modelPoset
-[1] "GaussianMixtures: 0x10c2954b0"
+[1] "GaussianMixtures: 0x10b852200"
 ```
