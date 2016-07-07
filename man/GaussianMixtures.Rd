@@ -4,8 +4,8 @@
 \alias{GaussianMixtures}
 \title{Construct a poset of gaussian mixture models.}
 \usage{
-GaussianMixtures(maxNumComponents = 1, phi = "default",
-                        restarts = 5000)
+GaussianMixtures(maxNumComponents = 1, dim = 1,
+                        phi = "default", restarts = 50)
 }
 \arguments{
 \item{maxNumComponents}{the maximum number of gaussian components to
