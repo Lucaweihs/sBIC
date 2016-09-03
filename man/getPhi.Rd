@@ -4,6 +4,11 @@
 \alias{getPhi}
 \alias{getPhi.MixtureModels}
 \title{Get the phi parameter.}
+\usage{
+getPhi(this, phi)
+
+\method{getPhi}{MixtureModels}(this, phi)
+}
 \arguments{
 \item{this}{the MixtureModels object.}
 

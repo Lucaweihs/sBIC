@@ -3,10 +3,13 @@
 \name{setData}
 \alias{setData}
 \title{Set data for a model poset.}
+\usage{
+setData(this, data)
+}
 \arguments{
 \item{this}{the model poset object.}
 
-\item{X}{the data to be set.}
+\item{data}{the data to be set.}
 }
 \description{
 Sets the data to be used by a poset of models when computing MLEs.

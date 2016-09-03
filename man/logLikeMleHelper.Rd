@@ -4,6 +4,11 @@
 \alias{logLikeMleHelper}
 \alias{logLikeMleHelper.ReducedRankRegressions}
 \title{Help compute the MLE.}
+\usage{
+logLikeMleHelper(this, model)
+
+\method{logLikeMleHelper}{ReducedRankRegressions}(this, model)
+}
 \arguments{
 \item{this}{the ReducedRankRegressions object.}
 

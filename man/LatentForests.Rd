@@ -21,7 +21,7 @@ An object representing the collection.
 For a fixed binary forest where all leaves represent observed variables this
 function creates an object representing all gaussian latent forest models
 that are submodels of the given model. All models are enumerated from 1 to
-the total number of subforests, see the method getSupport.LatentForests
+the total number of subforests, see the method \code{\link{getSupport.LatentForests}}
 for details on how to determine which model a particular model number
 corresponds to. Models are naturally ordered by inclusion so that, for
 example, the forest that has no edges is less than all other models.

@@ -5,14 +5,14 @@ Version: 0.1.0
 Author: Luca Weihs
 Maintainer: Luca Weihs <lucaw@uw.edu>
 Description: Computes the sBIC for various model collections including:
-             binomial mixtures, factor analysis models, gaussian mixtures,
-             latent forests, latent class analyses, and reduced rank
-             regressions.
+    binomial mixtures, factor analysis models, gaussian mixtures,
+    latent forests, latent class analyses, and reduced rank
+    regressions.
 License: GPL (>=3)
-Depends:
-    R.oo (>= 1.20.0),
-    mclust
 Imports:
+    R.oo (>= 1.20.0),
+    R.methodsS3,
+    mclust,
     igraph (>= 1.0.1),
     Rcpp (>= 0.12.3),
     combinat,
@@ -20,6 +20,21 @@ Imports:
     poLCA,
     hash
 LinkingTo: Rcpp
-Suggets:
-    testthat, mvtnorm
+Suggests:
+    testthat,
+    mvtnorm
 RoxygenNote: 5.0.1
+Collate:
+    'ModelPoset.R'
+    'MixtureModels.R'
+    'BinomialMixtures.R'
+    'FactorAnalyses.R'
+    'GaussianMixtures.R'
+    'LCAs.R'
+    'LatentForests-Helpers.R'
+    'LatentForests.R'
+    'RcppExports.R'
+    'ReducedRankRegressions.R'
+    'sBIC-Function.R'
+    'sbic.R'
+    'zzz.R'

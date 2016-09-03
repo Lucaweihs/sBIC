@@ -3,10 +3,13 @@
 \name{setData.FactorAnalyses}
 \alias{setData.FactorAnalyses}
 \title{Set data for the factor analysis models.}
+\usage{
+\method{setData}{FactorAnalyses}(this, data)
+}
 \arguments{
 \item{this}{the FactorAnalyses object.}
 
-\item{X}{the data to be set, should matrix of observed responses.}
+\item{data}{the data to be set, should matrix of observed responses.}
 }
 \description{
 Sets the data to be used by the factor analysis models when computing MLEs.

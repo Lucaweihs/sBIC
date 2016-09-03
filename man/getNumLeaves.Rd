@@ -4,6 +4,11 @@
 \alias{getNumLeaves}
 \alias{getNumLeaves.LatentForests}
 \title{Get number of leaves.}
+\usage{
+getNumLeaves(this)
+
+\method{getNumLeaves}{LatentForests}(this)
+}
 \arguments{
 \item{this}{the LatentForests object.}
 }

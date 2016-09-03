@@ -4,6 +4,11 @@
 \alias{getSupport}
 \alias{getSupport.LatentForests}
 \title{Get support for a given model.}
+\usage{
+getSupport(this, model)
+
+\method{getSupport}{LatentForests}(this, model)
+}
 \arguments{
 \item{this}{the LatentForests object.}
 

@@ -3,10 +3,13 @@
 \name{setData.BinomialMixtures}
 \alias{setData.BinomialMixtures}
 \title{Set data for the binomial mixture models.}
+\usage{
+\method{setData}{BinomialMixtures}(this, data)
+}
 \arguments{
 \item{this}{the BinomialMixtures object.}
 
-\item{X}{the data to be set, should be a numeric vector of non-negative
+\item{data}{the data to be set, should be a numeric vector of non-negative
 integers.}
 }
 \description{

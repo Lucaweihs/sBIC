@@ -4,6 +4,11 @@
 \alias{logLike}
 \alias{logLike.LatentForests}
 \title{Multivariate gaussian log-likelihood.}
+\usage{
+logLike(this, covMat)
+
+\method{logLike}{LatentForests}(this, covMat)
+}
 \arguments{
 \item{this}{the LatentForests object.}
 

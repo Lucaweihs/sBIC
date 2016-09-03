@@ -10,10 +10,9 @@ setConstructorS3("ModelPoset",
 #' @export   getTopOrder
 #'
 #' @param this the model poset object.
-NULL
-setMethodS3("getTopOrder", "ModelPoset", function(this) {
-  throw("getTopOrder is not yet implemented.")
-}, appendVarArgs = F)
+getTopOrder <- function(this) {
+    UseMethod("getTopOrder")
+}
 
 #' The prior on the models.
 #'
@@ -23,10 +22,9 @@ setMethodS3("getTopOrder", "ModelPoset", function(this) {
 #' @export   getPrior
 #'
 #' @param this the model poset object.
-NULL
-setMethodS3("getPrior", "ModelPoset", function(this) {
-  throw("getPrior is not yet implemented.")
-}, appendVarArgs = F)
+getPrior <- function(this) {
+    UseMethod("getPrior")
+}
 
 #' Number of models.
 #'
@@ -36,10 +34,9 @@ setMethodS3("getPrior", "ModelPoset", function(this) {
 #' @export   getNumModels
 #'
 #' @param this the model poset object.
-NULL
-setMethodS3("getNumModels", "ModelPoset", function(this) {
-  throw("getNumModels is not yet implemented.")
-}, appendVarArgs = F)
+getNumModels <- function(this) {
+    UseMethod("getNumModels")
+}
 
 #' Set data for a model poset.
 #'
@@ -49,11 +46,10 @@ setMethodS3("getNumModels", "ModelPoset", function(this) {
 #' @export   setData
 #'
 #' @param this the model poset object.
-#' @param X the data to be set.
-NULL
-setMethodS3("setData", "ModelPoset", function(this, X) {
-  throw("setData is not yet implemented.")
-}, appendVarArgs = F)
+#' @param data the data to be set.
+setData <- function(this, data) {
+    UseMethod("setData")
+}
 
 #' Return the set data.
 #'
@@ -64,10 +60,9 @@ setMethodS3("setData", "ModelPoset", function(this, X) {
 #' @export   getData
 #'
 #' @param this the object from which to get the data.
-NULL
-setMethodS3("getData", "ModelPoset", function(this) {
-  throw("getData is not yet implemented.")
-}, appendVarArgs = F)
+getData <- function(this) {
+    UseMethod("getData")
+}
 
 #' Number of samples in the set data.
 #'
@@ -77,11 +72,10 @@ setMethodS3("getData", "ModelPoset", function(this) {
 #' @name     getNumSamples
 #' @export   getNumSamples
 #'
-#' @param this the BinomialMixtures object.
-NULL
-setMethodS3("getNumSamples", "ModelPoset", function(this) {
-  throw("getData is not yet implemented.")
-}, appendVarArgs = F)
+#' @param this the object from which to get the number of samples.
+getNumSamples <- function(this) {
+    UseMethod("getNumSamples")
+}
 
 #' Parents of a model.
 #'
@@ -94,10 +88,9 @@ setMethodS3("getNumSamples", "ModelPoset", function(this) {
 #'
 #' @param this the object representing the model poset.
 #' @param model the model for which the parents should be found.
-NULL
-setMethodS3("parents", "ModelPoset", function(this, model) {
-  throw("parents is not yet implemented.")
-}, appendVarArgs = F)
+parents <- function(this, model) {
+    UseMethod("parents")
+}
 
 #' Maximum likelihood for data.
 #'
@@ -109,10 +102,10 @@ setMethodS3("parents", "ModelPoset", function(this, model) {
 #'
 #' @param this the object representing the model poset.
 #' @param model the model for which the maximum likelihood should be computed.
-NULL
-setMethodS3("logLikeMle", "ModelPoset", function(this, model) {
-  throw("logLike is not yet implemented.")
-}, appendVarArgs = F)
+#' @param ... further parameters to be passed to methods
+logLikeMle <- function(this, model, ...) {
+    UseMethod("logLikeMle")
+}
 
 #' Maximum likelihood estimator.
 #'
@@ -124,10 +117,9 @@ setMethodS3("logLikeMle", "ModelPoset", function(this, model) {
 #'
 #' @param this the object representing the model poset.
 #' @param model the model for which the maximum likelihood should be computed.
-NULL
-setMethodS3("mle", "ModelPoset", function(this, model) {
-  throw("mle is not yet implemented.")
-}, appendVarArgs = F)
+mle <- function(this, model) {
+    UseMethod("mle")
+}
 
 
 #' Learning coefficient
@@ -141,10 +133,9 @@ setMethodS3("mle", "ModelPoset", function(this, model) {
 #' @param this the object representing the model poset.
 #' @param superModel the larger model of the two input models.
 #' @param subModel the submodel of the larger model.
-NULL
-setMethodS3("learnCoef", "ModelPoset", function(this, superModel, subModel) {
-  throw("learnCoef is not yet implemented.")
-}, appendVarArgs = F)
+learnCoef <- function(this, superModel, subModel) {
+    UseMethod("learnCoef")
+}
 
 #' Model dimension.
 #'
@@ -155,7 +146,6 @@ setMethodS3("learnCoef", "ModelPoset", function(this, superModel, subModel) {
 #'
 #' @param this the object representing the model poset.
 #' @param model the model for which the dimension should be computed.
-NULL
-setMethodS3("getDimension", "ModelPoset", function(this, model) {
-  throw("getDim is not yet implemented.")
-}, appendVarArgs = F)
+getDimension <- function(this, model) {
+    UseMethod("getDimension")
+}

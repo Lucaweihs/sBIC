@@ -4,13 +4,10 @@
 \alias{BinomialMixtures}
 \title{Construct a poset of binomial mixture models.}
 \usage{
-BinomialMixtures(numCovariates = 1, maxNumFactors = 0,
-                        phi = "default")
+BinomialMixtures(maxNumComponents = 1, phi = "default")
 }
 \arguments{
-\item{numCovariates}{the number of covariates in all of the models.}
-
-\item{maxNumFactors}{the maximum number of factors allowed in a model, will
+\item{maxNumComponents}{the maximum number of components allowed in a model, will
 create a hierarchy of all models with less than or equal
 to this number.}
 

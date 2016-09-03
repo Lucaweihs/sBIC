@@ -6,22 +6,23 @@
 #'
 #' @param X the data for which the maximum likelihood estimates will be computed
 #'          for the given collection of models. To see how this data should be
-#'          formatted check the documentation for setData.YourModelName (e.g.
-#'          setData.LCAs). If X is NULL then it is assumed that data for the
+#'          formatted check the documentation for \code{setData.YourModelName} (e.g.
+#'          \code{setData.LCAs}). If X is NULL then it is assumed that data for the
 #'          model has already been set, this can be useful if you want to
 #'          compute the sBIC with the same model and data several times (perhaps
 #'          after changing some parameter of the model) without having to reset
 #'          the data and thus recompute maximum log-likelihoods.
+#'
 #' @param mod an object representing a poset of models of the same type, e.g.
 #'            a collection of binomial mixture models. The currently implemented
 #'            models include:
 #'            \itemize{
-#'              \item{Binomial mixtures, see ?BinomialMixtures.}
-#'              \item{Factor analysis, see ?FactorAnalyses.}
-#'              \item{Latent class analysis, see ?LCAs.}
-#'              \item{Latent gaussian forests, see ?LatentForests.}
-#'              \item{Reduced rank regression, see ?ReducedRankRegressions.}
-#'              \item{1-dimensional gaussian mixtures, see ?GaussianMixtures.}
+#'              \item Binomial mixtures, see \code{\link{BinomialMixtures}}.
+#'              \item Factor analysis, see \code{\link{FactorAnalyses}}.
+#'              \item Latent class analysis, see \code{\link{LCAs}}.
+#'              \item Latent gaussian forests, see \code{\link{LatentForests}}.
+#'              \item Reduced rank regression, see \code{\link{ReducedRankRegressions}}.
+#'              \item 1-dimensional gaussian mixtures, see \code{\link{GaussianMixtures}}.
 #'            }
 #'
 #'@return A named list containing the components

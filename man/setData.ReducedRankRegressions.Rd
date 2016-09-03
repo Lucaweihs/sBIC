@@ -3,10 +3,13 @@
 \name{setData.ReducedRankRegressions}
 \alias{setData.ReducedRankRegressions}
 \title{Set data for the reduced rank regression models.}
+\usage{
+\method{setData}{ReducedRankRegressions}(this, data)
+}
 \arguments{
 \item{this}{the ReducedRankRegressions object.}
 
-\item{XY}{the data to be set, should be a named list with two components:
+\item{data}{the data to be set, should be a named list with two components:
 \itemize{
   \item{X}{A matrix containing the values of covariates for each
           sample. Here each COLUMN represents a single sample from

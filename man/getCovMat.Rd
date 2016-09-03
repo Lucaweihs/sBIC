@@ -4,6 +4,11 @@
 \alias{getCovMat}
 \alias{getCovMat.LatentForests}
 \title{Create a covariance matrix.}
+\usage{
+getCovMat(this, edgeCorrelations)
+
+\method{getCovMat}{LatentForests}(this, edgeCorrelations)
+}
 \arguments{
 \item{this}{the LatentForests object.}
 

@@ -4,6 +4,11 @@
 \alias{setPhi}
 \alias{setPhi.MixtureModels}
 \title{Set phi parameter.}
+\usage{
+setPhi(this, phi)
+
+\method{setPhi}{MixtureModels}(this, phi)
+}
 \arguments{
 \item{this}{the MixtureModels object.}
 

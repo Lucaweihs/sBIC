@@ -4,6 +4,11 @@
 \alias{getNumFactorsForModel}
 \alias{getNumFactorsForModel.FactorAnalyses}
 \title{Number of factors for a model.}
+\usage{
+getNumFactorsForModel(this, model)
+
+\method{getNumFactorsForModel}{FactorAnalyses}(this, model)
+}
 \arguments{
 \item{this}{the FactorAnalyses object.}
 

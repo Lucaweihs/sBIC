@@ -4,6 +4,11 @@
 \alias{getModelWithSupport}
 \alias{getModelWithSupport.LatentForests}
 \title{Get model with the given support.}
+\usage{
+getModelWithSupport(this, support)
+
+\method{getModelWithSupport}{LatentForests}(this, support)
+}
 \arguments{
 \item{this}{the LatentForests object.}
 

@@ -1,3 +1,5 @@
+#' @include MixtureModels.R
+NULL
 #' Construct a poset of binomial mixture models.
 #'
 #' Creates an object representing a collection of binomial mixture models. There
@@ -8,12 +10,10 @@
 #' before a model with 3 or more components.
 #'
 #' @name BinomialMixtures
-#' @usage BinomialMixtures(numCovariates = 1, maxNumFactors = 0,
-#'                         phi = "default")
+#' @usage BinomialMixtures(maxNumComponents = 1, phi = "default")
 #' @export BinomialMixtures
 #'
-#' @param numCovariates the number of covariates in all of the models.
-#' @param maxNumFactors the maximum number of factors allowed in a model, will
+#' @param maxNumComponents the maximum number of components allowed in a model, will
 #'                      create a hierarchy of all models with less than or equal
 #'                      to this number.
 #' @param phi parameter determining the prior placed on latent class
@@ -60,6 +60,8 @@ setConstructorS3("BinomialMixtures",
 
 #' @rdname   getTopOrder
 #' @name     getTopOrder.BinomialMixtures
+#' @usage    \method{getTopOrder}{BinomialMixtures}(this)
+#' @S3method getTopOrder BinomialMixtures
 #' @export   getTopOrder.BinomialMixtures
 setMethodS3("getTopOrder", "BinomialMixtures", function(this) {
   return(this$.topOrder)
@@ -67,6 +69,8 @@ setMethodS3("getTopOrder", "BinomialMixtures", function(this) {
 
 #' @rdname   getPrior
 #' @name     getPrior.BinomialMixtures
+#' @usage    \method{getPrior}{BinomialMixtures}(this)
+#' @S3method getPrior BinomialMixtures
 #' @export   getPrior.BinomialMixtures
 setMethodS3("getPrior", "BinomialMixtures", function(this) {
   return(this$.prior)
@@ -74,6 +78,8 @@ setMethodS3("getPrior", "BinomialMixtures", function(this) {
 
 #' @rdname   getNumModels
 #' @name     getNumModels.BinomialMixtures
+#' @usage    \method{getNumModels}{BinomialMixtures}(this)
+#' @S3method getNumModels BinomialMixtures
 #' @export   getNumModels.BinomialMixtures
 setMethodS3("getNumModels", "BinomialMixtures", function(this) {
   return(this$.numModels)
@@ -84,13 +90,17 @@ setMethodS3("getNumModels", "BinomialMixtures", function(this) {
 #' Sets the data to be used by the binomial mixture models when computing MLEs.
 #'
 #' @name     setData.BinomialMixtures
+#' @usage    \method{setData}{BinomialMixtures}(this, data)
+#' @S3method setData BinomialMixtures
 #' @export   setData.BinomialMixtures
 #'
 #' @param this the BinomialMixtures object.
-#' @param X the data to be set, should be a numeric vector of non-negative
+#' @param data the data to be set, should be a numeric vector of non-negative
 #'        integers.
 NULL
-setMethodS3("setData", "BinomialMixtures", function(this, X) {
+setMethodS3("setData", "BinomialMixtures", function(this, data) {
+
+  X = data
   this$.X = X
 
   flexmixFit = flexmix::initFlexmix(
@@ -118,6 +128,8 @@ setMethodS3("setData", "BinomialMixtures", function(this, X) {
 
 #' @rdname   getData
 #' @name     getData.BinomialMixtures
+#' @S3method getData BinomialMixtures
+#' @usage    \method{getData}{BinomialMixtures}(this)
 #' @export   getData.BinomialMixtures
 setMethodS3("getData", "BinomialMixtures", function(this) {
   if (is.null(this$.X)) {
@@ -128,6 +140,8 @@ setMethodS3("getData", "BinomialMixtures", function(this) {
 
 #' @rdname   getNumSamples
 #' @name     getNumSamples.BinomialMixtures
+#' @S3method getNumSamples BinomialMixtures
+#' @usage    \method{getNumSamples}{BinomialMixtures}(this)
 #' @export   getNumSamples.BinomialMixtures
 setMethodS3("getNumSamples", "BinomialMixtures", function(this) {
   return(nrow(this$getData()))
@@ -135,13 +149,17 @@ setMethodS3("getNumSamples", "BinomialMixtures", function(this) {
 
 #' @rdname   logLikeMle
 #' @name     logLikeMle.BinomialMixtures
+#' @S3method logLikeMle BinomialMixtures
+#' @usage    \method{logLikeMle}{BinomialMixtures}(this, model, ...)
 #' @export   logLikeMle.BinomialMixtures
-setMethodS3("logLikeMle", "BinomialMixtures", function(this, model) {
+setMethodS3("logLikeMle", "BinomialMixtures", function(this, model, ...) {
   return(this$.logLikes[model])
 }, appendVarArgs = F)
 
 #' @rdname   mle
 #' @name     mle.BinomialMixtures
+#' @S3method mle BinomialMixtures
+#' @usage    \method{mle}{BinomialMixtures}(this, model)
 #' @export   mle.BinomialMixtures
 setMethodS3("mle", "BinomialMixtures", function(this, model) {
   return(this$.mle[[model]])
@@ -149,6 +167,8 @@ setMethodS3("mle", "BinomialMixtures", function(this, model) {
 
 #' @rdname   getDimension
 #' @name     getDimension.BinomialMixtures
+#' @S3method getDimension BinomialMixtures
+#' @usage    \method{getDimension}{BinomialMixtures}(this, model)
 #' @export   getDimension.BinomialMixtures
 setMethodS3("getDimension", "BinomialMixtures", function(this, model) {
   return(this$.dimension[model])

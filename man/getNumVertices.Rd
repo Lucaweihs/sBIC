@@ -4,6 +4,11 @@
 \alias{getNumVertices}
 \alias{getNumVertices.LatentForests}
 \title{Maximum number of vertices.}
+\usage{
+getNumVertices(this)
+
+\method{getNumVertices}{LatentForests}(this)
+}
 \arguments{
 \item{this}{the LatentForests object.}
 }
