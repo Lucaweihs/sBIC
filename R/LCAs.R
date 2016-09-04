@@ -81,7 +81,7 @@ setMethodS3("getTopOrder", "LCAs", function(this) {
 #' @name     getPrior.LCAs
 #' @S3method getPrior LCAs
 #' @usage    \method{getPrior}{LCAs}{this)
-#' #' @export   getPrior.LCAs
+#' @export   getPrior.LCAs
 setMethodS3("getPrior", "LCAs", function(this) {
   return(this$.prior)
 }, appendVarArgs = F)
