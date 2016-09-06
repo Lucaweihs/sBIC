@@ -7,6 +7,8 @@ Description: Computes the sBIC for various singular model collections including:
     binomial mixtures, factor analysis models, gaussian mixtures,
     latent forests, latent class analyses, and reduced rank regressions.
 License: GPL (>=3)
+URL: https://github.com/Lucaweihs/sBIC
+BugReports: https://github.com/Lucaweihs/sBIC/issues
 Imports:
     poLCA,
     R.oo (>= 1.20.0),
