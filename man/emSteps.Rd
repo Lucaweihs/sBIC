@@ -4,6 +4,11 @@
 \alias{emSteps}
 \alias{emSteps.LatentForests}
 \title{One EM-iteration.}
+\usage{
+emSteps(this, support, S)
+
+\method{emSteps}{LatentForests}(this, support, S)
+}
 \arguments{
 \item{this}{the LatentForests object.}
 

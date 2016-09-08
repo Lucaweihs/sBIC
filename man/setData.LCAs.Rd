@@ -6,7 +6,7 @@
 \arguments{
 \item{this}{the LCAs object.}
 
-\item{X}{the data to be set, should be an integer valued matrix where each
+\item{data}{the data to be set, should be an integer valued matrix where each
 row represents a single sample from the observed variables.}
 }
 \description{

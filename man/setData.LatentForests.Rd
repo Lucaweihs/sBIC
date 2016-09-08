@@ -3,10 +3,13 @@
 \name{setData.LatentForests}
 \alias{setData.LatentForests}
 \title{Set data for the latent forest models.}
+\usage{
+\method{setData}{LatentForests}(this, data)
+}
 \arguments{
 \item{this}{the LatentForests object.}
 
-\item{X}{the data to be set, should matrix of observed values where each row
+\item{data}{the data to be set, should matrix of observed values where each row
 corresponds to a single sample.}
 }
 \description{

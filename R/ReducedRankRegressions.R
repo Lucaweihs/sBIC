@@ -1,3 +1,5 @@
+#' @include ModelPoset.R
+NULL
 #' Construct a poset of reduced rank regression models.
 #'
 #' Creates an object representing a collection of reduced rank regression
@@ -51,6 +53,8 @@ setConstructorS3("ReducedRankRegressions",
 
 #' @rdname   getTopOrder
 #' @name     getTopOrder.ReducedRankRegressions
+#' @usage    \method{getTopOrder}{ReducedRankRegressions}(this)
+#' @S3method getTopOrder ReducedRankRegressions
 #' @export   getTopOrder.ReducedRankRegressions
 setMethodS3("getTopOrder", "ReducedRankRegressions", function(this) {
   return(this$.topOrder)
@@ -58,6 +62,8 @@ setMethodS3("getTopOrder", "ReducedRankRegressions", function(this) {
 
 #' @rdname   getPrior
 #' @name     getPrior.ReducedRankRegressions
+#' @usage    \method{getPrior}{ReducedRankRegressions}(this)
+#' @S3method getPrior ReducedRankRegressions
 #' @export   getPrior.ReducedRankRegressions
 setMethodS3("getPrior", "ReducedRankRegressions", function(this) {
   return(this$.prior)
@@ -65,6 +71,8 @@ setMethodS3("getPrior", "ReducedRankRegressions", function(this) {
 
 #' @rdname   getNumModels
 #' @name     getNumModels.ReducedRankRegressions
+#' @usage    \method{getNumModels}{ReducedRankRegressions}(this)
+#' @S3method getNumModels ReducedRankRegressions
 #' @export   getNumModels.ReducedRankRegressions
 setMethodS3("getNumModels", "ReducedRankRegressions", function(this) {
   return(this$.numModels)
@@ -76,10 +84,12 @@ setMethodS3("getNumModels", "ReducedRankRegressions", function(this) {
 #' MLEs.
 #'
 #' @name     setData.ReducedRankRegressions
+#' @usage    \method{setData}{ReducedRankRegressions}(this, data)
+#' @S3method setData ReducedRankRegressions
 #' @export   setData.ReducedRankRegressions
 #'
 #' @param this the ReducedRankRegressions object.
-#' @param XY the data to be set, should be a named list with two components:
+#' @param data the data to be set, should be a named list with two components:
 #'        \itemize{
 #'          \item{X}{A matrix containing the values of covariates for each
 #'                  sample. Here each COLUMN represents a single sample from
@@ -88,9 +98,9 @@ setMethodS3("getNumModels", "ReducedRankRegressions", function(this) {
 #'                   for each sample. Again, each COLUMN is a single sample.}
 #'        }
 NULL
-setMethodS3("setData", "ReducedRankRegressions", function(this, XY) {
-  X = XY$X
-  Y = XY$Y
+setMethodS3("setData", "ReducedRankRegressions", function(this, data) {
+  X = data$X
+  Y = data$Y
   if (nrow(X) != this$.numCovariates || nrow(Y) != this$.numResponses ||
       ncol(X) != ncol(Y)) {
     throw("Input data XY has incorrect dimensions.")
@@ -103,6 +113,8 @@ setMethodS3("setData", "ReducedRankRegressions", function(this, XY) {
 
 #' @rdname   getData
 #' @name     getData.ReducedRankRegressions
+#' @usage    \method{getData}{ReducedRankRegressions}(this)
+#' @S3method getData ReducedRankRegressions
 #' @export   getData.ReducedRankRegressions
 setMethodS3("getData", "ReducedRankRegressions", function(this) {
   if (is.null(this$.X)) {
@@ -113,6 +125,8 @@ setMethodS3("getData", "ReducedRankRegressions", function(this) {
 
 #' @rdname   getNumSamples
 #' @name     getNumSamples.ReducedRankRegressions
+#' @usage    \method{getNumSamples}{ReducedRankRegressions}(this)
+#' @S3method getNumSamples ReducedRankRegressions
 #' @export   getNumSamples.ReducedRankRegressions
 setMethodS3("getNumSamples", "ReducedRankRegressions", function(this) {
   return(ncol(this$getData()$X))
@@ -120,6 +134,8 @@ setMethodS3("getNumSamples", "ReducedRankRegressions", function(this) {
 
 #' @rdname   parents
 #' @name     parents.ReducedRankRegressions
+#' @usage    \method{parents}{ReducedRankRegressions}(this, model)
+#' @S3method parents ReducedRankRegressions
 #' @export   parents.ReducedRankRegressions
 setMethodS3("parents", "ReducedRankRegressions", function(this, model) {
   if (model > this$getNumModels() ||
@@ -143,9 +159,13 @@ setMethodS3("parents", "ReducedRankRegressions", function(this, model) {
 #'
 #' @param this the ReducedRankRegressions object.
 #' @param model the model number.
-NULL
+logLikeMleHelper <- function(this, model) {
+    UseMethod("logLikeMleHelper")
+}
 #' @rdname   logLikeMleHelper
 #' @name     logLikeMleHelper.ReducedRankRegressions
+#' @usage    \method{logLikeMleHelper}{ReducedRankRegressions}(this, model)
+#' @S3method logLikeMleHelper ReducedRankRegressions
 #' @export   logLikeMleHelper.ReducedRankRegressions
 setMethodS3("logLikeMleHelper", "ReducedRankRegressions", function(this, model) {
   if (!is.matrix(this$.unconstrainedMLE)) {
@@ -162,8 +182,10 @@ setMethodS3("logLikeMleHelper", "ReducedRankRegressions", function(this, model) 
 
 #' @rdname   logLikeMle
 #' @name     logLikeMle.ReducedRankRegressions
+#' @usage    \method{logLikeMle}{ReducedRankRegressions}(this, model, ...)
+#' @S3method logLikeMle ReducedRankRegressions
 #' @export   logLikeMle.ReducedRankRegressions
-setMethodS3("logLikeMle", "ReducedRankRegressions", function(this, model) {
+setMethodS3("logLikeMle", "ReducedRankRegressions", function(this, model, ...) {
   if (!is.na(this$.logLikes[model])) {
     return(this$.logLikes[model])
   }
@@ -197,6 +219,8 @@ setMethodS3("logLikeMle", "ReducedRankRegressions", function(this, model) {
 
 #' @rdname   learnCoef
 #' @name     learnCoef.ReducedRankRegressions
+#' @usage    \method{learnCoef}{ReducedRankRegressions}(this, superModel, subModel)
+#' @S3method learnCoef ReducedRankRegressions
 #' @export   learnCoef.ReducedRankRegressions
 setMethodS3("learnCoef", "ReducedRankRegressions", function(this, superModel, subModel) {
   ## MxH, NxH matrix sizes
@@ -252,6 +276,8 @@ setMethodS3("learnCoef", "ReducedRankRegressions", function(this, superModel, su
 
 #' @rdname   getDimension
 #' @name     getDimension.ReducedRankRegressions
+#' @usage    \method{getDimension}{ReducedRankRegressions}(this, model)
+#' @S3method getDimension ReducedRankRegressions
 #' @export   getDimension.ReducedRankRegressions
 setMethodS3("getDimension", "ReducedRankRegressions", function(this, model) {
   if (!anyNA(this$.dimension[model])) {

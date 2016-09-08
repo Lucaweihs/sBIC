@@ -13,6 +13,10 @@
 #' sBIC function.
 #'
 #' @importFrom Rcpp evalCpp
+#' @importFrom R.oo Object setConstructorS3 extend
+#' @importFrom R.methodsS3 setMethodS3 throw
+#' @importFrom mclust Mclust mclustBIC meV
+#' @importFrom stats as.formula cor cov factanal rexp runif
 #' @useDynLib sBIC
 #'
 #' @name sBIC-package

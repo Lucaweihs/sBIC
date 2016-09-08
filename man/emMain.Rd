@@ -4,6 +4,11 @@
 \alias{emMain}
 \alias{emMain.LatentForests}
 \title{EM-algorithm for latent forests.}
+\usage{
+emMain(this, model, starts, maxIter, tol)
+
+\method{emMain}{LatentForests}(this, model, starts=5, maxIter=1000, tol=1e-4)
+}
 \arguments{
 \item{this}{the LatentForests object.}
 

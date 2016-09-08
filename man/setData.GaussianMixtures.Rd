@@ -3,12 +3,15 @@
 \name{setData.GaussianMixtures}
 \alias{setData.GaussianMixtures}
 \title{Set data for the gaussian mixture models.}
+\usage{
+\method{setData}{GaussianMixtures}(this, data)
+}
 \arguments{
 \item{this}{the GaussianMixtures object.}
 
-\item{X}{the data to be set, a matrix where each row corresponds to a single
+\item{data}{the data to be set, a matrix where each row corresponds to a single
 multivariate observation. If the corresponding GaussianMixtures object
-has ambient dimension 1, then X may be a numeric vector of
+has ambient dimension 1, then data may be a numeric vector of
 observations.}
 }
 \description{

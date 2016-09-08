@@ -4,6 +4,11 @@
 \alias{getAllEdges}
 \alias{getAllEdges.LatentForests}
 \title{Edges representing the largest model.}
+\usage{
+getAllEdges(this, model)
+
+\method{getAllEdges}{LatentForests}(this, model)
+}
 \arguments{
 \item{this}{the LatentForests object.}
 
