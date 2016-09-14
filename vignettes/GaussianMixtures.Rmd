@@ -1,0 +1,86 @@
+---
+title: "Gaussian Mixtures"
+output: rmarkdown::pdf_document
+vignette:  >
+  %\VignetteEngine{knitr::rmarkdown}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(sBIC)
+```
+
+```{r}
+library(MASS)
+data(galaxies)
+X = galaxies / 1000
+```
+
+```{r}
+maxNumComponents = 10 # components to be considered
+
+
+## sBIC1
+set.seed(1234)
+m = sBIC(X, GaussianMixtures(maxNumComponents, phi=1, restarts=100))
+
+## on log scale
+which.max(m$sBIC)
+which.max(m$BIC)
+
+## Figure 6.3
+plot(
+  m$BIC - m$BIC[1],
+  pch = 1,
+  ylim = c(-1, 30),
+  axes = FALSE,
+  main = "Galaxies data:  Mixture of Gaussians (unequal variances)",
+  ylab = expression(BIC - BIC(M[1])),
+  xlab = "Number of components"
+)
+box()
+axis(2, las = 2)
+axis(1, at = 1:maxNumComponents)
+points(m$sBIC - m$sBIC[1], pch = 3)
+legend(1,
+       30,
+       c(expression(BIC), expression(bar(sBIC)[1])),
+       pch = c(1, 3),
+       y.intersp = 1.2)
+```
+
+```{r}
+## from Richardson & Green (Table 1)
+post.MCMC = c(0.000, 0.000, 0.061, 0.128, 0.182, 0.199, 0.160,
+              0.109, 0.071, 0.040, 0.023, 0.013, 0.006, 0.003)[1:maxNumComponents]
+post.MCMC = post.MCMC / sum(post.MCMC)
+```
+
+```{r}
+postBIC <- function(BIC) {
+  prob <- exp(BIC - max(BIC))
+  prob/sum(prob)
+}
+normalizedProbs = rbind("BIC"=postBIC(m$BIC), "sBIC1"=postBIC(m$sBIC), "MCMC"=post.MCMC)
+```
+
+```{r}
+
+barplot(
+  normalizedProbs,
+  beside = TRUE,
+  col = "black",
+  angle = c(0, 45, 90),
+  density = c(0, 20, 100),
+  legend = c(expression(BIC), expression(bar(sBIC)[1]), expression(MCMC)),
+  xlab = "Number of components",
+  main = "Galaxies data:  Mixture of Gaussians (unequal variances)",
+  args.legend = list(y.intersp = 1.2),
+  names.arg = 1:maxNumComponents
+)
+```
+
+

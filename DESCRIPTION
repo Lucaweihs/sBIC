@@ -22,7 +22,9 @@ Imports:
 LinkingTo: Rcpp
 Suggests:
     testthat,
-    mvtnorm
+    mvtnorm,
+    knitr
+VignetteBuilder: knitr
 RoxygenNote: 5.0.1
 Collate:
     'ModelPoset.R'

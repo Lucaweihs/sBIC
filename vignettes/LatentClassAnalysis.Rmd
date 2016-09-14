@@ -1,0 +1,162 @@
+---
+title: "Latent Class Analysis"
+output: rmarkdown::pdf_document
+vignette:  >
+  %\VignetteEngine{knitr::rmarkdown}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+```{r}
+library(sBIC)
+```
+
+```{r}
+createTable = function(maxNumClasses, trueNumClasses, numVariables,
+                       numStatesForVariables, P, probMat, phis, sampleSizes,
+                       nsim) {
+  probs = vector("list", numVariables)
+  for (i in 1:numVariables) {
+    probs[[i]] = matrix(0, trueNumClasses, numStatesForVariables)
+    probs[[i]][, 1] = probMat[i,]
+    probs[[i]][, 2] = 1 - probMat[i,]
+  }
+
+  bicResultsMat = matrix(0, length(sampleSizes), maxNumClasses)
+  dimnames(bicResultsMat) = list(as.character(sampleSizes), as.character(1:maxNumClasses))
+
+  sbicResultsMats = vector("list", length(phis))
+  for (j in 1:length(phis)) {
+    sbicResultsMats[[j]] = matrix(0, length(sampleSizes), maxNumClasses)
+    dimnames(sbicResultsMats[[j]]) = list(as.character(sampleSizes), as.character(1:maxNumClasses))
+  }
+
+  for (N in sampleSizes) {
+    print(N)
+    resultsMat = foreach(j = 1:nsim, .combine = "rbind") %dorng% {
+      X = poLCA.simdata(N = N, probs = probs, P = P)$dat
+      lcas = LCAs(maxNumClasses, numVariables, numStatesForVariables, phis[1])
+      results = sBIC(X, lcas)
+
+      resultsVec = numeric(length(phis) + 1)
+      resultsVec[1] = which.max(results$BIC)
+      resultsVec[2] = which.max(results$sBIC)
+      if (length(phis) > 1) {
+        for (jj in 2:length(phis)) {
+          lcas$setPhi(phis[jj])
+          results = sBIC(NULL, lcas)
+          resultsVec[jj + 1] = which.max(results$sBIC)
+        }
+      }
+      resultsVec
+    }
+
+    bicResults = factor(resultsMat[,1], levels = seq(1:maxNumClasses))
+    bicResultsMat[as.character(N),] = table(bicResults)
+
+    for (jj in 1:length(phis)) {
+      sbicResults = factor(resultsMat[, jj + 1], levels = seq(1:maxNumClasses))
+      sbicResultsMats[[jj]][as.character(N), ] = table(sbicResults)
+    }
+
+    cat(N, "\t", "BIC", table(bicResults), "\t")
+    for (jj in 1:length(phis)) {
+      cat(paste("BICS", phis[jj], sep = ""), sbicResultsMats[[jj]][as.character(N), ], "\t")
+    }
+    cat("\n")
+  }
+  return(list(bicResultsMat = bicResultsMat, sbicResultsMats = sbicResultsMats))
+}
+
+# Parameters used by all
+nsim = 5
+sampleSizes = c(50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 750, 1000)
+
+# 8 Simple Equal
+set.seed(10)
+maxNumClasses = 6
+trueNumClasses = 4
+numVariables = 8
+numStatesForVariables = 2
+P = rep(1 / trueNumClasses, trueNumClasses)  ## equal
+phis = c((1:20) / 2, 1e6)
+p1 = 0.85
+p2 = 0.1
+p3 = 0.2
+probMat = matrix(c(
+  p1,p2,p2,p2,
+  p1,p3,p3,p3,
+  p2,p1,p2,p2,
+  p3,p1,p3,p3,
+  p2,p2,p1,p2,
+  p3,p3,p1,p3,
+  p2,p2,p2,p1,
+  p3,p3,p3,p1), numVariables, trueNumClasses, byrow = TRUE)
+createTable(maxNumClasses, trueNumClasses, numVariables,
+            numStatesForVariables, P, probMat, phis, sampleSizes, nsim)
+
+# 8 Simple Unequal
+set.seed(10)
+P = c(5, 10, 15, 75) / 100
+createTable(maxNumClasses, trueNumClasses, numVariables,
+            numStatesForVariables, P, probMat, phis, sampleSizes, nsim)
+
+# 15 Simple
+# Simple Equal
+set.seed(10)
+maxNumClasses = 6
+trueNumClasses = 3
+numVariables = 15
+numStatesForVariables = 2
+P = rep(1 / trueNumClasses, trueNumClasses)  ## equal
+phis = c((1:32) / 2, 1e6)
+p1 = 0.85
+p2 = 0.1
+p3 = 0.2
+probMat =  matrix(c(
+  p1,p2,p2,
+  p1,p3,p3,
+  p1,p2,p2,
+  p1,p3,p3,
+  p1,p2,p2,
+  p2,p1,p3,
+  p3,p1,p2,
+  p2,p1,p3,
+  p3,p1,p2,
+  p2,p1,p3,
+  p3,p3,p1,
+  p2,p2,p1,
+  p3,p3,p1,
+  p2,p2,p1,
+  p3,p3,p1), numVariables, trueNumClasses, byrow=TRUE)
+createTable(maxNumClasses, trueNumClasses, numVariables,
+            numStatesForVariables, P, probMat, phis, sampleSizes, nsim)
+
+# 10 Complex
+set.seed(10)
+maxNumClasses = 6
+trueNumClasses = 4
+numVariables = 10
+numStatesForVariables = 2
+P = rep(1 / trueNumClasses, trueNumClasses)  ## equal
+phis = c((1:20) / 2, 1e6)
+p1 = 0.85
+p2 = 0.1
+p3 = 0.2
+probMat = matrix(c(
+  p1,p1,p2,p2,
+  p1,p1,p3,p3,
+  p1,p1,p2,p2,
+  p1,p1,p3,p3,
+  p1,p1,p2,p2,
+  p1,p3,p1,p3,
+  p1,p2,p1,p2,
+  p1,p3,p1,p3,
+  p1,p2,p1,p2,
+  p1,p3,p1,p3), numVariables, trueNumClasses, byrow=TRUE)
+```
+

@@ -1,0 +1,61 @@
+---
+title: "Factor Analysis"
+output: rmarkdown::pdf_document
+vignette:  >
+  %\VignetteEngine{knitr::rmarkdown}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(sBIC)
+
+# Monthly international exchanges rates using the data studied in
+# West and Harrison (1997, pp.610-618).
+
+# FIRST COME SOME QUANTITIES STATED IN THE PAPER
+
+# Posterior from reversible jump MCMC
+
+post1 = c(0.00, 0.88, 0.12)
+post2 = c(0.00, 0.98, 0.02)  ## more reliable ordering?
+```
+
+# Computing the sBIC for the Lopes and West (2004) data.
+
+```{r}
+X = read.table("lopeswest.dat", header = TRUE)
+X = subset(X, select=c("U.S.A", "Canada", "Yen", "Franc", "Lira", "Mark"))
+```
+
+```{r}
+factorAnalyses = FactorAnalyses(numCovariates=ncol(X), maxNumFactors=3)
+# Learning coefficients
+for (i in 1:4) {
+  for (j in 1:i) {
+    cat(factorAnalyses$learnCoef(i, j)$lambda, "\t")
+  }
+  cat("\n")
+}
+```
+
+## Data treated in Lopes and West are standardized one-lag differences
+
+```{r}
+Y = scale(diff(as.matrix(X)))
+results = sBIC(Y, factorAnalyses)
+```
+
+```{r}
+BICpost <- function(BIC) {
+  PostUnNorm = exp((BIC - max(BIC)))
+  zapsmall( PostUnnorm/ sum(PostUnnorm) )
+}
+```
+
+```{r}
+BICpost(results$BIC)
+BICpost(results$sBIC)
+```
