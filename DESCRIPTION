@@ -23,9 +23,9 @@ LinkingTo: Rcpp
 Suggests:
     testthat,
     mvtnorm,
-    knitr,
+    rmarkdown,
     MASS
-VignetteBuilder: knitr
+VignetteBuilder: rmarkdown
 RoxygenNote: 5.0.1
 Collate:
     'ModelPoset.R'
