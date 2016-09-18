@@ -3,14 +3,11 @@ title: "Binomial Mixtures"
 output: rmarkdown::pdf_document
 vignette:  >
   %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{Binomial Mixtures}
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-```
-
-```{r}
-library(sBIC)
 ```
 
 Section 6.1 of Drton and Plummer (2017) considers singular BIC calculations for binomial mixture models. This section uses simulated data. We therefore introduce a convenience function for simulating from a binomial mixture model.
@@ -51,6 +48,7 @@ To illustrate the singular BIC for binomial mixture models we step through the c
 ```{r}
 set.seed(11)
 Y = rBinomMix(100, alpha, theta, numTrials)
+library(sBIC)
 binomMix = BinomialMixtures(maxNumComponents, phi = 1)
 ```
 

@@ -23,7 +23,8 @@ LinkingTo: Rcpp
 Suggests:
     testthat,
     mvtnorm,
-    knitr
+    knitr,
+    MASS
 VignetteBuilder: knitr
 RoxygenNote: 5.0.1
 Collate:

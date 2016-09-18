@@ -3,6 +3,7 @@ title: "Factor Analysis"
 output: rmarkdown::pdf_document
 vignette:  >
   %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{Factor Analysis}
 ---
 
 ```{r setup, include=FALSE}
@@ -10,13 +11,9 @@ vignette:  >
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r}
-library(sBIC)
-```
+Section 5.2 of Drton and Plummer (2017) considers a factor analysis model applied to the data analysed by Lopes and West (2004) originally published in West and Harrison (1997, pp.610-618). The data concern average monthly exchange rates of six currencies relative to the pound sterling (GBP) from January 1975 to December 1986. 
 
-Section 5.2 of Drton and Plummer (2017) considers a factor analysis model applied to the data analysed by Lopes and West (2004) originally published in West and Harrison (1997, pp.610-618).
-
-The data concern average monthly exchange rates of six currencies relative to the pound sterling (GBP) from January 1975 to December 1986. The data are read in as a data frame then converted to a matrix  `X` containing only the currency values. The data to be passed to the factor analysis model take the form of  a matrix `Y` of lag-1 differences in which each column is standardized to have mean 0 and standard deviation 1.
+The data are read in as a data frame then converted to a matrix  `X` containing only the currency values. The data to be passed to the factor analysis model take the form of  a matrix `Y` of lag-1 differences in which each column is standardized to have mean 0 and standard deviation 1.
 
 ```{r}
 X = read.table("lopeswest.dat", header = TRUE)
@@ -24,15 +21,22 @@ X = as.matrix(X[, c("U.S.A.", "Canada", "Yen", "Franc", "Lira", "Mark")])
 Y = scale(diff(X))
 ```
 
-Under a factor analysis model $\text{Var}(Y) = \Sigma + \beta \beta'$ where $\Sigma$ is a diagonal matrix and $\beta$ is a $6 \times i$ matrix of factor loadings. Note that the minimal model is $i=0$ corresponding to independence of the columns of $Y$.
+Under a factor analysis model $\text{Var}(Y) = \Sigma + \beta \beta^T$ where $\Sigma$ is a diagonal matrix (*uniquenesses*) and $\beta$ is a $6 \times i$ matrix (*factor loadings*). Model singularities occur when the rank of $\beta$ is assumed to be $i$, but the true data-generating model has rank $j < i$.
 
-The `FactorAnalyses()` function creates an object representing a collection of factor analysis models with a given number of covariates, up to a maximum number of factors. The number of covariates is 6, i.e. the number of columns of `Y`. Following Lopes and West (2004) the maximum number of factors is set to 3.
+Factor analysis models are fitted with the `stats::factanal()` function. For example, the two-factor model is given by
 
 ```{r}
+factanal(Y, factors=2)
+```
+
+The frequentist analysis suggests that 2 factors are sufficient for these data. For Bayesian model choice using sBIC the `FactorAnalyses()` function creates an object representing a collection of factor analysis models with a given number of covariates, up to a maximum number of factors. For the Lopes and West (2004) data, the number of covariates is 6, i.e. the number of columns of `Y`. The maximum number of factors that can be fitted to 6 variables is 3: this model has degrees of freedom 0 and so fits $\text{Var}(Y)$ perfectly.
+
+```{r}
+library(sBIC)
 factorAnalyses = FactorAnalyses(numCovariates=ncol(Y), maxNumFactors=3)
 ```
 
-The learning coefficients $\lambda_{ij}$ can  be extracted from the resulting object. The multiplicity is equal to 1 for all models (not shown).
+The learning coefficients $\lambda_{ij}$ can  be extracted from the resulting object. Note that the minimal model is $i=0$ corresponding to independence of the columns of $Y$.
 
 ```{r}
 lambda <- matrix("", 4, 4, dimnames=list(paste0("i=",0:3), paste0("j=",0:3)))
@@ -44,9 +48,9 @@ for (i in 1:4) {
 knitr::kable(lambda, caption="Learning coefficients $\\lambda_{ij}$ for sBIC")
 ```
 
-Table 1 reproduces Table 2 of Drton and Plummer (2017) showing learning coefficients for model with $i$ factors embeded in a model with $j > i$ factors.
+Table 1 reproduces Table 2 of Drton and Plummer (2017) showing learning coefficients for model with $j$ factors embeded in a model with $i \geq j$ factors. The multiplicity is equal to 1 for all models (not shown).
 
-The singular BIC is calculated by passing to the `sBIC()` function the data `Y` and the object `factorAnalysis` representing the model collection. Model fitting is carried out by the `stats::factanal()` function.
+The singular BIC is calculated by passing to the `sBIC()` function the data `Y` and the object `factorAnalysis` representing the model collection.
 
 ```{r}
 results = sBIC(Y, factorAnalyses)
