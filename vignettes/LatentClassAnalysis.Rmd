@@ -16,7 +16,8 @@ In latent class analysis (LCA), the joint distribution of $r$ *items* $Y_1 \ldot
 
 Here we consider binary LCA models, in which the items can take one of two states, labelled "1" and "2" (Note that the `sBIC` package is capable of handling LCA models with more than two states).
 
-In order to simulate data from an LCA model, the following parameters must be set: 
+In order to simulate data from an LCA model, the following parameters must be set:
+
 1. `alpha`, a vector determining the prior probabilities of membership in each class, i.e. $\alpha_h$ is the probability of being in class $h$ for $h=1 \ldots i$.
 2. `P`, an $r \times i$ matrix such that $P_{lh}$ gives the probability that $Y_l = 2$ given membership of class $h$.
 
@@ -39,7 +40,7 @@ P = matrix(c(
   p3,p3,p3,p1), nrow=8, ncol=4, byrow = TRUE)
 ```
 
-The `poLCA::simLCA()` function simulates data from an LCA model. It requires the specification of the conditional probabilities in a different form (specifically, as a list of probability matrices) so we use a wrapper function `simLCA()`. The `simLCA()` function is designed to facilitate simulation studies, so it allows multiple simulated data sets of a given sample size to be generated. The simulated data sets are returned as a list of length `nsim`.
+The `simLCA()` function from the `poLCA` package (Drew and Linzer, 2011) simulates data from an LCA model. It requires the specification of the conditional probabilities in a different form (specifically, as a list of probability matrices) so we use a wrapper function `simLCA()`. The `simLCA()` function is designed to facilitate simulation studies, so it allows multiple simulated data sets of a given sample size to be generated. The simulated data sets are returned as a list of matrices length `nsim`.
 
 ```{r}
 simLCA <- function(alpha, ProbMat, sampleSize, nsim) {
@@ -178,3 +179,8 @@ knitr::kable(bictab, row.names=TRUE)
 Table: Frequency distribution of the number of classes chosen by BIC and $\overline{sBIC}_\phi$ for values of $\phi$ around 4.
 
 Table 1 shows the resulting frequency table. Regular BIC clearly underfits the model in these simulations. Similarly $\overline{sBIC}_5$ shows signs of underfitting while $\overline{sBIC}_3$ shows overfitting.
+
+## Bibliography
+
+*  Drew A. Linzer, Jeffrey B. Lewis (2011). poLCA: An R Package for Polytomous Variable Latent Class Analysis. Journal of Statistical Software, 42(10), 1-29. URL http://www.jstatsoft.org/v42/i10/.
+* Drton M. and Plummer M. (2017), A Bayesian information criterion for singular models. J. R. Statist. Soc. B; 79: 1-38.

@@ -11,11 +11,11 @@ vignette:  >
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-In a reduced rank regression model, a vector $Y$ of length $N$ depends on a vector $X$ of length $M$ via the conditional expectation $\mbox{E}(Y \mid X) = B X$. It is assumed that $\text{E}(X) = 0$, $\text{E}(Y) = 0$. The regression model is ``reduced rank'' because the matrix $B$ of regression coefficients may not be of full rank. Possible values of the rank of $B$ range from $0$ ($X$ and $Y$ are independent) to $\min(M,N)$ (the full rank model). If the rank is assumed to be $i$ then model singularities occur when the true data-generating model has rank $j < i$.
+In a reduced rank regression model, multivariate vectors $Y \in R^N$ and $X \in R^M$ satisfy $\text{E}(X)=0$, $\text{E}(Y) = 0$, $\text{E}(Y|X) = BX$. The $N \times M$ matrix $B$ of regression coefficients may not be of full rank. Possible values of the rank of $B$ range from $0$ ($X$ and $Y$ are independent) to $\min(M,N)$ (the full rank model). If the rank is assumed to be $i$ then model singularities occur when the true data-generating model has rank $j < i$.
 
 ## Simulating reduced rank regression data
 
-The `simRR()` function simulates `n` observations from a reduced rank regression model of rank `r`. The parameters `N` and `M` determine the length of $Y$ and $X$, respectively; `n` is the number of observations; and `r` is the rank of the coefficient matrix $B$. The output is a list of matrices `X` and `Y` such that each *column* represents an individual observation (i.e. `X` is transposed with respect to the design matrix used in `lm()`)
+This vignette uses simulated data, so we create a convenience function `simRR()` to simulate `n` observations from a reduced rank regression model of rank `r`. The parameters `N` and `M` determine the length of $Y$ and $X$, respectively; `n` is the number of observations; and `r` is the rank of the coefficient matrix $B$. The output is a list of matrices `X` and `Y` such that each *column* represents an individual observation (i.e. `X` is transposed with respect to the usual design matrix)
 
 ```{r}
 simRR <- function(N, M, n, r) {
@@ -57,7 +57,7 @@ library(sBIC)
 rreg = ReducedRankRegressions(numResponses=N, numCovariates=M, maxRank=min(M, N))
 ```
 
-The output from the `ReducedRankRegressions()` function is combined with the data in the `sBIC()` function to produce the singular BIC as well as the Shwarz BIC. Here we use a simulated data set with 100 observations.
+The output from the `ReducedRankRegressions()` function is combined with the data in the `sBIC()` function to produce the singular BIC as well as the Schwarz BIC. Here we use a simulated data set `XY` with 100 observations.
 
 ```{r}
 XY = simRR(N, M, 100, r)
@@ -115,4 +115,11 @@ for (i in 1:6) {
 }
 ```
 
-Figure 1 shows the frequency of the rank selections by BIC and sBIC as the sample size increases. BIC clearly under-fits for small sample sizes, although it does converge to the true rank of 5 for large samples (n=1000). Singular BIC converges more quickly (n=300). Figure 1 partly reproduces Figure 2 of Drton and Plummer (2017). The latter also includes the Widely Applicable Bayesian Information Criterion (WBIC) of Watanabe (2013).
+Figure 1 partly reproduces Figure 2 of Drton and Plummer (2017). The latter also includes a comparison with the Widely Applicable Bayesian Information Criterion (WBIC) of Watanabe (2013).
+
+## Bibliography
+
+* Aoyagi, M. and Watanabe, S. (2005) Stochastic complexities of reduced rank regression in Bayesian estimation.
+Neurl Netwrks; 18: 924-933.
+* Drton M. and Plummer M. (2017), A Bayesian information criterion for singular models. J. R. Statist. Soc. B; 79: 1-38.
+* Watanabe, S. (2013) A widely applicable Bayesian information criterion. J. Mach. Learn. Res.; 14: 867-897

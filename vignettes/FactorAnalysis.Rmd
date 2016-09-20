@@ -29,7 +29,7 @@ Factor analysis models are fitted with the `stats::factanal()` function. For exa
 factanal(Y, factors=2)
 ```
 
-The frequentist analysis suggests that 2 factors are sufficient for these data. For Bayesian model choice using sBIC the `FactorAnalyses()` function creates an object representing a collection of factor analysis models with a given number of covariates, up to a maximum number of factors. For the Lopes and West (2004) data, the number of covariates is 6, i.e. the number of columns of `Y`. The maximum number of factors that can be fitted to 6 variables is 3: this model has degrees of freedom 0 and so fits $\text{Var}(Y)$ perfectly.
+The frequentist analysis suggests that 2 factors are sufficient for these data. For Bayesian model choice using sBIC the `FactorAnalyses()` function creates an object representing a collection of factor analysis models with a given number of covariates, up to a maximum number of factors. For the Lopes and West (2004) data, the number of covariates is 6, i.e. the number of columns of `Y`. The maximum number of factors that can be fitted to 6 variables is 3.
 
 ```{r}
 library(sBIC)
@@ -54,7 +54,7 @@ The singular BIC is calculated by passing to the `sBIC()` function the data `Y` 
 
 ```{r}
 results = sBIC(Y, factorAnalyses)
-results
+print(results)
 ```
 
 If the singular BIC is considered to be an approximation to the log of the marginal likelihood, then it can be converted to an approximate posterior distribution by exponentiating and then normalizing the sBIC values. The convenience function `BICpost` carries out this transformation.
@@ -87,7 +87,6 @@ The approximate posterior derived from sBIC resembles the posterior from Table 5
 
 #Bibliography
 
-Lopes, HF and West M (2004). Bayesian model assessment in factor analysis, Statistica Sinica, 2004, 14, 41-67.
-
-West, M. and Harrison, P. J. (1997). Bayesian Forecasting and Dynamic Model. Springer
--Verlag, New York.
+* Drton M. and Plummer M. (2017), A Bayesian information criterion for singular models. J. R. Statist. Soc. B; 79: 1-38.
+* Lopes, HF and West M (2004). Bayesian model assessment in factor analysis, Statistica Sinica, 14, 41-67.
+* West, M. and Harrison, P.J. (1997). Bayesian Forecasting and Dynamic Model. Springer-Verlag, New York.
