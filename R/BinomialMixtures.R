@@ -16,8 +16,7 @@ NULL
 #' @param maxNumComponents the maximum number of components allowed in a model, will
 #'                      create a hierarchy of all models with less than or equal
 #'                      to this number.
-#' @param phi parameter determining the prior placed on latent class
-#'        probabilities.
+#' @param phi parameter controlling the strength of the sBIC penalty.
 #'
 #' @return An object representing the collection.
 NULL

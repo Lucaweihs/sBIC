@@ -19,8 +19,7 @@ NULL
 #' @param numVariables the number of observed variables.
 #' @param numStatesForVariables the number of states for each observed variable,
 #'        at the moment these must all be equal.
-#' @param phi parameter determining the prior placed on latent class
-#'        probabilities.
+#' @param phi parameter controlling the strength of the sBIC penalty.
 #'
 #' @return An object representing the collection.
 NULL

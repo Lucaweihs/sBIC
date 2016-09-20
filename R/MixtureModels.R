@@ -4,14 +4,13 @@ NULL
 #'
 #' An abstract class representing a collection of mixture models that are
 #' linearly ordered by the number of components in the mixture. This class
-#' should not be instantiated, just extended. 
+#' should not be instantiated, just extended.
 #'
 #' @name MixtureModels
 #' @usage MixtureModels(phi = "default")
 #' @export MixtureModels
 #'
-#' @param phi parameter determining the prior placed on latent class
-#'        probabilities.
+#' @param phi parameter controlling the strength of the sBIC penalty.
 #'
 #' @return An object representing the collection.
 #'
