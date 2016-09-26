@@ -18,8 +18,7 @@ NULL
 #'                         consider in a mixture.
 #' @param dim the ambient dimension in which the gaussian mixtures reside.
 #'        Default is 1, corresponding to gaussian mixtures on the real line.
-#' @param phi parameter determining the prior placed on latent class
-#'        probabilities.
+#' @param phi parameter controlling the strength of the sBIC penalty.
 #'
 #' @param restarts the number of random restarts to perform when computing the
 #'        MLE.

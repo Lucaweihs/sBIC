@@ -1,8 +1,10 @@
 Package: sBIC
 Type: Package
 Title: Computing the Singular BIC for Multiple Models
-Version: 0.1.0
-Authors@R: person("Luca", "Weihs", role=c("aut","cre"), email="lucaw@uw.edu")
+Version: 0.2.0
+Date: 2016-09-20
+Authors@R: c(person("Luca", "Weihs", role=c("aut","cre"), email="lucaw@uw.edu"),
+             person("Martyn", "Plummer", role="ctb"))
 Description: Computes the sBIC for various singular model collections including:
     binomial mixtures, factor analysis models, gaussian mixtures,
     latent forests, latent class analyses, and reduced rank regressions.
@@ -22,7 +24,10 @@ Imports:
 LinkingTo: Rcpp
 Suggests:
     testthat,
-    mvtnorm
+    mvtnorm,
+    knitr,
+    MASS
+VignetteBuilder: knitr
 RoxygenNote: 5.0.1
 Collate:
     'ModelPoset.R'
