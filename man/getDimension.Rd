@@ -18,6 +18,8 @@ getDimension(this, model)
 
 \method{getDimension}{GaussianMixtures}(this, model)
 
+\method{getDimension}{LCAs}(this, model)
+
 \method{getDimension}{LatentForests}(this, model)
 
 \method{getDimension}{ReducedRankRegressions}(this, model)

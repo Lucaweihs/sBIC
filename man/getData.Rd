@@ -18,6 +18,8 @@ getData(this)
 
 \method{getData}{GaussianMixtures}(this)
 
+\method{getData}{LCAs}(this)
+
 \method{getData}{LatentForests}(this)
 
 \method{getData}{ReducedRankRegressions}(this)

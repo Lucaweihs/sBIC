@@ -18,6 +18,10 @@ getTopOrder(this)
 
 \method{getTopOrder}{GaussianMixtures}(this)
 
+\method{getTopOrder}{LCAs}(this)
+
+\method{getTopOrder}{LatentForests}(this)
+
 \method{getTopOrder}{ReducedRankRegressions}(this)
 }
 \arguments{

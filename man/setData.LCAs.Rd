@@ -3,6 +3,9 @@
 \name{setData.LCAs}
 \alias{setData.LCAs}
 \title{Set data for the LCA models.}
+\usage{
+\method{setData}{LCAs}(this, data)
+}
 \arguments{
 \item{this}{the LCAs object.}
 

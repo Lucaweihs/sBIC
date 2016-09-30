@@ -18,6 +18,8 @@ getNumModels(this)
 
 \method{getNumModels}{GaussianMixtures}(this)
 
+\method{getNumModels}{LCAs}(this)
+
 \method{getNumModels}{LatentForests}(this)
 
 \method{getNumModels}{ReducedRankRegressions}(this)

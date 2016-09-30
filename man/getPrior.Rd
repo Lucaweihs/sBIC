@@ -18,6 +18,8 @@ getPrior(this)
 
 \method{getPrior}{GaussianMixtures}(this)
 
+\method{getPrior}{LCAs}(this)
+
 \method{getPrior}{LatentForests}(this)
 
 \method{getPrior}{ReducedRankRegressions}(this)

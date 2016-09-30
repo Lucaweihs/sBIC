@@ -16,10 +16,10 @@ This package allows you to compute the singilar Bayesian information criterion a
 
 1. [Binomial mixtures](BinomialMixtures.pdf)
 2. [Gaussian mixtures](GaussianMixtures.pdf)
-3. [Latent class analysis](LCAs.pdf)
+3. [Latent class analysis](LatentClassAnalysis.pdf)
 4. Gaussian latent forests
-5. [Reduced rank regression](ReducedRankRegressions.pdf)
-6. [Factor analysis](FactorAnalyses.pdf)
+5. [Reduced rank regression](ReducedRankRegression.pdf)
+6. [Factor analysis](FactorAnalysis.pdf)
 
 
 All of these models, excluding Gaussian latent forests, are described in the above paper. For details regardings the use of the sBIC with Gaussian latent forests see Drton et al (2014).
@@ -29,7 +29,7 @@ All of these models, excluding Gaussian latent forests, are described in the abo
 This package makes extensive use of the `R.oo` package (Bengtsson 2003) which allows for the use
 of some object oriented principles in R. While not strictly necessary to use this package it may be helpful to read sections 1 and 2 of Bengstsson (2003) which serve as an introduction to R.oo.
 
-An important consequence of the use of `R.oo` is that objects in the `sBIC` package use call by reference semantics and are modified by  
+An important consequence of the use of `R.oo` is that objects in the `sBIC` package use call by reference semantics and are modified by calling their associated methods.
 
 ## Example
 

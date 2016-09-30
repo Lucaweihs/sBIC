@@ -11,7 +11,7 @@ vignette:  >
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-In a reduced rank regression model, multivariate vectors $Y \in R^N$ and $X \in R^M$ satisfy $\text{E}(X)=0$, $\text{E}(Y) = 0$, $\text{E}(Y|X) = BX$. The $N \times M$ matrix $B$ of regression coefficients may not be of full rank. Possible values of the rank of $B$ range from $0$ ($X$ and $Y$ are independent) to $\min(M,N)$ (the full rank model). If the rank is assumed to be $i$ then model singularities occur when the true data-generating model has rank $j < i$.
+In a centered reduced rank regression model, multivariate vectors $Y \in R^N$ and $X \in R^M$ satisfy $\text{E}(X)=0$, $\text{E}(Y) = 0$, $\text{E}(Y|X) = BX$. The $N \times M$ matrix $B$ of regression coefficients may not be of full rank. Possible values of the rank of $B$ range from $0$ ($X$ and $Y$ are independent) to $\min(M,N)$ (the full rank model). If the rank is assumed to be $i$ then model singularities occur when the true data-generating model has rank $j < i$.
 
 ## Simulating reduced rank regression data
 

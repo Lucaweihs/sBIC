@@ -33,16 +33,16 @@ plot(fit, what="density", main="", xlab="Velocity (Mm/s)")
 rug(X)
 ```
 
-Section 6.2 of Drton and Plummer (2017) considers singular BIC for Gaussian mixture models usign the `galaxies` data set as an example. Singularities occur when two mixture components coincide (i.e. they have the same mean and variance) or on the boundary of the parameter space when the prior probability of a mixture component goes down to zero. 
+Section 6.2 of Drton and Plummer (2017) considers singular BIC for Gaussian mixture models using the `galaxies` data set as an example. Singularities occur when two mixture components coincide (i.e. they have the same mean and variance) or on the boundary of the parameter space where the prior probability of a mixture component is zero. 
 
-The `GaussianMixtures()` function creates an object representing a family of mixture models up to a specified maximum number of components (`maxNumComponents=10` in this example). The `phi` parameter controls the penalty to be used for `sBIC` (See below) and the `restarts` parameter determines the number of times each model is fitted starting from randomly chosen starting points. Due to the multi-modal likelihood surface for mixture models, multiple restarts are required to find the global maximum.
+The `GaussianMixtures()` function creates an object representing a family of mixture models up to a specified maximum number of components (`maxNumComponents=10` in this example). The `phi` parameter controls the penalty to be used for `sBIC` (See below) and the `restarts` parameter determines the number of times each model is fitted starting from randomly chosen starting points. Due to the multi-modal likelihood surface for mixture models, multiple restarts are used to find a good (local) maximum.
 
 ```{r}
 library(sBIC)
 gMix = GaussianMixtures(maxNumComponents=10, phi=1, restarts=100)
 ```
 
-Learning coefficients are known exactly for Gaussian mixtures with equal variances, but this model is rarely applied in practice. For unequal variances, the learning coefficients are unknown, but upper bounds are given by Drton and Plummer (2017, equation 6.11). These  bounds are implemented by setting the penalty parameter `phi=1` in the `GaussianMixtures()` function. We refer to the singular BIC using these approximate penalties as $\overline{\text{sBIC}}_1$. It is calculated by supplying the data `X` and the model set `gMix` to the `sBIC()` function. The RNG seed is set for reproducibility, due to the random restarts.
+Learning coefficients are known exactly for Gaussian mixtures with known and equal variances, but this model is rarely applied in practice. For unequal variances, the learning coefficients are unknown, but upper bounds are given by Drton and Plummer (2017, equation 6.11). These  bounds are implemented by setting the penalty parameter `phi=1` in the `GaussianMixtures()` function. We refer to the singular BIC using these approximate penalties as $\overline{\text{sBIC}}_1$. It is calculated by supplying the data `X` and the model set `gMix` to the `sBIC()` function. The RNG seed is set for reproducibility, due to the random restarts.
 
 ```{r}
 set.seed(1234)
@@ -50,7 +50,7 @@ m = sBIC(X, gMix)
 print(m)
 ```
 
-Figure 2 compares BIC with $\overline{\text{sBIC}}_1$. Both criteria have been standardsized so that the value for the 1-component model is 0. This figures reproduces Figure 7 of Drton and Plummer (2017). The reproduction is not exact because, in the interests of speed, we have reduced the number of restarts from 5000 to 100. This mainly affects the models with larger number of components.
+Figure 2 compares BIC with $\overline{\text{sBIC}}_1$. Both criteria have been standardized so that the value for the 1-component model is 0. This figures reproduces Figure 7 of Drton and Plummer (2017). The reproduction is not exact because, in the interests of speed, we have reduced the number of restarts from 5000 to 100. This mainly affects the models with larger number of components.
 
 ```{r, fig.cap="Comparison of singular BIC with BIC for choosing the number of components in the galaxies data"}
 matplot(

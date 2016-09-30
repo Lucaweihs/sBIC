@@ -64,7 +64,7 @@ setConstructorS3("LatentForests",
 #' @rdname   getTopOrder
 #' @name     getTopOrder.LatentForests
 #' @S3method getTopOrder LatentForests
-#' @usage    \method{getTopOrder}{LatentForests}{this)
+#' @usage    \method{getTopOrder}{LatentForests}(this)
 #' @export   getTopOrder.LatentForests
 setMethodS3("getTopOrder", "LatentForests", function(this) {
   return(this$.topOrder)

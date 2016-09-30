@@ -76,13 +76,13 @@ poLCA(f, X, nclass = 3, verbose=FALSE)
 
 ## Singular BIC for LCA
 
-As with other mixture models, the learning coefficients for LCA are not known exactly, but lower bounds can be derived and used to obtain an approximate singular BIC. In the case of LCA models, the bounds are extremely sensitive to the prior distribution on the class probabilities $\alpha$ as this determines the asymptotic behaviour on the boundary $\alpha_h = 0$. The argument is developed in some detail in Drton and Plummer (2017, Section 6.3).
+As with other mixture models, the learning coefficients for LCA are not known exactly, but bounds can be derived and used to obtain an approximate singular BIC. In the case of LCA models, the bounds are extremely sensitive to the prior distribution on the class probabilities $\alpha$ as this determines the asymptotic behaviour on the boundary $\alpha_h = 0$. The argument is developed in some detail in Drton and Plummer (2017, Section 6.3).
 
 In the case of a Dirichlet prior with shape parameter $\phi$, the bound for the learning coefficient $\lambda_{ij}$ of a model with $j$ classes embedded in a model with $i > j$ classes is given by Drton and Plummer (2017, equation 6.19) $$\lambda_{ij} \leq \min (\lambda^{-\phi}_{ij}, \lambda^{-r/2}_{ij})$$ where $\lambda^{-\phi}_{ij}$ is defined by Drton and Plummer (2017, equation 6.15) $$\lambda^{-\phi}_{ij} = \left\{jr + j - 1 + (i-j)\phi\right\}$$
 
 These results suggest that $\phi \approx r/2$ should have good asymptotic properties for selecting the number of latent classes $i$. Tables 3 and 4 of Drton and Plummer (2017) show the results of simulation studies in support of this claim. The simulations are too extensive to reproduce in this vignette, but we step through a single example showing how the singular BIC can be recalculated for different values of $\phi$.
 
-The `sBIC::LCAs()` function creates an object of class "LCAs" representing latent class analysis models for a given number of items (`numVariables`) taking a given number of states (`numStatesForVariables`) up to a maximum number of latent states `maxNumClasses`. The resulting object of class "LCAs" is combined with the data in the `sBIC()` function, which fits the various latent class models and calculate the approximate singular BIC.
+The `sBIC::LCAs()` function creates an object of class "LCAs" representing latent class analysis models for a given number of items (`numVariables`) taking a given number of states (`numStatesForVariables`) up to a maximum number of latent states `maxNumClasses`. The resulting object of class "LCAs" is combined with the data in the `sBIC()` function, which fits the various latent class models and calculates the approximate singular BIC.
 
 ```{r}
 library(sBIC)
@@ -90,7 +90,7 @@ lcas = LCAs(maxNumClasses=6, numVariables=8, numStatesForVariables=2)
 results = sBIC(X, lcas)
 ```
 
-With $r=8$ items, the optimal $\phi$ is in the order of $r/2 = 4$.  The default behaviour of `sBIC()` is to use $\phi=(r+1)/2$, i.e. $\phi=4.5$ in this example. We investigate the behaviour of the singular BIC for values around $\phi=4$ by setting up a vector `phivec` of alternative values for $\phi$.
+With $r=8$ items, we choose $\phi$ on the order of $r/2 = 4$.  The default behaviour of `sBIC()` is to use $\phi=(r+1)/2$, i.e. $\phi=4.5$ in this example. We investigate the behaviour of the singular BIC for values around $\phi=4$ by setting up a vector `phivec` of alternative values for $\phi$.
 
 ```{r}
 phivec = (6:10)/2

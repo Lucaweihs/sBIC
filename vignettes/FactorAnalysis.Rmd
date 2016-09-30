@@ -48,7 +48,7 @@ for (i in 1:4) {
 knitr::kable(lambda, caption="Learning coefficients $\\lambda_{ij}$ for sBIC")
 ```
 
-Table 1 reproduces Table 2 of Drton and Plummer (2017) showing learning coefficients for model with $j$ factors embeded in a model with $i \geq j$ factors. The multiplicity is equal to 1 for all models (not shown).
+Table 1 reproduces Table 2 of Drton and Plummer (2017) showing learning coefficients for model with $j$ factors embedded in a model with $i \geq j$ factors. The multiplicity is equal to 1 for all models (not shown).
 
 The singular BIC is calculated by passing to the `sBIC()` function the data `Y` and the object `factorAnalysis` representing the model collection.
 
@@ -73,7 +73,7 @@ BICpost(results$BIC)
 BICpost(results$sBIC)
 ```
 
-These values can be compared with the poterior distribution of the number of components derived by Lopes and West (2004) using reversible jump MCMC. They give two posterior distributions based on two different models.
+These values can be compared with the posterior distribution of the number of components derived by Lopes and West (2004) using reversible jump MCMC. They give two posterior distributions based on two different models.
 
 
 |         | i = 1 | i = 2 | i = 3 |

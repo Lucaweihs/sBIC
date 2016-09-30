@@ -70,7 +70,7 @@ setConstructorS3("LCAs",
 #' @rdname   getTopOrder
 #' @name     getTopOrder.LCAs
 #' @S3method getTopOrder LCAs
-#' @usage    \method{getTopOrder}{LCAs}{this)
+#' @usage    \method{getTopOrder}{LCAs}(this)
 #' @export   getTopOrder.LCAs
 setMethodS3("getTopOrder", "LCAs", function(this) {
   return(this$.topOrder)
@@ -79,7 +79,7 @@ setMethodS3("getTopOrder", "LCAs", function(this) {
 #' @rdname   getPrior
 #' @name     getPrior.LCAs
 #' @S3method getPrior LCAs
-#' @usage    \method{getPrior}{LCAs}{this)
+#' @usage    \method{getPrior}{LCAs}(this)
 #' @export   getPrior.LCAs
 setMethodS3("getPrior", "LCAs", function(this) {
   return(this$.prior)
@@ -88,7 +88,7 @@ setMethodS3("getPrior", "LCAs", function(this) {
 #' @rdname   getNumModels
 #' @name     getNumModels.LCAs
 #' @S3method getNumModels LCAs
-#' @usage    \method{getNumModels}{LCAs}{this)
+#' @usage    \method{getNumModels}{LCAs}(this)
 #' @export   getNumModels.LCAs
 setMethodS3("getNumModels", "LCAs", function(this) {
   return(this$.numModels)
@@ -101,7 +101,7 @@ setMethodS3("getNumModels", "LCAs", function(this) {
 #' @name     setData.LCAs
 #' @export   setData.LCAs
 #' @S3method setData LCAs
-#' @usage    \method{setData}{LCAs}{this, data)
+#' @usage    \method{setData}{LCAs}(this, data)
 #'
 #' @param this the LCAs object.
 #' @param data the data to be set, should be an integer valued matrix where each
@@ -121,7 +121,7 @@ setMethodS3("setData", "LCAs", function(this, data) {
 #' @rdname   getData
 #' @name     getData.LCAs
 #' @S3method getData LCAs
-#' @usage    \method{getData}{LCAs}{this)
+#' @usage    \method{getData}{LCAs}(this)
 #' @export   getData.LCAs
 setMethodS3("getData", "LCAs", function(this) {
   if (is.null(this$.X)) {
@@ -133,7 +133,7 @@ setMethodS3("getData", "LCAs", function(this) {
 #' @rdname   getNumSamples
 #' @name     getNumSamples.LCAs
 #' @S3method getNumSamples LCAs
-#' @usage    \method{getNumSamples}{LCAs}{this)
+#' @usage    \method{getNumSamples}{LCAs}(this)
 #' @export   getNumSamples.LCAs
 setMethodS3("getNumSamples", "LCAs", function(this) {
   return(nrow(this$getData()))
@@ -160,7 +160,7 @@ setMethodS3("logLikeMle", "LCAs", function(this, model, ...) {
 #' @rdname   mle
 #' @name     mle.LCAs
 #' @S3method mle LCAs
-#' @usage    \method{mle}{LCAs}{this)
+#' @usage    \method{mle}{LCAs}(this, model)
 #' @export   mle.LCAs
 setMethodS3("mle", "LCAs", function(this, model) {
   if (!is.na(this$.mle[[model]])) {
@@ -173,7 +173,7 @@ setMethodS3("mle", "LCAs", function(this, model) {
 #' @rdname   getDimension
 #' @name     getDimension.LCAs
 #' @S3method getDimension LCAs
-#' @usage    \method{getDimension}{LCAs}{this)
+#' @usage    \method{getDimension}{LCAs}(this, model)
 #' @export   getDimension.LCAs
 setMethodS3("getDimension", "LCAs", function(this, model) {
   return(this$.dimension[model])

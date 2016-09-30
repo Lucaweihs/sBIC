@@ -19,7 +19,7 @@ rBinomMix = function(n, alpha, theta, size) {
 }
 ```
 
-The `rBinomMix()` function generates `n` samples from a mixture model in which component `i` has a binomial distribution with probability parameter `theta[i]` and size parameter `size` (assumed to be common to all mixture components). The prior probability of component `i` is proportional to `alpha[i]`. Model singularities when two mixture components $h$ and $l$ have the same probability parameters $\theta_h = \theta_l$.
+The `rBinomMix()` function generates `n` samples from a mixture model in which component `i` has a binomial distribution with probability parameter `theta[i]` and size parameter `size` (assumed to be common to all mixture components). The prior probability of component `i` is proportional to `alpha[i]`. Model singularities arise when two mixture components $h$ and $l$ have the same probability parameters $\theta_h = \theta_l$ or a mixture weight is zero.
 
 We now set the parameters for the true, data-generating distribution. We choose a 4-component model in which each component has equal prior weight and the probability parameters range between 0.2 and 0.8. The number of trials is 30 for all mixture components.
 
@@ -53,7 +53,7 @@ library(sBIC)
 binomMix = BinomialMixtures(maxNumComponents, phi = 1)
 ```
 
-This creates an object `binomMix` of class "BinomialMixtures" containing the approximate learning coefficients for mixture models with up to 7 components. Learning coefficients for binomial mixtures are not fully characterized, but an approximate upper bound is given by Drton and Plummer (2017, equation 6.7).  The "BinomialMixtures" class uses these bounds used as proxies for the learning coefficients if the penalty parameter `phi` is set to `phi=1`.
+This creates an object `binomMix` of class "BinomialMixtures" containing the approximate learning coefficients for mixture models with up to 7 components. Learning coefficients for binomial mixtures are not fully characterized, but an upper bound is given by Drton and Plummer (2017, equation 6.7).  The "BinomialMixtures" class uses these bounds as proxies for the learning coefficients if the penalty parameter `phi` is set to `phi=1`. The extension to general Dirichlet hyperparameter `phi` is given in Drton and Plummer (2017, equation 6.15).
 
 For binomial mixtures the `sBIC` function takes as its first argument a 2-column integer matrix where the first column gives the number of success and the second gives the number of failures.
 
@@ -72,7 +72,7 @@ a$BIC - max(a$BIC)
 a$sBIC - max(a$sBIC)
 ```
 
-Alternative, tighter bounds on the learning coefficients can be derived from Rousseau and Mengersen (2011). These bounds are implemented by the "BinomialMixtures" class with penalty `phi=0.5`. The penalty parameter can be reset by using the `setPhi` member function.
+When the prior on the mixture weights is a uniform distribution, alternative, tighter bounds on the learning coefficients can be derived from Rousseau and Mengersen (2011). These bounds are implemented by the "BinomialMixtures" class with penalty `phi=0.5`. The penalty parameter can be reset by using the `setPhi` member function.
 
 ```{r}
 binomMix$setPhi(0.5)

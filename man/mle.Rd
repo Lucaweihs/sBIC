@@ -17,6 +17,8 @@ mle(this, model)
 
 \method{mle}{GaussianMixtures}(this, model)
 
+\method{mle}{LCAs}(this, model)
+
 \method{mle}{LatentForests}(this, model)
 }
 \arguments{

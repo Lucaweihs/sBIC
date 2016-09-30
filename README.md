@@ -2,72 +2,61 @@
 
 ## Purpose
 
-This package allows you to compute the sinuglar bayesian information criterion
-as described in
+This package allows you to compute the singilar Bayesian information criterion as described in Drton and Plummer (2017) for collections of the following model types:
 
-Mathias Drton, and Martyn Plummer. "A Bayesian information criterion for
-singular models." arXiv preprint arXiv:1309.0911 (2015).
-
-for collections of the following model types
-
-1. Binomial mixture
-2. Gaussian mixture
+1. Binomial mixtures
+2. Gaussian mixtures
 3. Latent class analysis
-4. Gaussian latent forest
+4. Gaussian latent forests
 5. Reduced rank regression
 6. Factor analysis
 
-All of these models, excluding gaussian latent forests, are described in the
-above paper. For details regardings the use of the sBIC with gaussian latent
-forests see 
 
-Mathias Drton, Shaowei Lin, Luca Weihs, and Piotr Zwiernik. "Marginal likelihood
-and model selection for Gaussian latent tree and forest models." arXiv preprint
-arXiv:1412.8285 (2014).
+All of these models, excluding Gaussian latent forests, are described in the above paper. For details regardings the use of the sBIC with Gaussian latent forests see Drton et al (2014).
+
+## Object oriented approach
+
+This package makes extensive use of the `R.oo` package (Bengtsson 2003) which allows for the use
+of some object oriented principles in R. While not strictly necessary to use this package it may be helpful to read sections 1 and 2 of Bengstsson (2003) which serve as an introduction to R.oo.
+
+An important consequence of the use of `R.oo` is that objects in the `sBIC` package use call by reference semantics and are modified by calling their associated methods.
 
 ## Example
 
-This package makes extensive use of the R.oo package which allows for the use
-of some object oriented principles in R. While not strictly necessary to use
-this package it may be helpful to read sections 1 and 2 of
-http://www1.maths.lth.se/help/R/R.oo/ which serve as an introduction to R.oo.
+Each collection of models is defined as its own class.  As an example for how to use the package we will compute the sBIC for a collection of Gaussian mixture models with at most 8 components:
 
-Each collection of models is defined as its own class, to see all available
-classes check the help for the sBIC function. As an example for how to use the
-package we will compute the sBIC for a collection of gaussian mixture models
-with at most 8 components:
-
+```{r}
+set.seed(123)
 ```
-> library(sBIC)
->
-> # Set a seed for reproducibility
-> set.seed(123)
-> 
-> # Create an object representing a collection of Gaussian mixture models
-> # with at most 8 components in 2 dimensions.
-> gms = GaussianMixtures(maxNumComponents = 8, dim = 2, restarts = 100)
->
-> # Generate some simulation data, a mixture of 3 normals.
-> library(MASS)
-> n = 175
-> class = sample(0:2, n, replace = T)
-> X = (class == 0) * mvrnorm(n, mu = c(0, 0), Sigma = diag(2)) +
->     (class == 1) * mvrnorm(n, mu = c(2.5, 2.5), Sigma = diag(2) + t(.3 * diag(2))) +
->     (class == 2) * mvrnorm(n, mu = c(-3, 2.5), Sigma = diag(2) + t(.2 * diag(2)))
-> 
-> # Compute the sBIC on the mixture models with the randomly generated data,
-> # notice that the BIC too strongly penalizes the (true) model with 3
-> # components.
-> sBIC(X, gms)
-$logLike
-[1] -732.9610 -697.5850 -683.9564 -676.2722 -668.5807 -661.2474 -653.9223 -646.2799
 
-$sBIC
-[1] -747.6058 -729.8036 -727.4262 -728.7474 -729.9027 -731.3697 -732.8346 -733.9800
+Create an object representing a collection of Gaussian mixture models with at most 8 components in 2 dimensions.
 
-$BIC
-[1] -747.6058 -729.8037 -733.7488 -743.6385 -753.5207 -763.7613 -774.0100 -783.9413
-
-$modelPoset
-[1] "GaussianMixtures: 0x10e24eca8"
+```{r}
+library(sBIC)
+gms = GaussianMixtures(maxNumComponents = 8, dim = 2, restarts = 100)
 ```
+
+Generate some simulated data, a mixture of 3 bivariate normals.
+
+```{r}
+library(MASS)
+n = 175
+class = sample(0:2, n, replace = TRUE)
+X = (class == 0) * mvrnorm(n, mu = c(0, 0), Sigma = diag(2)) +
+    (class == 1) * mvrnorm(n, mu = c(2.5, 2.5), Sigma = diag(1.3, 2)) +
+    (class == 2) * mvrnorm(n, mu = c(-3, 2.5), Sigma = diag(1.2, 2))
+``` 
+
+Compute the sBIC on the mixture models with the randomly generated data. 
+
+```{r}
+sBIC(X, gms)
+```
+
+Notice that the BIC too strongly penalizes the (true) model with 3 components.
+
+## References
+
+* Bengtsson, H. (2003)The R.oo package - Object-Oriented Programming with References Using Standard R Code, Proceedings of the 3rd   International Workshop on Distributed Statistical Computing (DSC 2003), ISSN 1609-395X, Hornik, K.; Leisch, F. & Zeileis, A. (eds.) URL https://www.r-project.org/conferences/DSC-2003/Proceedings/Bengtsson.pdf
+* Drton M, Lin S, Weihs L and  Zwiernik P. (2014) Marginal likelihood and model selection for Gaussian latent tree and forest models. arXiv preprint arXiv:1412.8285.
+* Drton M. and Plummer M. (2017), A Bayesian information criterion for singular models. J. R. Statist. Soc. B; 79: 1-38. Also available as arXiv preprint arXiv:1309.0911 
