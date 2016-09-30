@@ -11,8 +11,7 @@ BinomialMixtures(maxNumComponents = 1, phi = "default")
 create a hierarchy of all models with less than or equal
 to this number.}
 
-\item{phi}{parameter determining the prior placed on latent class
-probabilities.}
+\item{phi}{parameter controlling the strength of the sBIC penalty.}
 }
 \value{
 An object representing the collection.

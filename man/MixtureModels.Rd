@@ -7,8 +7,7 @@
 MixtureModels(phi = "default")
 }
 \arguments{
-\item{phi}{parameter determining the prior placed on latent class
-probabilities.}
+\item{phi}{parameter controlling the strength of the sBIC penalty.}
 }
 \value{
 An object representing the collection.

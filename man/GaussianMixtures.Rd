@@ -14,8 +14,7 @@ consider in a mixture.}
 \item{dim}{the ambient dimension in which the gaussian mixtures reside.
 Default is 1, corresponding to gaussian mixtures on the real line.}
 
-\item{phi}{parameter determining the prior placed on latent class
-probabilities.}
+\item{phi}{parameter controlling the strength of the sBIC penalty.}
 
 \item{restarts}{the number of random restarts to perform when computing the
 MLE.}

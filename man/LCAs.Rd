@@ -16,8 +16,7 @@ considered.}
 \item{numStatesForVariables}{the number of states for each observed variable,
 at the moment these must all be equal.}
 
-\item{phi}{parameter determining the prior placed on latent class
-probabilities.}
+\item{phi}{parameter controlling the strength of the sBIC penalty.}
 }
 \value{
 An object representing the collection.
