@@ -7,7 +7,7 @@ setConstructorS3("ModelPoset",
 #' Returns a topological ordering of models in the collection.
 #'
 #' @name     getTopOrder
-#' @export   getTopOrder
+#' @export
 #'
 #' @param this the model poset object.
 getTopOrder <- function(this) {
@@ -19,7 +19,7 @@ getTopOrder <- function(this) {
 #' Returns the unnormalized prior on the collection.
 #'
 #' @name     getPrior
-#' @export   getPrior
+#' @export
 #'
 #' @param this the model poset object.
 getPrior <- function(this) {
@@ -31,7 +31,7 @@ getPrior <- function(this) {
 #' Returns the number of models in the collection.
 #'
 #' @name     getNumModels
-#' @export   getNumModels
+#' @export
 #'
 #' @param this the model poset object.
 getNumModels <- function(this) {
@@ -43,7 +43,7 @@ getNumModels <- function(this) {
 #' Sets the data to be used by a poset of models when computing MLEs.
 #'
 #' @name     setData
-#' @export   setData
+#' @export
 #'
 #' @param this the model poset object.
 #' @param data the data to be set.
@@ -57,7 +57,7 @@ setData <- function(this, data) {
 #' then will return that data, otherwise will throw an error.
 #'
 #' @name     getData
-#' @export   getData
+#' @export
 #'
 #' @param this the object from which to get the data.
 getData <- function(this) {
@@ -70,7 +70,7 @@ getData <- function(this) {
 #' number of samples in the data. Otherwise throws an error.
 #'
 #' @name     getNumSamples
-#' @export   getNumSamples
+#' @export
 #'
 #' @param this the object from which to get the number of samples.
 getNumSamples <- function(this) {
@@ -84,7 +84,7 @@ getNumSamples <- function(this) {
 #' which there exists no other model M' such that M < M' < (given model).
 #'
 #' @name     parents
-#' @export   parents
+#' @export
 #'
 #' @param this the object representing the model poset.
 #' @param model the model for which the parents should be found.
@@ -98,7 +98,7 @@ parents <- function(this, model) {
 #' data set using the setData command.
 #'
 #' @name     logLikeMle
-#' @export   logLikeMle
+#' @export
 #'
 #' @param this the object representing the model poset.
 #' @param model the model for which the maximum likelihood should be computed.
@@ -113,7 +113,7 @@ logLikeMle <- function(this, model, ...) {
 #' given model in the collection) given the data set with setData.
 #'
 #' @name     mle
-#' @export   mle
+#' @export
 #'
 #' @param this the object representing the model poset.
 #' @param model the model for which the maximum likelihood should be computed.
@@ -128,7 +128,7 @@ mle <- function(this, model) {
 #' model's submodels.
 #'
 #' @name     learnCoef
-#' @export   learnCoef
+#' @export
 #'
 #' @param this the object representing the model poset.
 #' @param superModel the larger model of the two input models.
@@ -142,7 +142,7 @@ learnCoef <- function(this, superModel, subModel) {
 #' Computes the dimension of a model in the model poset.
 #'
 #' @name     getDimension
-#' @export   getDimension
+#' @export
 #'
 #' @param this the object representing the model poset.
 #' @param model the model for which the dimension should be computed.

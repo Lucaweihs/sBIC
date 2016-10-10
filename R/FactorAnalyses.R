@@ -81,7 +81,7 @@ setMethodS3("getNumModels", "FactorAnalyses", function(this) {
 #' Given a model number returns the number of factors in that model
 #'
 #' @name     getNumFactorsForModel
-#' @export   getNumFactorsForModel
+#' @export
 #'
 #' @param this the FactorAnalyses object.
 #' @param model the model number.

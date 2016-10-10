@@ -138,7 +138,7 @@ setMethodS3("parents", "ReducedRankRegressions", function(this, model) {
 #' in the ReducedRankRegressions class.
 #'
 #' @name     logLikeMleHelper
-#' @export   logLikeMleHelper
+#' @export
 #'
 #' @param this the ReducedRankRegressions object.
 #' @param model the model number.

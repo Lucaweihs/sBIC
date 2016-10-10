@@ -50,7 +50,7 @@ setMethodS3("learnCoef", "MixtureModels", function(this, superModel, subModel) {
 #' Gets the phi parameter controlling the strength of the sBIC penalty.
 #'
 #' @name     getPhi
-#' @export   getPhi
+#' @export
 #'
 #' @param this the MixtureModels object.
 #' @param phi the new phi value.
@@ -69,7 +69,7 @@ setMethodS3("getPhi", "MixtureModels", function(this, phi) {
 #' Set the phi parameter in a mixture model object to a different value.
 #'
 #' @name     setPhi
-#' @export   setPhi
+#' @export
 #'
 #' @param this the MixtureModels object.
 #' @param phi the new phi value.

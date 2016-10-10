@@ -195,7 +195,7 @@ setMethodS3("getDimension", "LatentForests", function(this, model) {
 #' Returns the sampling covariance matrix for the data set with setData().
 #'
 #' @name     getSamplingCovMat
-#' @export   getSamplingCovMat
+#' @export
 #'
 #' @param this the LatentForests object.
 getSamplingCovMat <- function(this) {
@@ -219,7 +219,7 @@ setMethodS3("getSamplingCovMat", "LatentForests", function(this) {
 #' model and is 0 otherwise.
 #'
 #' @name     getSupport
-#' @export   getSupport
+#' @export
 #'
 #' @param this the LatentForests object.
 #' @param model the model number.
@@ -242,7 +242,7 @@ setMethodS3("getSupport", "LatentForests", function(this, model) {
 #' 5th edge then it will remain the 5th edge but may now be of the form (4,1).
 #'
 #' @name     getAllEdges
-#' @export   getAllEdges
+#' @export
 #'
 #' @param this the LatentForests object.
 #' @param model the model number.
@@ -261,7 +261,7 @@ setMethodS3("getAllEdges", "LatentForests", function(this, model) {
 #' Gets the number of leaves in the latent forest models.
 #'
 #' @name     getNumLeaves
-#' @export   getNumLeaves
+#' @export
 #'
 #' @param this the LatentForests object.
 getNumLeaves <- function(this) {
@@ -280,7 +280,7 @@ setMethodS3("getNumLeaves", "LatentForests", function(this) {
 #' of vertices a tree with this$getNumLeaves() number of leaves has.
 #'
 #' @name     getNumVertices
-#' @export   getNumVertices
+#' @export
 #'
 #' @param this the LatentForests object.
 getNumVertices <- function(this) {
@@ -304,7 +304,7 @@ setMethodS3("getNumVertices", "LatentForests", function(this) {
 #' returned by this$getAllEdges()
 #'
 #' @name     getModelWithSupport
-#' @export   getModelWithSupport
+#' @export
 #'
 #' @param this the LatentForests object.
 #' @param support the 0-1 vector representing the support.
@@ -331,7 +331,7 @@ setMethodS3("getModelWithSupport", "LatentForests", function(this, support) {
 #' and assumed 0 means.
 #'
 #' @name     logLike
-#' @export   logLike
+#' @export
 #'
 #' @param this the LatentForests object.
 #' @param covMat a covariance matrix.
@@ -357,7 +357,7 @@ setMethodS3("logLike", "LatentForests", function(this, covMat) {
 #' approximate maximum likelihood estimate for a given latent forest model.
 #'
 #' @name     emMain
-#' @export   emMain
+#' @export
 #'
 #' @param this the LatentForests object.
 #' @param model the model for which to compute the approximate MLE.
@@ -427,7 +427,7 @@ setMethodS3("emMain", "LatentForests", function(this, model, starts = 5,
 #' correspond (in order) to the edges returned by this$getAllEdges().
 #'
 #' @name     getCovMat
-#' @export   getCovMat
+#' @export
 #'
 #' @param this the LatentForests object.
 #' @param edgeCorrelations the edge correlations in a numeric vector.
@@ -464,7 +464,7 @@ setMethodS3("getCovMat", "LatentForests", function(this, edgeCorrelations) {
 #' is a helper function for emMain method.
 #'
 #' @name     emSteps
-#' @export   emSteps
+#' @export
 #'
 #' @param this the LatentForests object.
 #' @param support the support of the model.
