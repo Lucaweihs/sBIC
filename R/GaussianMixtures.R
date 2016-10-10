@@ -10,9 +10,7 @@ NULL
 #' before a model with 3 or more components.
 #'
 #' @name GaussianMixtures
-#' @usage GaussianMixtures(maxNumComponents = 1, dim = 1,
-#'                  phi = "default", restarts = 50)
-#' @export GaussianMixtures
+#' @export
 #'
 #' @param maxNumComponents the maximum number of gaussian components to
 #'                         consider in a mixture.
@@ -24,7 +22,6 @@ NULL
 #'        MLE.
 #'
 #' @return An object representing the collection.
-NULL
 setConstructorS3("GaussianMixtures",
                  function(maxNumComponents = 1, dim = 1, phi = "default",
                           restarts = 50) {

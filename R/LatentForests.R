@@ -11,8 +11,7 @@ NULL
 #' example, the forest that has no edges is less than all other models.
 #'
 #' @name LatentForests
-#' @usage LatentForests(numLeaves = 0, E = matrix(numeric(0), ncol = 2))
-#' @export LatentForests
+#' @export
 #'
 #' @param numLeaves the number of observed variables (these are the leaves of
 #'                  the model)
@@ -21,7 +20,6 @@ NULL
 #'          1:numLeaves as leaves of the forest with no internal nodes as leaves.
 #'
 #' @return An object representing the collection.
-NULL
 setConstructorS3("LatentForests",
                  function(numLeaves = 0,
                           E = matrix(numeric(0), ncol = 2)) {

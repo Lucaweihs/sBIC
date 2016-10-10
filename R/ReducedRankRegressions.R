@@ -10,15 +10,13 @@ NULL
 #' rank 2 comes before before a model with rank 3 or greater.
 #'
 #' @name ReducedRankRegressions
-#' @usage ReducedRankRegressions(numResponses, numCovariates, maxRank)
-#' @export ReducedRankRegressions
+#' @export
 #'
 #' @param numResponses the number of response variables.
 #' @param numCovariates the number of covariates.
 #' @param maxRank the largest rank model to be included in the collection.
 #'
 #' @return An object representing the collection.
-NULL
 setConstructorS3("ReducedRankRegressions",
                  function(numResponses = 1, numCovariates = 1, maxRank = 0) {
                    numModels = maxRank + 1

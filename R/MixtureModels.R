@@ -7,15 +7,13 @@ NULL
 #' should not be instantiated, just extended.
 #'
 #' @name MixtureModels
-#' @usage MixtureModels(phi = "default")
-#' @export MixtureModels
+#' @export
 #'
 #' @param phi parameter controlling the strength of the sBIC penalty.
 #'
 #' @return An object representing the collection.
 #'
 #' @seealso \code{\link{GaussianMixtures}}, \code{\link{BinomialMixtures}}, \code{\link{LCAs}}
-NULL
 setConstructorS3("MixtureModels",
                  function(phi = "default") { extend(ModelPoset(), "MixtureModels", .phi = phi) },
                  abstract = T)

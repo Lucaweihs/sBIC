@@ -4,8 +4,8 @@
 \alias{LCAs}
 \title{Construct a poset of latent class analysis models.}
 \usage{
-LCAs(maxNumClasses = 1, numVariables = 2,
-     numStatesForVariables = 2, phi = "default")
+LCAs(maxNumClasses = 1, numVariables = 2, numStatesForVariables = 2,
+  phi = "default")
 }
 \arguments{
 \item{maxNumClasses}{the number of classes in the largest LCA model to

@@ -10,8 +10,7 @@ NULL
 #' before a model with 3 or more components.
 #'
 #' @name BinomialMixtures
-#' @usage BinomialMixtures(maxNumComponents = 1, phi = "default")
-#' @export BinomialMixtures
+#' @export
 #'
 #' @param maxNumComponents the maximum number of components allowed in a model, will
 #'                      create a hierarchy of all models with less than or equal

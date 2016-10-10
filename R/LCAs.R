@@ -10,9 +10,7 @@ NULL
 #' comes before a model with 3 or more latent classes.
 #'
 #' @name LCAs
-#' @usage LCAs(maxNumClasses = 1, numVariables = 2,
-#'      numStatesForVariables = 2, phi = "default")
-#' @export LCAs
+#' @export
 #'
 #' @param maxNumClasses the number of classes in the largest LCA model to
 #'        considered.
@@ -22,7 +20,6 @@ NULL
 #' @param phi parameter controlling the strength of the sBIC penalty.
 #'
 #' @return An object representing the collection.
-NULL
 setConstructorS3("LCAs",
                  function(maxNumClasses = 1, numVariables = 2,
                           numStatesForVariables = 2, phi = "default") {

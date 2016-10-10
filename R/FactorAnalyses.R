@@ -12,8 +12,7 @@ NULL
 #' a model with 2 factors comes before a model with 3 or more factors.
 #'
 #' @name FactorAnalyses
-#' @usage FactorAnalyses(numCovariates = 1, maxNumFactors = 0)
-#' @export FactorAnalyses
+#' @export
 #'
 #' @param numCovariates the number of covariates in all of the models.
 #' @param maxNumFactors the maximum number of factors allowed in a model, will
@@ -21,7 +20,6 @@ NULL
 #'                      to this number.
 #'
 #' @return An object representing the collection.
-NULL
 setConstructorS3("FactorAnalyses",
                  function(numCovariates = 1, maxNumFactors = 0) {
                    numModels = maxNumFactors + 1
