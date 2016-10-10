@@ -59,27 +59,21 @@ setConstructorS3("FactorAnalyses",
 
 #' @rdname   getTopOrder
 #' @name     getTopOrder.FactorAnalyses
-#' @usage    \method{getTopOrder}{FactorAnalyses}(this)
-#' @S3method getTopOrder FactorAnalyses
-#' @export   getTopOrder.FactorAnalyses
+#' @export
 setMethodS3("getTopOrder", "FactorAnalyses", function(this) {
   return(this$.topOrder)
 }, appendVarArgs = F)
 
 #' @rdname   getPrior
 #' @name     getPrior.FactorAnalyses
-#' @usage    \method{getPrior}{FactorAnalyses}(this)
-#' @S3method getPrior FactorAnalyses
-#' @export   getPrior.FactorAnalyses
+#' @export
 setMethodS3("getPrior", "FactorAnalyses", function(this) {
   return(this$.prior)
 }, appendVarArgs = F)
 
 #' @rdname   getNumModels
 #' @name     getNumModels.FactorAnalyses
-#' @usage    \method{getNumModels}{FactorAnalyses}(this)
-#' @S3method getNumModels FactorAnalyses
-#' @export   getNumModels.FactorAnalyses
+#' @export
 setMethodS3("getNumModels", "FactorAnalyses", function(this) {
   return(this$.numModels)
 }, appendVarArgs = F)
@@ -98,9 +92,7 @@ getNumFactorsForModel <- function(this, model) {
 }
 #' @rdname   getNumFactorsForModel
 #' @name     getNumFactorsForModel.FactorAnalyses
-#' @S3method getNumFactorsForModel FactorAnalyses
-#' @usage    \method{getNumFactorsForModel}{FactorAnalyses}(this, model)
-#' @export   getNumFactorsForModel.FactorAnalyses
+#' @export
 setMethodS3("getNumFactorsForModel", "FactorAnalyses", function(this, model) {
   if (model < 1 || model > this$getNumModels()) {
     throw("Invalid model number.")
@@ -113,14 +105,11 @@ setMethodS3("getNumFactorsForModel", "FactorAnalyses", function(this, model) {
 #' Sets the data to be used by the factor analysis models when computing MLEs.
 #'
 #' @name     setData.FactorAnalyses
-#' @S3method setData FactorAnalyses
-#' @usage    \method{setData}{FactorAnalyses}(this, data)
-#' @export   setData.FactorAnalyses
+#' @export
 #'
 #' @param this the FactorAnalyses object.
 #' @param data the data to be set, should matrix of observed responses.
 #'
-NULL
 setMethodS3("setData", "FactorAnalyses", function(this, data) {
   if (ncol(data) != this$.numCovariates) {
     throw("Number of covariates in model does not match input matrix.")
@@ -132,9 +121,7 @@ setMethodS3("setData", "FactorAnalyses", function(this, data) {
 
 #' @rdname   getData
 #' @name     getData.FactorAnalyses
-#' @S3method getData FactorAnalyses
-#' @usage    \method{getData}{FactorAnalyses}(this)
-#' @export   getData.FactorAnalyses
+#' @export
 setMethodS3("getData", "FactorAnalyses", function(this) {
   if (is.null(this$.X)) {
     throw("Data has not yet been set")
@@ -144,18 +131,14 @@ setMethodS3("getData", "FactorAnalyses", function(this) {
 
 #' @rdname   getNumSamples
 #' @name     getNumSamples.FactorAnalyses
-#' @S3method getNumSamples FactorAnalyses
-#' @usage    \method{getNumSamples}{FactorAnalyses}(this)
-#' @export   getNumSamples.FactorAnalyses
+#' @export
 setMethodS3("getNumSamples", "FactorAnalyses", function(this) {
   return(nrow(this$getData()))
 }, appendVarArgs = F)
 
 #' @rdname   parents
 #' @name     parents.FactorAnalyses
-#' @S3method parents FactorAnalyses
-#' @usage    \method{parents}{FactorAnalyses}(this, model)
-#' @export   parents.FactorAnalyses
+#' @export
 setMethodS3("parents", "FactorAnalyses", function(this, model) {
   if (model > this$getNumModels() ||
       model <= 0 || length(model) != 1) {
@@ -170,9 +153,7 @@ setMethodS3("parents", "FactorAnalyses", function(this, model) {
 
 #' @rdname   logLikeMle
 #' @name     logLikeMle.FactorAnalyses
-#' @S3method logLikeMle FactorAnalyses
-#' @usage    \method{logLikeMle}{FactorAnalyses}(this, model, starts = 1, ...)
-#' @export   logLikeMle.FactorAnalyses
+#' @export
 #' @param    starts The number of starting values to be tried
 setMethodS3("logLikeMle", "FactorAnalyses", function(this, model, starts = 1, ...) {
   if (!is.na(this$.logLikes[model])) {
@@ -199,9 +180,7 @@ setMethodS3("logLikeMle", "FactorAnalyses", function(this, model, starts = 1, ..
 
 #' @rdname   mle
 #' @name     mle.FactorAnalyses
-#' @S3method mle FactorAnalyses
-#' @usage    \method{mle}{FactorAnalyses}(this, model)
-#' @export   mle.FactorAnalyses
+#' @export
 setMethodS3("mle", "FactorAnalyses", function(this, model) {
   if (!is.na(this$.mle[[model]])) {
     return(this$.mle[[model]])
@@ -212,9 +191,7 @@ setMethodS3("mle", "FactorAnalyses", function(this, model) {
 
 #' @rdname   learnCoef
 #' @name     learnCoef.FactorAnalyses
-#' @S3method learnCoef FactorAnalyses
-#' @usage    \method{learnCoef}{FactorAnalyses}(this, superModel, subModel)
-#' @export   learnCoef.FactorAnalyses
+#' @export
 setMethodS3("learnCoef", "FactorAnalyses", function(this, superModel, subModel) {
   m = this$.numCovariates
   k = this$getNumFactorsForModel(superModel)
@@ -224,9 +201,7 @@ setMethodS3("learnCoef", "FactorAnalyses", function(this, superModel, subModel) 
 
 #' @rdname   getDimension
 #' @name     getDimension.FactorAnalyses
-#' @S3method getDimension FactorAnalyses
-#' @usage    \method{getDimension}{FactorAnalyses}(this, model)
-#' @export   getDimension.FactorAnalyses
+#' @export
 setMethodS3("getDimension", "FactorAnalyses", function(this, model) {
   return(this$.dimension[model])
 }, appendVarArgs = F)

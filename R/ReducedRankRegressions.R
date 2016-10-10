@@ -53,27 +53,21 @@ setConstructorS3("ReducedRankRegressions",
 
 #' @rdname   getTopOrder
 #' @name     getTopOrder.ReducedRankRegressions
-#' @usage    \method{getTopOrder}{ReducedRankRegressions}(this)
-#' @S3method getTopOrder ReducedRankRegressions
-#' @export   getTopOrder.ReducedRankRegressions
+#' @export
 setMethodS3("getTopOrder", "ReducedRankRegressions", function(this) {
   return(this$.topOrder)
 }, appendVarArgs = F)
 
 #' @rdname   getPrior
 #' @name     getPrior.ReducedRankRegressions
-#' @usage    \method{getPrior}{ReducedRankRegressions}(this)
-#' @S3method getPrior ReducedRankRegressions
-#' @export   getPrior.ReducedRankRegressions
+#' @export
 setMethodS3("getPrior", "ReducedRankRegressions", function(this) {
   return(this$.prior)
 }, appendVarArgs = F)
 
 #' @rdname   getNumModels
 #' @name     getNumModels.ReducedRankRegressions
-#' @usage    \method{getNumModels}{ReducedRankRegressions}(this)
-#' @S3method getNumModels ReducedRankRegressions
-#' @export   getNumModels.ReducedRankRegressions
+#' @export
 setMethodS3("getNumModels", "ReducedRankRegressions", function(this) {
   return(this$.numModels)
 }, appendVarArgs = F)
@@ -84,9 +78,7 @@ setMethodS3("getNumModels", "ReducedRankRegressions", function(this) {
 #' MLEs.
 #'
 #' @name     setData.ReducedRankRegressions
-#' @usage    \method{setData}{ReducedRankRegressions}(this, data)
-#' @S3method setData ReducedRankRegressions
-#' @export   setData.ReducedRankRegressions
+#' @export
 #'
 #' @param this the ReducedRankRegressions object.
 #' @param data the data to be set, should be a named list with two components:
@@ -97,7 +89,6 @@ setMethodS3("getNumModels", "ReducedRankRegressions", function(this) {
 #'          \item{Y}{A matrix containing the values of the response variables
 #'                   for each sample. Again, each COLUMN is a single sample.}
 #'        }
-NULL
 setMethodS3("setData", "ReducedRankRegressions", function(this, data) {
   X = data$X
   Y = data$Y
@@ -113,9 +104,7 @@ setMethodS3("setData", "ReducedRankRegressions", function(this, data) {
 
 #' @rdname   getData
 #' @name     getData.ReducedRankRegressions
-#' @usage    \method{getData}{ReducedRankRegressions}(this)
-#' @S3method getData ReducedRankRegressions
-#' @export   getData.ReducedRankRegressions
+#' @export
 setMethodS3("getData", "ReducedRankRegressions", function(this) {
   if (is.null(this$.X)) {
     throw("Data has not yet been set")
@@ -125,18 +114,14 @@ setMethodS3("getData", "ReducedRankRegressions", function(this) {
 
 #' @rdname   getNumSamples
 #' @name     getNumSamples.ReducedRankRegressions
-#' @usage    \method{getNumSamples}{ReducedRankRegressions}(this)
-#' @S3method getNumSamples ReducedRankRegressions
-#' @export   getNumSamples.ReducedRankRegressions
+#' @export
 setMethodS3("getNumSamples", "ReducedRankRegressions", function(this) {
   return(ncol(this$getData()$X))
 }, appendVarArgs = F)
 
 #' @rdname   parents
 #' @name     parents.ReducedRankRegressions
-#' @usage    \method{parents}{ReducedRankRegressions}(this, model)
-#' @S3method parents ReducedRankRegressions
-#' @export   parents.ReducedRankRegressions
+#' @export
 setMethodS3("parents", "ReducedRankRegressions", function(this, model) {
   if (model > this$getNumModels() ||
       model < 1 || length(model) != 1) {
@@ -164,9 +149,7 @@ logLikeMleHelper <- function(this, model) {
 }
 #' @rdname   logLikeMleHelper
 #' @name     logLikeMleHelper.ReducedRankRegressions
-#' @usage    \method{logLikeMleHelper}{ReducedRankRegressions}(this, model)
-#' @S3method logLikeMleHelper ReducedRankRegressions
-#' @export   logLikeMleHelper.ReducedRankRegressions
+#' @export
 setMethodS3("logLikeMleHelper", "ReducedRankRegressions", function(this, model) {
   if (!is.matrix(this$.unconstrainedMLE)) {
     X = this$.X
@@ -182,9 +165,7 @@ setMethodS3("logLikeMleHelper", "ReducedRankRegressions", function(this, model) 
 
 #' @rdname   logLikeMle
 #' @name     logLikeMle.ReducedRankRegressions
-#' @usage    \method{logLikeMle}{ReducedRankRegressions}(this, model, ...)
-#' @S3method logLikeMle ReducedRankRegressions
-#' @export   logLikeMle.ReducedRankRegressions
+#' @export
 setMethodS3("logLikeMle", "ReducedRankRegressions", function(this, model, ...) {
   if (!is.na(this$.logLikes[model])) {
     return(this$.logLikes[model])
@@ -219,9 +200,7 @@ setMethodS3("logLikeMle", "ReducedRankRegressions", function(this, model, ...) {
 
 #' @rdname   learnCoef
 #' @name     learnCoef.ReducedRankRegressions
-#' @usage    \method{learnCoef}{ReducedRankRegressions}(this, superModel, subModel)
-#' @S3method learnCoef ReducedRankRegressions
-#' @export   learnCoef.ReducedRankRegressions
+#' @export
 setMethodS3("learnCoef", "ReducedRankRegressions", function(this, superModel, subModel) {
   ## MxH, NxH matrix sizes
   M = this$.numCovariates
@@ -276,9 +255,7 @@ setMethodS3("learnCoef", "ReducedRankRegressions", function(this, superModel, su
 
 #' @rdname   getDimension
 #' @name     getDimension.ReducedRankRegressions
-#' @usage    \method{getDimension}{ReducedRankRegressions}(this, model)
-#' @S3method getDimension ReducedRankRegressions
-#' @export   getDimension.ReducedRankRegressions
+#' @export
 setMethodS3("getDimension", "ReducedRankRegressions", function(this, model) {
   if (!anyNA(this$.dimension[model])) {
    return(this$.dimension[model])

@@ -67,27 +67,21 @@ setConstructorS3("GaussianMixtures",
 
 #' @rdname   getTopOrder
 #' @name     getTopOrder.GaussianMixtures
-#' @S3method getTopOrder GaussianMixtures
-#' @usage    \method{getTopOrder}{GaussianMixtures}(this)
-#' @export   getTopOrder.GaussianMixtures
+#' @export
 setMethodS3("getTopOrder", "GaussianMixtures", function(this) {
   return(this$.topOrder)
 }, appendVarArgs = F)
 
 #' @rdname   getPrior
 #' @name     getPrior.GaussianMixtures
-#' @S3method getPrior GaussianMixtures
-#' @usage    \method{getPrior}{GaussianMixtures}(this)
-#' @export   getPrior.GaussianMixtures
+#' @export
 setMethodS3("getPrior", "GaussianMixtures", function(this) {
   return(this$.prior)
 }, appendVarArgs = F)
 
 #' @rdname   getNumModels
 #' @name     getNumModels.GaussianMixtures
-#' @S3method getNumModels GaussianMixtures
-#' @usage    \method{getNumModels}{GaussianMixtures}(this)
-#' @export   getNumModels.GaussianMixtures
+#' @export
 setMethodS3("getNumModels", "GaussianMixtures", function(this) {
   return(this$.numModels)
 }, appendVarArgs = F)
@@ -97,16 +91,13 @@ setMethodS3("getNumModels", "GaussianMixtures", function(this) {
 #' Sets the data to be used by the gaussian mixture models when computing MLEs.
 #'
 #' @name     setData.GaussianMixtures
-#' @S3method setData GaussianMixtures
-#' @usage    \method{setData}{GaussianMixtures}(this, data)
-#' @export   setData.GaussianMixtures
+#' @export
 #'
 #' @param this the GaussianMixtures object.
 #' @param data the data to be set, a matrix where each row corresponds to a single
 #'        multivariate observation. If the corresponding GaussianMixtures object
 #'        has ambient dimension 1, then data may be a numeric vector of
 #'        observations.
-NULL
 setMethodS3("setData", "GaussianMixtures", function(this, data) {
   X = data
   if (is.vector(X)) {
@@ -124,9 +115,7 @@ setMethodS3("setData", "GaussianMixtures", function(this, data) {
 
 #' @rdname   getData
 #' @name     getData.GaussianMixtures
-#' @S3method getData GaussianMixtures
-#' @usage    \method{getData}{GaussianMixtures}(this)
-#' @export   getData.GaussianMixtures
+#' @export
 setMethodS3("getData", "GaussianMixtures", function(this) {
   if (is.null(this$.X)) {
     throw("Data has not yet been set")
@@ -136,18 +125,14 @@ setMethodS3("getData", "GaussianMixtures", function(this) {
 
 #' @rdname   getNumSamples
 #' @name     getNumSamples.GaussianMixtures
-#' @S3method getNumSamples GaussianMixtures
-#' @usage    \method{getNumSamples}{GaussianMixtures}(this)
-#' @export   getNumSamples.GaussianMixtures
+#' @export
 setMethodS3("getNumSamples", "GaussianMixtures", function(this) {
   return(length(this$getData()))
 }, appendVarArgs = F)
 
 #' @rdname   logLikeMle
 #' @name     logLikeMle.GaussianMixtures
-#' @S3method logLikeMle GaussianMixtures
-#' @usage    \method{logLikeMle}{GaussianMixtures}(this, model, ...)
-#' @export   logLikeMle.GaussianMixtures
+#' @export
 setMethodS3("logLikeMle", "GaussianMixtures", function(this, model, ...) {
   if (!is.na(this$.logLikes[model])) {
     return(this$.logLikes[model])
@@ -182,9 +167,7 @@ setMethodS3("logLikeMle", "GaussianMixtures", function(this, model, ...) {
 
 #' @rdname   mle
 #' @name     mle.GaussianMixtures
-#' @S3method mle GaussianMixtures
-#' @usage    \method{mle}{GaussianMixtures}(this, model)
-#' @export   mle.GaussianMixtures
+#' @export
 setMethodS3("mle", "GaussianMixtures", function(this, model) {
   if (!is.na(this$.mle[[model]])) {
     return(this$.mle[[model]])
@@ -195,9 +178,7 @@ setMethodS3("mle", "GaussianMixtures", function(this, model) {
 
 #' @rdname   getDimension
 #' @name     getDimension.GaussianMixtures
-#' @S3method getDimension GaussianMixtures
-#' @usage    \method{getDimension}{GaussianMixtures}(this, model)
-#' @export   getDimension.GaussianMixtures
+#' @export
 setMethodS3("getDimension", "GaussianMixtures", function(this, model) {
   return(this$.dimension[model])
 }, appendVarArgs = F)
