@@ -4,7 +4,7 @@
 \alias{ReducedRankRegressions}
 \title{Construct a poset of reduced rank regression models.}
 \usage{
-ReducedRankRegressions(numResponses, numCovariates, maxRank)
+ReducedRankRegressions(numResponses = 1, numCovariates = 1, maxRank = 0)
 }
 \arguments{
 \item{numResponses}{the number of response variables.}

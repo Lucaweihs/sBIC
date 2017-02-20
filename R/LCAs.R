@@ -10,9 +10,7 @@ NULL
 #' comes before a model with 3 or more latent classes.
 #'
 #' @name LCAs
-#' @usage LCAs(maxNumClasses = 1, numVariables = 2,
-#'      numStatesForVariables = 2, phi = "default")
-#' @export LCAs
+#' @export
 #'
 #' @param maxNumClasses the number of classes in the largest LCA model to
 #'        considered.
@@ -22,7 +20,6 @@ NULL
 #' @param phi parameter controlling the strength of the sBIC penalty.
 #'
 #' @return An object representing the collection.
-NULL
 setConstructorS3("LCAs",
                  function(maxNumClasses = 1, numVariables = 2,
                           numStatesForVariables = 2, phi = "default") {
@@ -69,27 +66,21 @@ setConstructorS3("LCAs",
 
 #' @rdname   getTopOrder
 #' @name     getTopOrder.LCAs
-#' @S3method getTopOrder LCAs
-#' @usage    \method{getTopOrder}{LCAs}(this)
-#' @export   getTopOrder.LCAs
+#' @export
 setMethodS3("getTopOrder", "LCAs", function(this) {
   return(this$.topOrder)
 }, appendVarArgs = F)
 
 #' @rdname   getPrior
 #' @name     getPrior.LCAs
-#' @S3method getPrior LCAs
-#' @usage    \method{getPrior}{LCAs}(this)
-#' @export   getPrior.LCAs
+#' @export
 setMethodS3("getPrior", "LCAs", function(this) {
   return(this$.prior)
 }, appendVarArgs = F)
 
 #' @rdname   getNumModels
 #' @name     getNumModels.LCAs
-#' @S3method getNumModels LCAs
-#' @usage    \method{getNumModels}{LCAs}(this)
-#' @export   getNumModels.LCAs
+#' @export
 setMethodS3("getNumModels", "LCAs", function(this) {
   return(this$.numModels)
 }, appendVarArgs = F)
@@ -99,14 +90,11 @@ setMethodS3("getNumModels", "LCAs", function(this) {
 #' Sets the data to be used by the LCA models when computing MLEs.
 #'
 #' @name     setData.LCAs
-#' @export   setData.LCAs
-#' @S3method setData LCAs
-#' @usage    \method{setData}{LCAs}(this, data)
+#' @export
 #'
 #' @param this the LCAs object.
 #' @param data the data to be set, should be an integer valued matrix where each
 #'        row represents a single sample from the observed variables.
-NULL
 setMethodS3("setData", "LCAs", function(this, data) {
   if (ncol(data) != this$.numVariables) {
     throw("Input data has incorrect number of columns.")
@@ -120,9 +108,7 @@ setMethodS3("setData", "LCAs", function(this, data) {
 
 #' @rdname   getData
 #' @name     getData.LCAs
-#' @S3method getData LCAs
-#' @usage    \method{getData}{LCAs}(this)
-#' @export   getData.LCAs
+#' @export
 setMethodS3("getData", "LCAs", function(this) {
   if (is.null(this$.X)) {
     throw("Data has not yet been set")
@@ -132,18 +118,14 @@ setMethodS3("getData", "LCAs", function(this) {
 
 #' @rdname   getNumSamples
 #' @name     getNumSamples.LCAs
-#' @S3method getNumSamples LCAs
-#' @usage    \method{getNumSamples}{LCAs}(this)
-#' @export   getNumSamples.LCAs
+#' @export
 setMethodS3("getNumSamples", "LCAs", function(this) {
   return(nrow(this$getData()))
 }, appendVarArgs = F)
 
 #' @rdname   logLikeMle
 #' @name     logLikeMle.LCAs
-#' @S3method logLikeMle LCAs
-#' @usage    \method{logLikeMle}{LCAs}(this, model, ...)
-#' @export   logLikeMle.LCAs
+#' @export
 setMethodS3("logLikeMle", "LCAs", function(this, model, ...) {
   if (!is.na(this$.logLikes[model])) {
     return(this$.logLikes[model])
@@ -159,9 +141,7 @@ setMethodS3("logLikeMle", "LCAs", function(this, model, ...) {
 
 #' @rdname   mle
 #' @name     mle.LCAs
-#' @S3method mle LCAs
-#' @usage    \method{mle}{LCAs}(this, model)
-#' @export   mle.LCAs
+#' @export
 setMethodS3("mle", "LCAs", function(this, model) {
   if (!is.na(this$.mle[[model]])) {
     return(this$.mle[[model]])
@@ -172,9 +152,7 @@ setMethodS3("mle", "LCAs", function(this, model) {
 
 #' @rdname   getDimension
 #' @name     getDimension.LCAs
-#' @S3method getDimension LCAs
-#' @usage    \method{getDimension}{LCAs}(this, model)
-#' @export   getDimension.LCAs
+#' @export
 setMethodS3("getDimension", "LCAs", function(this, model) {
   return(this$.dimension[model])
 }, appendVarArgs = F)

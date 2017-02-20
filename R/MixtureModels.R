@@ -7,24 +7,20 @@ NULL
 #' should not be instantiated, just extended.
 #'
 #' @name MixtureModels
-#' @usage MixtureModels(phi = "default")
-#' @export MixtureModels
+#' @export
 #'
 #' @param phi parameter controlling the strength of the sBIC penalty.
 #'
 #' @return An object representing the collection.
 #'
 #' @seealso \code{\link{GaussianMixtures}}, \code{\link{BinomialMixtures}}, \code{\link{LCAs}}
-NULL
 setConstructorS3("MixtureModels",
                  function(phi = "default") { extend(ModelPoset(), "MixtureModels", .phi = phi) },
                  abstract = T)
 
 #' @rdname   parents
 #' @name     parents.MixtureModels
-#' @S3method parents MixtureModels
-#' @usage    \method{parents}{MixtureModels}(this, model)
-#' @export   parents.MixtureModels
+#' @export
 setMethodS3("parents", "MixtureModels", function(this, model) {
   if (model > this$getNumModels() ||
       model < 1 || length(model) != 1) {
@@ -39,9 +35,7 @@ setMethodS3("parents", "MixtureModels", function(this, model) {
 
 #' @rdname   learnCoef
 #' @name     learnCoef.MixtureModels
-#' @usage    \method{learnCoef}{MixtureModels}(this, superModel, subModel)
-#' @S3method learnCoef MixtureModels
-#' @export   learnCoef.MixtureModels
+#' @export
 setMethodS3("learnCoef", "MixtureModels", function(this, superModel, subModel) {
   i = superModel
   j = subModel
@@ -56,7 +50,7 @@ setMethodS3("learnCoef", "MixtureModels", function(this, superModel, subModel) {
 #' Gets the phi parameter controlling the strength of the sBIC penalty.
 #'
 #' @name     getPhi
-#' @export   getPhi
+#' @export
 #'
 #' @param this the MixtureModels object.
 #' @param phi the new phi value.
@@ -65,9 +59,7 @@ getPhi <- function(this, phi) {
 }
 #' @rdname   getPhi
 #' @name     getPhi.MixtureModels
-#' @usage    \method{getPhi}{MixtureModels}(this, phi)
-#' @S3method getPhi MixtureModels
-#' @export   getPhi.MixtureModels
+#' @export
 setMethodS3("getPhi", "MixtureModels", function(this, phi) {
   return(this$.phi)
 }, appendVarArgs = F)
@@ -77,7 +69,7 @@ setMethodS3("getPhi", "MixtureModels", function(this, phi) {
 #' Set the phi parameter in a mixture model object to a different value.
 #'
 #' @name     setPhi
-#' @export   setPhi
+#' @export
 #'
 #' @param this the MixtureModels object.
 #' @param phi the new phi value.
@@ -86,9 +78,7 @@ setPhi <- function(this, phi) {
 }
 #' @rdname   setPhi
 #' @name     setPhi.MixtureModels
-#' @S3method setPhi MixtureModels
-#' @usage    \method{setPhi}{MixtureModels}(this, phi)
-#' @export   setPhi.MixtureModels
+#' @export
 setMethodS3("setPhi", "MixtureModels", function(this, phi) {
   if (!is.numeric(phi) || length(phi) != 1) {
     throw("Invalid phi value.")

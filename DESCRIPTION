@@ -28,7 +28,7 @@ Suggests:
     knitr,
     MASS
 VignetteBuilder: knitr
-RoxygenNote: 5.0.1
+RoxygenNote: 5.0.1.9000
 Collate:
     'ModelPoset.R'
     'MixtureModels.R'

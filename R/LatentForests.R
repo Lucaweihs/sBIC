@@ -11,8 +11,7 @@ NULL
 #' example, the forest that has no edges is less than all other models.
 #'
 #' @name LatentForests
-#' @usage LatentForests(numLeaves = 0, E = matrix(numeric(0), ncol = 2))
-#' @export LatentForests
+#' @export
 #'
 #' @param numLeaves the number of observed variables (these are the leaves of
 #'                  the model)
@@ -21,7 +20,6 @@ NULL
 #'          1:numLeaves as leaves of the forest with no internal nodes as leaves.
 #'
 #' @return An object representing the collection.
-NULL
 setConstructorS3("LatentForests",
                  function(numLeaves = 0,
                           E = matrix(numeric(0), ncol = 2)) {
@@ -63,27 +61,21 @@ setConstructorS3("LatentForests",
 
 #' @rdname   getTopOrder
 #' @name     getTopOrder.LatentForests
-#' @S3method getTopOrder LatentForests
-#' @usage    \method{getTopOrder}{LatentForests}(this)
-#' @export   getTopOrder.LatentForests
+#' @export
 setMethodS3("getTopOrder", "LatentForests", function(this) {
   return(this$.topOrder)
 }, appendVarArgs = F)
 
 #' @rdname   getPrior
 #' @name     getPrior.LatentForests
-#' @S3method getPrior LatentForests
-#' @usage    \method{getPrior}{LatentForests}(this)
-#' @export   getPrior.LatentForests
+#' @export
 setMethodS3("getPrior", "LatentForests", function(this) {
   return(this$.prior)
 }, appendVarArgs = F)
 
 #' @rdname   getNumModels
 #' @name     getNumModels.LatentForests
-#' @S3method getNumModels LatentForests
-#' @usage    \method{getNumModels}{LatentForests}(this)
-#' @export   getNumModels.LatentForests
+#' @export
 setMethodS3("getNumModels", "LatentForests", function(this) {
   return(this$.numModels)
 }, appendVarArgs = F)
@@ -94,15 +86,12 @@ setMethodS3("getNumModels", "LatentForests", function(this) {
 #' MLEs.
 #'
 #' @name     setData.LatentForests
-#' @S3method setData LatentForests
-#' @usage    \method{setData}{LatentForests}(this, data)
-#' @export   setData.LatentForests
+#' @export
 #'
 #' @param this the LatentForests object.
 #' @param data the data to be set, should matrix of observed values where each row
 #'        corresponds to a single sample.
 #'
-NULL
 setMethodS3("setData", "LatentForests", function(this, data) {
   this$.X = data
   this$.sampleCovMat = t(data) %*% data
@@ -112,9 +101,7 @@ setMethodS3("setData", "LatentForests", function(this, data) {
 
 #' @rdname   getData
 #' @name     getData.LatentForests
-#' @S3method getData LatentForests
-#' @usage    \method{getData}{LatentForests}(this)
-#' @export   getData.LatentForests
+#' @export
 setMethodS3("getData", "LatentForests", function(this) {
   if (is.null(this$.X)) {
     throw("No data has been set for models.")
@@ -124,18 +111,14 @@ setMethodS3("getData", "LatentForests", function(this) {
 
 #' @rdname   getNumSamples
 #' @name     getNumSamples.LatentForests
-#' @S3method getNumSamples LatentForests
-#' @usage    \method{getNumSamples}{LatentForests}(this)
-#' @export   getNumSamples.LatentForests
+#' @export
 setMethodS3("getNumSamples", "LatentForests", function(this) {
   return(nrow(this$getData()))
 }, appendVarArgs = F)
 
 #' @rdname   parents
 #' @name     parents.LatentForests
-#' @S3method parents LatentForests
-#' @usage    \method{parents}{LatentForests}(this, model)
-#' @export   parents.LatentForests
+#' @export
 setMethodS3("parents", "LatentForests", function(this, model) {
   if (length(model) != 1) {
     throw("parents can only accept a single model.")
@@ -145,9 +128,7 @@ setMethodS3("parents", "LatentForests", function(this, model) {
 
 #' @rdname   logLikeMle
 #' @name     logLikeMle.LatentForests
-#' @S3method logLikeMle LatentForests
-#' @usage    \method{logLikeMle}{LatentForests}(this, model, ...)
-#' @export   logLikeMle.LatentForests
+#' @export
 setMethodS3("logLikeMle", "LatentForests", function(this, model, ...) {
   if (!is.na(this$.logLikes[model])) {
     return(this$.logLikes[model])
@@ -160,9 +141,7 @@ setMethodS3("logLikeMle", "LatentForests", function(this, model, ...) {
 
 #' @rdname   mle
 #' @name     mle.LatentForests
-#' @S3method mle LatentForests
-#' @usage    \method{mle}{LatentForests}(this, model)
-#' @export   mle.LatentForests
+#' @export
 setMethodS3("mle", "LatentForests", function(this, model) {
   if (!is.na(this$.mle[[model]])) {
     return(this$.mle[[model]])
@@ -173,9 +152,7 @@ setMethodS3("mle", "LatentForests", function(this, model) {
 
 #' @rdname   learnCoef
 #' @name     learnCoef.LatentForests
-#' @S3method learnCoef LatentForests
-#' @usage    \method{learnCoef}{LatentForests}(this, superModel, subModel)
-#' @export   learnCoef.LatentForests
+#' @export
 setMethodS3("learnCoef", "LatentForests", function(this, superModel, subModel) {
   support = this$getSupport(superModel)
   subSupport = this$getSupport(subModel)
@@ -208,9 +185,7 @@ setMethodS3("learnCoef", "LatentForests", function(this, superModel, subModel) {
 
 #' @rdname   getDimension
 #' @name     getDimension.LatentForests
-#' @S3method getDimension LatentForests
-#' @usage    \method{getDimension}{LatentForests}(this, model)
-#' @export   getDimension.LatentForests
+#' @export
 setMethodS3("getDimension", "LatentForests", function(this, model) {
   return(this$.dimension[model])
 }, appendVarArgs = F)
@@ -220,7 +195,7 @@ setMethodS3("getDimension", "LatentForests", function(this, model) {
 #' Returns the sampling covariance matrix for the data set with setData().
 #'
 #' @name     getSamplingCovMat
-#' @export   getSamplingCovMat
+#' @export
 #'
 #' @param this the LatentForests object.
 getSamplingCovMat <- function(this) {
@@ -228,9 +203,7 @@ getSamplingCovMat <- function(this) {
 }
 #' @rdname   getSamplingCovMat
 #' @name     getSamplingCovMat.LatentForests
-#' @S3method getSamplingCovMat LatentForests
-#' @usage    \method{getSamplingCovMat}{LatentForests}(this)
-#' @export   getSamplingCovMat.LatentForests
+#' @export
 setMethodS3("getSamplingCovMat", "LatentForests", function(this) {
   if (is.null(this$.X)) {
     throw("No data has been set for models.")
@@ -246,7 +219,7 @@ setMethodS3("getSamplingCovMat", "LatentForests", function(this) {
 #' model and is 0 otherwise.
 #'
 #' @name     getSupport
-#' @export   getSupport
+#' @export
 #'
 #' @param this the LatentForests object.
 #' @param model the model number.
@@ -255,9 +228,7 @@ getSupport <- function(this, model) {
 }
 #' @rdname   getSupport
 #' @name     getSupport.LatentForests
-#' @S3method getSupport LatentForests
-#' @usage    \method{getSupport}{LatentForests}(this, model)
-#' @export   getSupport.LatentForests
+#' @export
 setMethodS3("getSupport", "LatentForests", function(this, model) {
   return(this$.subModels[model, ])
 }, appendVarArgs = F)
@@ -271,7 +242,7 @@ setMethodS3("getSupport", "LatentForests", function(this, model) {
 #' 5th edge then it will remain the 5th edge but may now be of the form (4,1).
 #'
 #' @name     getAllEdges
-#' @export   getAllEdges
+#' @export
 #'
 #' @param this the LatentForests object.
 #' @param model the model number.
@@ -280,9 +251,7 @@ getAllEdges <- function(this, model) {
 }
 #' @rdname   getAllEdges
 #' @name     getAllEdges.LatentForests
-#' @usage    \method{getAllEdges}{LatentForests}(this, model)
-#' @S3method getAllEdges LatentForests
-#' @export   getAllEdges.LatentForests
+#' @export
 setMethodS3("getAllEdges", "LatentForests", function(this, model) {
   return(this$.E)
 }, appendVarArgs = F)
@@ -292,7 +261,7 @@ setMethodS3("getAllEdges", "LatentForests", function(this, model) {
 #' Gets the number of leaves in the latent forest models.
 #'
 #' @name     getNumLeaves
-#' @export   getNumLeaves
+#' @export
 #'
 #' @param this the LatentForests object.
 getNumLeaves <- function(this) {
@@ -300,9 +269,7 @@ getNumLeaves <- function(this) {
 }
 #' @rdname   getNumLeaves
 #' @name     getNumLeaves.LatentForests
-#' @S3method getNumLeaves LatentForests
-#' @usage    \method{getNumLeaves}{LatentForests}(this)
-#' @export   getNumLeaves.LatentForests
+#' @export
 setMethodS3("getNumLeaves", "LatentForests", function(this) {
   return(this$.numLeaves)
 }, appendVarArgs = F)
@@ -313,7 +280,7 @@ setMethodS3("getNumLeaves", "LatentForests", function(this) {
 #' of vertices a tree with this$getNumLeaves() number of leaves has.
 #'
 #' @name     getNumVertices
-#' @export   getNumVertices
+#' @export
 #'
 #' @param this the LatentForests object.
 getNumVertices <- function(this) {
@@ -321,9 +288,7 @@ getNumVertices <- function(this) {
 }
 #' @rdname   getNumVertices
 #' @name     getNumVertices.LatentForests
-#' @S3method getNumVertices LatentForests
-#' @usage    \method{getNumVertices}{LatentForests}(this)
-#' @export   getNumVertices.LatentForests
+#' @export
 setMethodS3("getNumVertices", "LatentForests", function(this) {
   numLeaves = this$getNumLeaves()
   if (numLeaves == 0) {
@@ -339,7 +304,7 @@ setMethodS3("getNumVertices", "LatentForests", function(this) {
 #' returned by this$getAllEdges()
 #'
 #' @name     getModelWithSupport
-#' @export   getModelWithSupport
+#' @export
 #'
 #' @param this the LatentForests object.
 #' @param support the 0-1 vector representing the support.
@@ -348,9 +313,7 @@ getModelWithSupport <- function(this, support) {
 }
 #' @rdname   getModelWithSupport
 #' @name     getModelWithSupport.LatentForests
-#' @S3method getModelWithSupport LatentForests
-#' @usage    \method{getModelWithSupport}{LatentForests}(this, support)
-#' @export   getModelWithSupport.LatentForests
+#' @export
 setMethodS3("getModelWithSupport", "LatentForests", function(this, support) {
   if (length(support) != nrow(this$getAllEdges())) {
     throw("Invalid support length.")
@@ -368,7 +331,7 @@ setMethodS3("getModelWithSupport", "LatentForests", function(this, support) {
 #' and assumed 0 means.
 #'
 #' @name     logLike
-#' @export   logLike
+#' @export
 #'
 #' @param this the LatentForests object.
 #' @param covMat a covariance matrix.
@@ -377,9 +340,7 @@ logLike <- function(this, covMat) {
 }
 #' @rdname   logLike
 #' @name     logLike.LatentForests
-#' @S3method logLike LatentForests
-#' @usage    \method{logLike}{LatentForests}(this, covMat)
-#' @export   logLike.LatentForests
+#' @export
 setMethodS3("logLike", "LatentForests", function(this, covMat) {
   n = this$getNumSamples()
   tXX = this$getSamplingCovMat()
@@ -396,7 +357,7 @@ setMethodS3("logLike", "LatentForests", function(this, covMat) {
 #' approximate maximum likelihood estimate for a given latent forest model.
 #'
 #' @name     emMain
-#' @export   emMain
+#' @export
 #'
 #' @param this the LatentForests object.
 #' @param model the model for which to compute the approximate MLE.
@@ -408,9 +369,6 @@ emMain <- function(this, model, starts, maxIter, tol) {
 }
 #' @rdname   emMain
 #' @name     emMain.LatentForests
-#' @S3method emMain LatentForests
-#' @usage    \method{emMain}{LatentForests}(this, model, starts=5, maxIter=1000, tol=1e-4)
-#' @S3method emMain LatentForests
 #' @export
 setMethodS3("emMain", "LatentForests", function(this, model, starts = 5,
                                                 maxIter = 1000, tol = 1e-4) {
@@ -469,7 +427,7 @@ setMethodS3("emMain", "LatentForests", function(this, model, starts = 5,
 #' correspond (in order) to the edges returned by this$getAllEdges().
 #'
 #' @name     getCovMat
-#' @export   getCovMat
+#' @export
 #'
 #' @param this the LatentForests object.
 #' @param edgeCorrelations the edge correlations in a numeric vector.
@@ -478,9 +436,7 @@ getCovMat <- function(this, edgeCorrelations) {
 }
 #' @rdname   getCovMat
 #' @name     getCovMat.LatentForests
-#' @S3method getCovMat LatentForests
-#' @usage    \method{getCovMat}{LatentForests}(this, edgeCorrelations)
-#' @export   getCovMat.LatentForests
+#' @export
 setMethodS3("getCovMat", "LatentForests", function(this, edgeCorrelations) {
   v = this$getNumVertices()
   E = this$getAllEdges()
@@ -508,7 +464,7 @@ setMethodS3("getCovMat", "LatentForests", function(this, edgeCorrelations) {
 #' is a helper function for emMain method.
 #'
 #' @name     emSteps
-#' @export   emSteps
+#' @export
 #'
 #' @param this the LatentForests object.
 #' @param support the support of the model.
@@ -518,9 +474,7 @@ emSteps <- function(this, support, S) {
 }
 #' @rdname   emSteps
 #' @name     emSteps.LatentForests
-#' @S3method emSteps LatentForests
-#' @usage    \method{emSteps}{LatentForests}(this, support, S)
-#' @export   emSteps.LatentForests
+#' @export
 setMethodS3("emSteps", "LatentForests", function(this, support, S) {
   tXX = this$getSamplingCovMat()
   E = this$getAllEdges()

@@ -7,7 +7,8 @@
 \usage{
 emMain(this, model, starts, maxIter, tol)
 
-\method{emMain}{LatentForests}(this, model, starts=5, maxIter=1000, tol=1e-4)
+\method{emMain}{LatentForests}(this, model, starts = 5, maxIter = 1000,
+  tol = 1e-04)
 }
 \arguments{
 \item{this}{the LatentForests object.}
