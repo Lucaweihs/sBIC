@@ -3,9 +3,6 @@
 \name{setData.BinomialMixtures}
 \alias{setData.BinomialMixtures}
 \title{Set data for the binomial mixture models.}
-\usage{
-\method{setData}{BinomialMixtures}(this, data)
-}
 \arguments{
 \item{this}{the BinomialMixtures object.}
 
@@ -15,4 +12,3 @@ integers.}
 \description{
 Sets the data to be used by the binomial mixture models when computing MLEs.
 }
-

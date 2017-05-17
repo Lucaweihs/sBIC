@@ -3,9 +3,6 @@
 \name{setData.LCAs}
 \alias{setData.LCAs}
 \title{Set data for the LCA models.}
-\usage{
-\method{setData}{LCAs}(this, data)
-}
 \arguments{
 \item{this}{the LCAs object.}
 
@@ -15,4 +12,3 @@ row represents a single sample from the observed variables.}
 \description{
 Sets the data to be used by the LCA models when computing MLEs.
 }
-

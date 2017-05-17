@@ -3,10 +3,6 @@
 \name{GaussianMixtures}
 \alias{GaussianMixtures}
 \title{Construct a poset of gaussian mixture models.}
-\usage{
-GaussianMixtures(maxNumComponents = 1, dim = 1, phi = "default",
-  restarts = 50)
-}
 \arguments{
 \item{maxNumComponents}{the maximum number of gaussian components to
 consider in a mixture.}
@@ -30,4 +26,3 @@ specifiying the number of components in the model. Models are naturally
 ordered by inclusion so that, for example, a model with 2 components comes
 before a model with 3 or more components.
 }
-

@@ -6,8 +6,6 @@
 \title{Sampling covariance matrix.}
 \usage{
 getSamplingCovMat(this)
-
-\method{getSamplingCovMat}{LatentForests}(this)
 }
 \arguments{
 \item{this}{the LatentForests object.}
@@ -15,4 +13,3 @@ getSamplingCovMat(this)
 \description{
 Returns the sampling covariance matrix for the data set with setData().
 }
-

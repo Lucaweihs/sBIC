@@ -13,18 +13,6 @@
 \title{Model dimension.}
 \usage{
 getDimension(this, model)
-
-\method{getDimension}{BinomialMixtures}(this, model)
-
-\method{getDimension}{FactorAnalyses}(this, model)
-
-\method{getDimension}{GaussianMixtures}(this, model)
-
-\method{getDimension}{LCAs}(this, model)
-
-\method{getDimension}{LatentForests}(this, model)
-
-\method{getDimension}{ReducedRankRegressions}(this, model)
 }
 \arguments{
 \item{this}{the object representing the model poset.}
@@ -34,4 +22,3 @@ getDimension(this, model)
 \description{
 Computes the dimension of a model in the model poset.
 }
-

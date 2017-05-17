@@ -1,4 +1,4 @@
-setConstructorS3("ModelPoset",
+R.oo::setConstructorS3("ModelPoset",
                  function() { extend(Object(), "Object") },
                  abstract = T)
 

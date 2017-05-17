@@ -6,9 +6,6 @@
 \title{EM-algorithm for latent forests.}
 \usage{
 emMain(this, model, starts, maxIter, tol)
-
-\method{emMain}{LatentForests}(this, model, starts = 5, maxIter = 1000,
-  tol = 1e-04)
 }
 \arguments{
 \item{this}{the LatentForests object.}
@@ -25,4 +22,3 @@ emMain(this, model, starts, maxIter, tol)
 Uses the EM-algorithm (with multiple random restarts) to compute an
 approximate maximum likelihood estimate for a given latent forest model.
 }
-

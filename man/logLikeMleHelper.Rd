@@ -6,8 +6,6 @@
 \title{Help compute the MLE.}
 \usage{
 logLikeMleHelper(this, model)
-
-\method{logLikeMleHelper}{ReducedRankRegressions}(this, model)
 }
 \arguments{
 \item{this}{the ReducedRankRegressions object.}
@@ -18,4 +16,3 @@ logLikeMleHelper(this, model)
 A private method that acts as a helper function for the logLikeMLE method
 in the ReducedRankRegressions class.
 }
-

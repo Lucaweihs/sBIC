@@ -3,9 +3,6 @@
 \name{LatentForests}
 \alias{LatentForests}
 \title{Construct a poset of gaussian latent forest models.}
-\usage{
-LatentForests(numLeaves = 0, E = matrix(numeric(0), ncol = 2))
-}
 \arguments{
 \item{numLeaves}{the number of observed variables (these are the leaves of
 the model)}
@@ -26,4 +23,3 @@ for details on how to determine which model a particular model number
 corresponds to. Models are naturally ordered by inclusion so that, for
 example, the forest that has no edges is less than all other models.
 }
-

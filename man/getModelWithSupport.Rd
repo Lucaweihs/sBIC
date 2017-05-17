@@ -6,8 +6,6 @@
 \title{Get model with the given support.}
 \usage{
 getModelWithSupport(this, support)
-
-\method{getModelWithSupport}{LatentForests}(this, support)
 }
 \arguments{
 \item{this}{the LatentForests object.}
@@ -19,4 +17,3 @@ Returns the model number corresponding to a given 0-1 vector representing
 the support of the model. This support should corresponds to the edges
 returned by this$getAllEdges()
 }
-

@@ -16,4 +16,3 @@ Computes the sBIC for various model collections including:
 The primary functionality of this package can be accessed through the
 sBIC function.
 }
-

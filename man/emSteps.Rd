@@ -6,8 +6,6 @@
 \title{One EM-iteration.}
 \usage{
 emSteps(this, support, S)
-
-\method{emSteps}{LatentForests}(this, support, S)
 }
 \arguments{
 \item{this}{the LatentForests object.}
@@ -20,4 +18,3 @@ emSteps(this, support, S)
 A private method that performs a single iteration of the EM-algorithm, this
 is a helper function for emMain method.
 }
-

@@ -3,10 +3,6 @@
 \name{LCAs}
 \alias{LCAs}
 \title{Construct a poset of latent class analysis models.}
-\usage{
-LCAs(maxNumClasses = 1, numVariables = 2, numStatesForVariables = 2,
-  phi = "default")
-}
 \arguments{
 \item{maxNumClasses}{the number of classes in the largest LCA model to
 considered.}
@@ -29,4 +25,3 @@ specifiying the number of latent classes in the model. Models are naturally
 ordered by inclusion so that, for example, a model with 2 latent classes
 comes before a model with 3 or more latent classes.
 }
-

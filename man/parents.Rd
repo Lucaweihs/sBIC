@@ -3,21 +3,13 @@
 %   R/FactorAnalyses.R, R/LatentForests.R, R/ReducedRankRegressions.R
 \name{parents}
 \alias{parents}
+\alias{parents.MixtureModels}
 \alias{parents.FactorAnalyses}
 \alias{parents.LatentForests}
-\alias{parents.MixtureModels}
 \alias{parents.ReducedRankRegressions}
 \title{Parents of a model.}
 \usage{
 parents(this, model)
-
-\method{parents}{MixtureModels}(this, model)
-
-\method{parents}{FactorAnalyses}(this, model)
-
-\method{parents}{LatentForests}(this, model)
-
-\method{parents}{ReducedRankRegressions}(this, model)
 }
 \arguments{
 \item{this}{the object representing the model poset.}
@@ -29,4 +21,3 @@ Returns the immediate parents of a given model, i.e. those models
 M that are (in the poset ordering) less than the given model but for
 which there exists no other model M' such that M < M' < (given model).
 }
-

@@ -6,8 +6,6 @@
 \title{Number of factors for a model.}
 \usage{
 getNumFactorsForModel(this, model)
-
-\method{getNumFactorsForModel}{FactorAnalyses}(this, model)
 }
 \arguments{
 \item{this}{the FactorAnalyses object.}
@@ -17,4 +15,3 @@ getNumFactorsForModel(this, model)
 \description{
 Given a model number returns the number of factors in that model
 }
-

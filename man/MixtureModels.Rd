@@ -3,9 +3,6 @@
 \name{MixtureModels}
 \alias{MixtureModels}
 \title{Linear collections of mixture models.}
-\usage{
-MixtureModels(phi = "default")
-}
 \arguments{
 \item{phi}{parameter controlling the strength of the sBIC penalty.}
 }
@@ -20,4 +17,3 @@ should not be instantiated, just extended.
 \seealso{
 \code{\link{GaussianMixtures}}, \code{\link{BinomialMixtures}}, \code{\link{LCAs}}
 }
-

@@ -13,18 +13,6 @@
 \title{Return the set data.}
 \usage{
 getData(this)
-
-\method{getData}{BinomialMixtures}(this)
-
-\method{getData}{FactorAnalyses}(this)
-
-\method{getData}{GaussianMixtures}(this)
-
-\method{getData}{LCAs}(this)
-
-\method{getData}{LatentForests}(this)
-
-\method{getData}{ReducedRankRegressions}(this)
 }
 \arguments{
 \item{this}{the object from which to get the data.}
@@ -33,4 +21,3 @@ getData(this)
 If data has been set for the object using the setData() function
 then will return that data, otherwise will throw an error.
 }
-

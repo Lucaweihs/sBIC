@@ -6,8 +6,6 @@
 \title{Set phi parameter.}
 \usage{
 setPhi(this, phi)
-
-\method{setPhi}{MixtureModels}(this, phi)
 }
 \arguments{
 \item{this}{the MixtureModels object.}
@@ -17,4 +15,3 @@ setPhi(this, phi)
 \description{
 Set the phi parameter in a mixture model object to a different value.
 }
-

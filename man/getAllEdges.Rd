@@ -6,8 +6,6 @@
 \title{Edges representing the largest model.}
 \usage{
 getAllEdges(this, model)
-
-\method{getAllEdges}{LatentForests}(this, model)
 }
 \arguments{
 \item{this}{the LatentForests object.}
@@ -21,4 +19,3 @@ This matrix will have edges in the same order but may have flipped which
 node comes first in any particular edge. That is if edge (1,4) was the
 5th edge then it will remain the 5th edge but may now be of the form (4,1).
 }
-

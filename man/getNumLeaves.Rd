@@ -6,8 +6,6 @@
 \title{Get number of leaves.}
 \usage{
 getNumLeaves(this)
-
-\method{getNumLeaves}{LatentForests}(this)
 }
 \arguments{
 \item{this}{the LatentForests object.}
@@ -15,4 +13,3 @@ getNumLeaves(this)
 \description{
 Gets the number of leaves in the latent forest models.
 }
-

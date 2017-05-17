@@ -14,14 +14,14 @@ NULL
 #' @return An object representing the collection.
 #'
 #' @seealso \code{\link{GaussianMixtures}}, \code{\link{BinomialMixtures}}, \code{\link{LCAs}}
-setConstructorS3("MixtureModels",
+R.oo::setConstructorS3("MixtureModels",
                  function(phi = "default") { extend(ModelPoset(), "MixtureModels", .phi = phi) },
                  abstract = T)
 
 #' @rdname   parents
 #' @name     parents.MixtureModels
 #' @export
-setMethodS3("parents", "MixtureModels", function(this, model) {
+R.methodsS3::setMethodS3("parents", "MixtureModels", function(this, model) {
   if (model > this$getNumModels() ||
       model < 1 || length(model) != 1) {
     throw("Invalid input model.")
@@ -36,7 +36,7 @@ setMethodS3("parents", "MixtureModels", function(this, model) {
 #' @rdname   learnCoef
 #' @name     learnCoef.MixtureModels
 #' @export
-setMethodS3("learnCoef", "MixtureModels", function(this, superModel, subModel) {
+R.methodsS3::setMethodS3("learnCoef", "MixtureModels", function(this, superModel, subModel) {
   i = superModel
   j = subModel
   r = this$getDimension(1) # Dimension of a single component
@@ -60,7 +60,7 @@ getPhi <- function(this, phi) {
 #' @rdname   getPhi
 #' @name     getPhi.MixtureModels
 #' @export
-setMethodS3("getPhi", "MixtureModels", function(this, phi) {
+R.methodsS3::setMethodS3("getPhi", "MixtureModels", function(this, phi) {
   return(this$.phi)
 }, appendVarArgs = F)
 
@@ -79,7 +79,7 @@ setPhi <- function(this, phi) {
 #' @rdname   setPhi
 #' @name     setPhi.MixtureModels
 #' @export
-setMethodS3("setPhi", "MixtureModels", function(this, phi) {
+R.methodsS3::setMethodS3("setPhi", "MixtureModels", function(this, phi) {
   if (!is.numeric(phi) || length(phi) != 1) {
     throw("Invalid phi value.")
   }

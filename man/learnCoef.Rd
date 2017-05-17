@@ -3,21 +3,13 @@
 %   R/FactorAnalyses.R, R/LatentForests.R, R/ReducedRankRegressions.R
 \name{learnCoef}
 \alias{learnCoef}
+\alias{learnCoef.MixtureModels}
 \alias{learnCoef.FactorAnalyses}
 \alias{learnCoef.LatentForests}
-\alias{learnCoef.MixtureModels}
 \alias{learnCoef.ReducedRankRegressions}
 \title{Learning coefficient}
 \usage{
 learnCoef(this, superModel, subModel)
-
-\method{learnCoef}{MixtureModels}(this, superModel, subModel)
-
-\method{learnCoef}{FactorAnalyses}(this, superModel, subModel)
-
-\method{learnCoef}{LatentForests}(this, superModel, subModel)
-
-\method{learnCoef}{ReducedRankRegressions}(this, superModel, subModel)
 }
 \arguments{
 \item{this}{the object representing the model poset.}
@@ -30,4 +22,3 @@ learnCoef(this, superModel, subModel)
 Computes the learning coefficient for a model with respect to one of the
 model's submodels.
 }
-

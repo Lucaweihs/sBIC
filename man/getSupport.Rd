@@ -6,8 +6,6 @@
 \title{Get support for a given model.}
 \usage{
 getSupport(this, model)
-
-\method{getSupport}{LatentForests}(this, model)
 }
 \arguments{
 \item{this}{the LatentForests object.}
@@ -20,4 +18,3 @@ of edges returned by this$getAllEdges(), the support is represented by a
 0-1 vector v where the ith entry of v is 1 if the ith edge in E is in the
 model and is 0 otherwise.
 }
-

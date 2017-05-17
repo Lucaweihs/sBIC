@@ -18,7 +18,7 @@ NULL
 #' @param phi parameter controlling the strength of the sBIC penalty.
 #'
 #' @return An object representing the collection.
-setConstructorS3("BinomialMixtures",
+R.oo::setConstructorS3("BinomialMixtures",
                  function(maxNumComponents = 1, phi = "default") {
                    numModels =  maxNumComponents
                    prior = rep(1, numModels)
@@ -58,21 +58,21 @@ setConstructorS3("BinomialMixtures",
 #' @rdname   getTopOrder
 #' @name     getTopOrder.BinomialMixtures
 #' @export
-setMethodS3("getTopOrder", "BinomialMixtures", function(this) {
+R.methodsS3::setMethodS3("getTopOrder", "BinomialMixtures", function(this) {
   return(this$.topOrder)
 }, appendVarArgs = F)
 
 #' @rdname   getPrior
 #' @name     getPrior.BinomialMixtures
 #' @export
-setMethodS3("getPrior", "BinomialMixtures", function(this) {
+R.methodsS3::setMethodS3("getPrior", "BinomialMixtures", function(this) {
   return(this$.prior)
 }, appendVarArgs = F)
 
 #' @rdname   getNumModels
 #' @name     getNumModels.BinomialMixtures
 #' @export
-setMethodS3("getNumModels", "BinomialMixtures", function(this) {
+R.methodsS3::setMethodS3("getNumModels", "BinomialMixtures", function(this) {
   return(this$.numModels)
 }, appendVarArgs = F)
 
@@ -86,7 +86,7 @@ setMethodS3("getNumModels", "BinomialMixtures", function(this) {
 #' @param this the BinomialMixtures object.
 #' @param data the data to be set, should be a numeric vector of non-negative
 #'        integers.
-setMethodS3("setData", "BinomialMixtures", function(this, data) {
+R.methodsS3::setMethodS3("setData", "BinomialMixtures", function(this, data) {
 
   X = data
   this$.X = X
@@ -117,7 +117,7 @@ setMethodS3("setData", "BinomialMixtures", function(this, data) {
 #' @rdname   getData
 #' @name     getData.BinomialMixtures
 #' @export
-setMethodS3("getData", "BinomialMixtures", function(this) {
+R.methodsS3::setMethodS3("getData", "BinomialMixtures", function(this) {
   if (is.null(this$.X)) {
     throw("Data has not yet been set")
   }
@@ -127,27 +127,27 @@ setMethodS3("getData", "BinomialMixtures", function(this) {
 #' @rdname   getNumSamples
 #' @name     getNumSamples.BinomialMixtures
 #' @export
-setMethodS3("getNumSamples", "BinomialMixtures", function(this) {
+R.methodsS3::setMethodS3("getNumSamples", "BinomialMixtures", function(this) {
   return(nrow(this$getData()))
 }, appendVarArgs = F)
 
 #' @rdname   logLikeMle
 #' @name     logLikeMle.BinomialMixtures
 #' @export
-setMethodS3("logLikeMle", "BinomialMixtures", function(this, model, ...) {
+R.methodsS3::setMethodS3("logLikeMle", "BinomialMixtures", function(this, model, ...) {
   return(this$.logLikes[model])
 }, appendVarArgs = F)
 
 #' @rdname   mle
 #' @name     mle.BinomialMixtures
 #' @export
-setMethodS3("mle", "BinomialMixtures", function(this, model) {
+R.methodsS3::setMethodS3("mle", "BinomialMixtures", function(this, model) {
   return(this$.mle[[model]])
 }, appendVarArgs = F)
 
 #' @rdname   getDimension
 #' @name     getDimension.BinomialMixtures
 #' @export
-setMethodS3("getDimension", "BinomialMixtures", function(this, model) {
+R.methodsS3::setMethodS3("getDimension", "BinomialMixtures", function(this, model) {
   return(this$.dimension[model])
 }, appendVarArgs = F)

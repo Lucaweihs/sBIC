@@ -13,18 +13,6 @@
 \title{The prior on the models.}
 \usage{
 getPrior(this)
-
-\method{getPrior}{BinomialMixtures}(this)
-
-\method{getPrior}{FactorAnalyses}(this)
-
-\method{getPrior}{GaussianMixtures}(this)
-
-\method{getPrior}{LCAs}(this)
-
-\method{getPrior}{LatentForests}(this)
-
-\method{getPrior}{ReducedRankRegressions}(this)
 }
 \arguments{
 \item{this}{the model poset object.}
@@ -32,4 +20,3 @@ getPrior(this)
 \description{
 Returns the unnormalized prior on the collection.
 }
-

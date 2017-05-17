@@ -20,7 +20,7 @@ NULL
 #' @param phi parameter controlling the strength of the sBIC penalty.
 #'
 #' @return An object representing the collection.
-setConstructorS3("LCAs",
+R.oo::setConstructorS3("LCAs",
                  function(maxNumClasses = 1, numVariables = 2,
                           numStatesForVariables = 2, phi = "default") {
                    numModels = maxNumClasses
@@ -67,21 +67,21 @@ setConstructorS3("LCAs",
 #' @rdname   getTopOrder
 #' @name     getTopOrder.LCAs
 #' @export
-setMethodS3("getTopOrder", "LCAs", function(this) {
+R.methodsS3::setMethodS3("getTopOrder", "LCAs", function(this) {
   return(this$.topOrder)
 }, appendVarArgs = F)
 
 #' @rdname   getPrior
 #' @name     getPrior.LCAs
 #' @export
-setMethodS3("getPrior", "LCAs", function(this) {
+R.methodsS3::setMethodS3("getPrior", "LCAs", function(this) {
   return(this$.prior)
 }, appendVarArgs = F)
 
 #' @rdname   getNumModels
 #' @name     getNumModels.LCAs
 #' @export
-setMethodS3("getNumModels", "LCAs", function(this) {
+R.methodsS3::setMethodS3("getNumModels", "LCAs", function(this) {
   return(this$.numModels)
 }, appendVarArgs = F)
 
@@ -95,7 +95,7 @@ setMethodS3("getNumModels", "LCAs", function(this) {
 #' @param this the LCAs object.
 #' @param data the data to be set, should be an integer valued matrix where each
 #'        row represents a single sample from the observed variables.
-setMethodS3("setData", "LCAs", function(this, data) {
+R.methodsS3::setMethodS3("setData", "LCAs", function(this, data) {
   if (ncol(data) != this$.numVariables) {
     throw("Input data has incorrect number of columns.")
   }
@@ -109,7 +109,7 @@ setMethodS3("setData", "LCAs", function(this, data) {
 #' @rdname   getData
 #' @name     getData.LCAs
 #' @export
-setMethodS3("getData", "LCAs", function(this) {
+R.methodsS3::setMethodS3("getData", "LCAs", function(this) {
   if (is.null(this$.X)) {
     throw("Data has not yet been set")
   }
@@ -119,14 +119,14 @@ setMethodS3("getData", "LCAs", function(this) {
 #' @rdname   getNumSamples
 #' @name     getNumSamples.LCAs
 #' @export
-setMethodS3("getNumSamples", "LCAs", function(this) {
+R.methodsS3::setMethodS3("getNumSamples", "LCAs", function(this) {
   return(nrow(this$getData()))
 }, appendVarArgs = F)
 
 #' @rdname   logLikeMle
 #' @name     logLikeMle.LCAs
 #' @export
-setMethodS3("logLikeMle", "LCAs", function(this, model, ...) {
+R.methodsS3::setMethodS3("logLikeMle", "LCAs", function(this, model, ...) {
   if (!is.na(this$.logLikes[model])) {
     return(this$.logLikes[model])
   }
@@ -142,7 +142,7 @@ setMethodS3("logLikeMle", "LCAs", function(this, model, ...) {
 #' @rdname   mle
 #' @name     mle.LCAs
 #' @export
-setMethodS3("mle", "LCAs", function(this, model) {
+R.methodsS3::setMethodS3("mle", "LCAs", function(this, model) {
   if (!is.na(this$.mle[[model]])) {
     return(this$.mle[[model]])
   }
@@ -153,6 +153,6 @@ setMethodS3("mle", "LCAs", function(this, model) {
 #' @rdname   getDimension
 #' @name     getDimension.LCAs
 #' @export
-setMethodS3("getDimension", "LCAs", function(this, model) {
+R.methodsS3::setMethodS3("getDimension", "LCAs", function(this, model) {
   return(this$.dimension[model])
 }, appendVarArgs = F)

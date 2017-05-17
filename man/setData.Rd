@@ -14,4 +14,3 @@ setData(this, data)
 \description{
 Sets the data to be used by a poset of models when computing MLEs.
 }
-

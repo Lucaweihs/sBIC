@@ -18,4 +18,3 @@ corresponds to a edge in the tree. These edge matrices will be in 'directed
 order,' i.e. will be so that if they are considered to be directed edges
 then the resulting graph will have exactly one source.
 }
-

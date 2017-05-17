@@ -22,7 +22,7 @@ NULL
 #'        MLE.
 #'
 #' @return An object representing the collection.
-setConstructorS3("GaussianMixtures",
+R.oo::setConstructorS3("GaussianMixtures",
                  function(maxNumComponents = 1, dim = 1, phi = "default",
                           restarts = 50) {
                    numModels = maxNumComponents
@@ -65,21 +65,21 @@ setConstructorS3("GaussianMixtures",
 #' @rdname   getTopOrder
 #' @name     getTopOrder.GaussianMixtures
 #' @export
-setMethodS3("getTopOrder", "GaussianMixtures", function(this) {
+R.methodsS3::setMethodS3("getTopOrder", "GaussianMixtures", function(this) {
   return(this$.topOrder)
 }, appendVarArgs = F)
 
 #' @rdname   getPrior
 #' @name     getPrior.GaussianMixtures
 #' @export
-setMethodS3("getPrior", "GaussianMixtures", function(this) {
+R.methodsS3::setMethodS3("getPrior", "GaussianMixtures", function(this) {
   return(this$.prior)
 }, appendVarArgs = F)
 
 #' @rdname   getNumModels
 #' @name     getNumModels.GaussianMixtures
 #' @export
-setMethodS3("getNumModels", "GaussianMixtures", function(this) {
+R.methodsS3::setMethodS3("getNumModels", "GaussianMixtures", function(this) {
   return(this$.numModels)
 }, appendVarArgs = F)
 
@@ -95,7 +95,7 @@ setMethodS3("getNumModels", "GaussianMixtures", function(this) {
 #'        multivariate observation. If the corresponding GaussianMixtures object
 #'        has ambient dimension 1, then data may be a numeric vector of
 #'        observations.
-setMethodS3("setData", "GaussianMixtures", function(this, data) {
+R.methodsS3::setMethodS3("setData", "GaussianMixtures", function(this, data) {
   X = data
   if (is.vector(X)) {
     X = matrix(as.numeric(X), ncol = 1)
@@ -113,7 +113,7 @@ setMethodS3("setData", "GaussianMixtures", function(this, data) {
 #' @rdname   getData
 #' @name     getData.GaussianMixtures
 #' @export
-setMethodS3("getData", "GaussianMixtures", function(this) {
+R.methodsS3::setMethodS3("getData", "GaussianMixtures", function(this) {
   if (is.null(this$.X)) {
     throw("Data has not yet been set")
   }
@@ -123,14 +123,14 @@ setMethodS3("getData", "GaussianMixtures", function(this) {
 #' @rdname   getNumSamples
 #' @name     getNumSamples.GaussianMixtures
 #' @export
-setMethodS3("getNumSamples", "GaussianMixtures", function(this) {
+R.methodsS3::setMethodS3("getNumSamples", "GaussianMixtures", function(this) {
   return(length(this$getData()))
 }, appendVarArgs = F)
 
 #' @rdname   logLikeMle
 #' @name     logLikeMle.GaussianMixtures
 #' @export
-setMethodS3("logLikeMle", "GaussianMixtures", function(this, model, ...) {
+R.methodsS3::setMethodS3("logLikeMle", "GaussianMixtures", function(this, model, ...) {
   if (!is.na(this$.logLikes[model])) {
     return(this$.logLikes[model])
   }
@@ -165,7 +165,7 @@ setMethodS3("logLikeMle", "GaussianMixtures", function(this, model, ...) {
 #' @rdname   mle
 #' @name     mle.GaussianMixtures
 #' @export
-setMethodS3("mle", "GaussianMixtures", function(this, model) {
+R.methodsS3::setMethodS3("mle", "GaussianMixtures", function(this, model) {
   if (!is.na(this$.mle[[model]])) {
     return(this$.mle[[model]])
   }
@@ -176,6 +176,6 @@ setMethodS3("mle", "GaussianMixtures", function(this, model) {
 #' @rdname   getDimension
 #' @name     getDimension.GaussianMixtures
 #' @export
-setMethodS3("getDimension", "GaussianMixtures", function(this, model) {
+R.methodsS3::setMethodS3("getDimension", "GaussianMixtures", function(this, model) {
   return(this$.dimension[model])
 }, appendVarArgs = F)

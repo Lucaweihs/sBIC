@@ -3,9 +3,6 @@
 \name{setData.GaussianMixtures}
 \alias{setData.GaussianMixtures}
 \title{Set data for the gaussian mixture models.}
-\usage{
-\method{setData}{GaussianMixtures}(this, data)
-}
 \arguments{
 \item{this}{the GaussianMixtures object.}
 
@@ -17,4 +14,3 @@ observations.}
 \description{
 Sets the data to be used by the gaussian mixture models when computing MLEs.
 }
-

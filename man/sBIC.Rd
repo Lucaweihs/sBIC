@@ -40,4 +40,3 @@ A named list containing the components
 \description{
 Computes the sBIC for a given collection of models.
 }
-

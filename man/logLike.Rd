@@ -6,8 +6,6 @@
 \title{Multivariate gaussian log-likelihood.}
 \usage{
 logLike(this, covMat)
-
-\method{logLike}{LatentForests}(this, covMat)
 }
 \arguments{
 \item{this}{the LatentForests object.}
@@ -19,4 +17,3 @@ A private method that returns the log-likelihood of the data set with
 setData() under a multivariate gaussian model with a given covariance matrix
 and assumed 0 means.
 }
-

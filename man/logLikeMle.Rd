@@ -13,18 +13,6 @@
 \title{Maximum likelihood for data.}
 \usage{
 logLikeMle(this, model, ...)
-
-\method{logLikeMle}{BinomialMixtures}(this, model, ...)
-
-\method{logLikeMle}{FactorAnalyses}(this, model, starts = 1, ...)
-
-\method{logLikeMle}{GaussianMixtures}(this, model, ...)
-
-\method{logLikeMle}{LCAs}(this, model, ...)
-
-\method{logLikeMle}{LatentForests}(this, model, ...)
-
-\method{logLikeMle}{ReducedRankRegressions}(this, model, ...)
 }
 \arguments{
 \item{this}{the object representing the model poset.}
@@ -39,4 +27,3 @@ logLikeMle(this, model, ...)
 Computes the maximum likelihood of a model in the model poset for the
 data set using the setData command.
 }
-

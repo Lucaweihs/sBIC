@@ -13,18 +13,6 @@
 \title{Number of models.}
 \usage{
 getNumModels(this)
-
-\method{getNumModels}{BinomialMixtures}(this)
-
-\method{getNumModels}{FactorAnalyses}(this)
-
-\method{getNumModels}{GaussianMixtures}(this)
-
-\method{getNumModels}{LCAs}(this)
-
-\method{getNumModels}{LatentForests}(this)
-
-\method{getNumModels}{ReducedRankRegressions}(this)
 }
 \arguments{
 \item{this}{the model poset object.}
@@ -32,4 +20,3 @@ getNumModels(this)
 \description{
 Returns the number of models in the collection.
 }
-

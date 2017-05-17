@@ -6,8 +6,6 @@
 \title{Maximum number of vertices.}
 \usage{
 getNumVertices(this)
-
-\method{getNumVertices}{LatentForests}(this)
 }
 \arguments{
 \item{this}{the LatentForests object.}
@@ -16,4 +14,3 @@ getNumVertices(this)
 A private method for LatentForests that computes the number
 of vertices a tree with this$getNumLeaves() number of leaves has.
 }
-

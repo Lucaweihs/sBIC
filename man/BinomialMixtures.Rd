@@ -3,9 +3,6 @@
 \name{BinomialMixtures}
 \alias{BinomialMixtures}
 \title{Construct a poset of binomial mixture models.}
-\usage{
-BinomialMixtures(maxNumComponents = 1, phi = "default")
-}
 \arguments{
 \item{maxNumComponents}{the maximum number of components allowed in a model, will
 create a hierarchy of all models with less than or equal
@@ -24,4 +21,3 @@ specifiying the number of components in the model. Models are naturally
 ordered by inclusion so that, for example, a model with 2 components comes
 before a model with 3 or more components.
 }
-

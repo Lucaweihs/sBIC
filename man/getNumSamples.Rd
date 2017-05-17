@@ -13,18 +13,6 @@
 \title{Number of samples in the set data.}
 \usage{
 getNumSamples(this)
-
-\method{getNumSamples}{BinomialMixtures}(this)
-
-\method{getNumSamples}{FactorAnalyses}(this)
-
-\method{getNumSamples}{GaussianMixtures}(this)
-
-\method{getNumSamples}{LCAs}(this)
-
-\method{getNumSamples}{LatentForests}(this)
-
-\method{getNumSamples}{ReducedRankRegressions}(this)
 }
 \arguments{
 \item{this}{the object from which to get the number of samples.}
@@ -33,4 +21,3 @@ getNumSamples(this)
 If data has been set using the setData method then returns the
 number of samples in the data. Otherwise throws an error.
 }
-

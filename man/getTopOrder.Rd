@@ -14,17 +14,7 @@
 \usage{
 getTopOrder(this)
 
-\method{getTopOrder}{BinomialMixtures}(this)
-
-\method{getTopOrder}{FactorAnalyses}(this)
-
-\method{getTopOrder}{GaussianMixtures}(this)
-
-\method{getTopOrder}{LCAs}(this)
-
-\method{getTopOrder}{LatentForests}(this)
-
-\method{getTopOrder}{ReducedRankRegressions}(this)
+\method{getTopOrder}(FactorAnalyses)(this)
 }
 \arguments{
 \item{this}{the model poset object.}
@@ -32,4 +22,3 @@ getTopOrder(this)
 \description{
 Returns a topological ordering of models in the collection.
 }
-

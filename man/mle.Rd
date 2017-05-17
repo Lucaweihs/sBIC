@@ -11,16 +11,6 @@
 \title{Maximum likelihood estimator.}
 \usage{
 mle(this, model)
-
-\method{mle}{BinomialMixtures}(this, model)
-
-\method{mle}{FactorAnalyses}(this, model)
-
-\method{mle}{GaussianMixtures}(this, model)
-
-\method{mle}{LCAs}(this, model)
-
-\method{mle}{LatentForests}(this, model)
 }
 \arguments{
 \item{this}{the object representing the model poset.}
@@ -31,4 +21,3 @@ mle(this, model)
 Computes the maximum likelihood estimator of the model parameters (for a
 given model in the collection) given the data set with setData.
 }
-

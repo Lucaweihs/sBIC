@@ -3,9 +3,6 @@
 \name{setData.LatentForests}
 \alias{setData.LatentForests}
 \title{Set data for the latent forest models.}
-\usage{
-\method{setData}{LatentForests}(this, data)
-}
 \arguments{
 \item{this}{the LatentForests object.}
 
@@ -16,4 +13,3 @@ corresponds to a single sample.}
 Sets the data to be used by the latent forest models models for computing
 MLEs.
 }
-

@@ -3,9 +3,6 @@
 \name{FactorAnalyses}
 \alias{FactorAnalyses}
 \title{Construct a poset of factor analysis models.}
-\usage{
-FactorAnalyses(numCovariates = 1, maxNumFactors = 0)
-}
 \arguments{
 \item{numCovariates}{the number of covariates in all of the models.}
 
@@ -26,4 +23,3 @@ like all models to be numbered with strictly positive integers for
 consistency. Models are naturally ordered by inclusion so that, for example,
 a model with 2 factors comes before a model with 3 or more factors.
 }
-

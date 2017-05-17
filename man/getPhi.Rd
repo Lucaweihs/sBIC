@@ -6,8 +6,6 @@
 \title{Get the phi parameter.}
 \usage{
 getPhi(this, phi)
-
-\method{getPhi}{MixtureModels}(this, phi)
 }
 \arguments{
 \item{this}{the MixtureModels object.}
@@ -17,4 +15,3 @@ getPhi(this, phi)
 \description{
 Gets the phi parameter controlling the strength of the sBIC penalty.
 }
-

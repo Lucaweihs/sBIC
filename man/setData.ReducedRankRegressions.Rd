@@ -3,9 +3,6 @@
 \name{setData.ReducedRankRegressions}
 \alias{setData.ReducedRankRegressions}
 \title{Set data for the reduced rank regression models.}
-\usage{
-\method{setData}{ReducedRankRegressions}(this, data)
-}
 \arguments{
 \item{this}{the ReducedRankRegressions object.}
 
@@ -22,4 +19,3 @@
 Sets the data to be used by the reduced rank regression models when computing
 MLEs.
 }
-

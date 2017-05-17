@@ -6,8 +6,6 @@
 \title{Create a covariance matrix.}
 \usage{
 getCovMat(this, edgeCorrelations)
-
-\method{getCovMat}{LatentForests}(this, edgeCorrelations)
 }
 \arguments{
 \item{this}{the LatentForests object.}
@@ -19,4 +17,3 @@ Creates a covariance matrix for the latent forest model where edge
 correlations are given. Here edge correlations are given as a vector and
 correspond (in order) to the edges returned by this$getAllEdges().
 }
-

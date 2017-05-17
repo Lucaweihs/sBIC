@@ -3,9 +3,6 @@
 \name{ReducedRankRegressions}
 \alias{ReducedRankRegressions}
 \title{Construct a poset of reduced rank regression models.}
-\usage{
-ReducedRankRegressions(numResponses = 1, numCovariates = 1, maxRank = 0)
-}
 \arguments{
 \item{numResponses}{the number of response variables.}
 
@@ -24,4 +21,3 @@ specifiying the rank of the regression matrix in the model. Models are
 naturally ordered by inclusion so that, for example, a model with 2
 rank 2 comes before before a model with rank 3 or greater.
 }
-
